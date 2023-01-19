@@ -103,7 +103,7 @@ async function createProducts(users, prisma) {
               method: "get",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: process.env.ACCESS_KEY,
+                Authorization: process.env.PEXELS_ACCESS_KEY,
               },
             }
           );
