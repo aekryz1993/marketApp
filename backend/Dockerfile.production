@@ -1,0 +1,5 @@
+FROM node:alpine
+WORKDIR /english-memo-backend
+COPY . .
+RUN npm i
+CMD ["npm", "start"]

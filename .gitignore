@@ -1,0 +1,14 @@
+node_modules
+
+market-frontend/.cache
+market-frontend/node_modules
+market-frontend/build
+market-frontend/public/build
+market-frontend/.env
+market-frontend/app/tailwind.css
+
+backend/node_modules
+backend/.env
+backend/prisma/seed/data/products*
+backend/prisma/seed/dist
+backend/public

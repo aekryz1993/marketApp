@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  --text-colour: #050505;
+  --background-colour: #f1f2f5;
+  --base-font-size: 16px;
+
+  color: var(--text-colour);
+  background-color: var(--background-colour);
+  font-family: "Helvetica, Arial, sans-serif";
+  font-size: var(--base-font-size);
+}
+
+html.dark {
+  --text-colour: #e4e6eb;
+  --background-colour: #18191a;
+}
+
+@layer base {
+  .logo-text {
+    font-family: sarif;
+    font-size: calc(1vw + 1rem);
+    font-weight: 900;
+  }
+
+  .text-ellipsis-2 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+  }
+
+  .text-ellipsis-2 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+  }
+
+  .text-direction-ltr {
+    direction: ltr;
+  }
+
+  .text-direction-rtl {
+    direction: rtl;
+  }
+
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+}

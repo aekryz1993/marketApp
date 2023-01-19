@@ -1,0 +1,16 @@
+{
+  "name": "market-app",
+  "version": "1.0.0",
+  "description": "Cloned facebook's Marketplace ",
+  "main": "index.js",
+  "scripts": {
+    "server": "npm run dev --prefix backend",
+    "client": "npm run dev --prefix market-frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Abdelkader Riazi",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}

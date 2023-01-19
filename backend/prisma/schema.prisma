@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fieldReference"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  username         String    @unique
+  hashedPassword   String
+  profilePicture   String?
+  sellingProducts  Product[] @relation(name: "UserSellingProducts")
+  buyingProducts   Product[] @relation(fields: [buyingProductIDs], references: [id])
+  buyingProductIDs String[]  @db.ObjectId
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model Product {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  images        Image[]
+  brand         String?
+  description   String?
+  category      Category
+  condition     Condition?
+  sold          Boolean    @default(false)
+  stock         Int        @default(1)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  location      String?
+  // location      Location?  @relation(fields: [locationId], references: [id])
+  // locationId    String?    @db.ObjectId
+  currentPrice  Price?     @relation(name: "CurrentProductPrice")
+  previousPrice Price?     @relation(name: "PrevioustProductPrice")
+  tags          Tag[]
+  owner         User?      @relation("UserSellingProducts", fields: [ownerId], references: [id])
+  ownerId       String?    @db.ObjectId
+  buyers        User[]     @relation(fields: [buyerIDs], references: [id])
+  buyerIDs      String[]   @db.ObjectId
+}
+
+model Image {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  src       ImageSrc?
+  alt       String?
+  product   Product?  @relation(fields: [productId], references: [id])
+  productId String?   @db.ObjectId
+}
+
+model ImageSrc {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  original  String
+  square    String?
+  large2x   String?
+  large     String?
+  medium    String?
+  small     String?
+  portrait  String?
+  landscape String?
+  tiny      String?
+  image     Image   @relation(fields: [imageId], references: [id])
+  imageId   String  @unique @db.ObjectId
+}
+
+model Location {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  // latitude  Float
+  // longitude Float
+}
+
+model Price {
+  id                       String   @id @default(auto()) @map("_id") @db.ObjectId
+  amount                   Float
+  // formattedAmount          String
+  currency                 Currency
+  productOfCurrentPrice    Product? @relation(name: "CurrentProductPrice", fields: [productOfCurrentPriceId], references: [id])
+  productOfCurrentPriceId  String?  @unique @db.ObjectId
+  productOfPreviousPrice   Product? @relation(name: "PrevioustProductPrice", fields: [productOfPreviousPriceId], references: [id])
+  productOfPreviousPriceId String?  @unique @db.ObjectId
+}
+
+model Tag {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  text      String
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @db.ObjectId
+}
+
+enum Category {
+  Vehicles
+  Property_Rentals          @map("Property Rentals")
+  Apparel
+  Electronics
+  Entertainment
+  Family
+  Garden_AND_Outdoor        @map("Garden AND Outdoor")
+  Hobbies
+  Home_Goods                @map("Home Goods")
+  Home_Improvement_Supplies @map("Home Improvement Supplies")
+  Home_Sales                @map("Home Sales")
+  Musical_Instruments       @map("Musical Instruments")
+  Office_Supplies           @map("Office Supplies")
+  Pet_Supplies              @map("Pet Supplies")
+  Sporting_Goods            @map("Sporting Goods")
+  Toys_AND_Games            @map("Toys AND Games")
+}
+
+enum Currency {
+  DZD
+  Dollar
+  Euro
+}
+
+enum Condition {
+  New
+  Like_New @map("Used - Like New")
+  Good     @map("Used - Good")
+  Fair     @map("Used - Fair")
+}
