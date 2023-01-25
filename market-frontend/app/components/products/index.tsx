@@ -11,6 +11,7 @@ import { useFetchProductsOnScroll } from "~/hooks/products/useFetchProductsOnScr
 import { useBreakPoints } from "~/hooks/useBreakpoints";
 import { cardStyle } from "../utilities/card/styled";
 import { Loader } from "../loader";
+import { useResizeW } from "~/hooks/useResizeW";
 
 export const ProductsLayout = () => {
   const {
@@ -18,12 +19,15 @@ export const ProductsLayout = () => {
   } = useProducts();
 
   const breakPoint = useBreakPoints();
+  const sizeW = useResizeW();
 
   const handleScroll = useFetchProductsOnScroll();
 
+  if (!sizeW) return <Loader dimensions="w-28 h-28" />
+
   return (
     <>
-      <Sidebar />
+      <Sidebar sizeW={sizeW} />
       <Main onScroll={handleScroll}>
         <Container>
           <Container className={headerContainerClasses}>

@@ -18,9 +18,9 @@ export const useFetchProductsOnScroll = () => {
     fetchProducts,
   } = useProducts();
 
-  const { fetchProductsQuery, loading } = useFetchProducts();
-
   const location = useLocation();
+
+  const { fetchProductsQuery, loading } = useFetchProducts();
 
   const { handleReachEndScroll } = useHandleScroll();
 
@@ -58,7 +58,7 @@ export const useFetchProductsOnScroll = () => {
     });
   }, [fetchProductsQuery, handleCompleted, variables]);
 
-  const throttledFetchProducts = useThrottle(handleFetchProducts, 200, {
+  const throttledFetchProducts = useThrottle(handleFetchProducts, 10, {
     trailing: false,
   });
 

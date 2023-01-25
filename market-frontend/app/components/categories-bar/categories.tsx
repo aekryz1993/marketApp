@@ -10,17 +10,14 @@ import {
   categoryNameClasses,
 } from "./styled";
 import { useToggleSidebar } from "~/context/sidebar";
-import { useProducts } from "~/context/products";
 import { useCallback } from "react";
 
 export const Categories = () => {
   const [, setIsOpen] = useToggleSidebar();
-  const { resetProducts } = useProducts();
 
   const handleReset = useCallback(() => {
-    resetProducts({ loading: true });
     setIsOpen(false);
-  }, [resetProducts, setIsOpen]);
+  }, [setIsOpen]);
 
   return (
     <Container classes={categoriesContainerClasses}>

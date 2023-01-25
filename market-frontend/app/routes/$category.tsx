@@ -3,7 +3,7 @@ import type { TProductsLoaderData } from "~/types/data";
 import { OrderBy, Category } from "~/types/enums";
 
 import { json, redirect } from "@remix-run/node";
-import { useCatch, useLoaderData } from "@remix-run/react";
+import { useCatch, useLoaderData, useParams } from "@remix-run/react";
 import { ProductsProvider } from "~/context/products";
 
 import { TAKE, fetchProducts } from "~/endpoints/query/products";
@@ -51,9 +51,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export default function CategoryPage() {
   const data = useLoaderData<TProductsLoaderData>();
+  const params = useParams()
 
   return (
-    <ProductsProvider products={data.products}>
+    <ProductsProvider key={params.category ?? ""} products={data.products}>
       <ProductsLayout />
     </ProductsProvider>
   );

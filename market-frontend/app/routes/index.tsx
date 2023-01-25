@@ -3,7 +3,7 @@ import type { TProductsLoaderData } from "~/types/data";
 import { OrderBy } from "~/types/enums";
 
 import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useLocation } from "@remix-run/react";
 import { ProductsProvider } from "~/context/products";
 
 import { TAKE, fetchProducts } from "~/endpoints/query/products";
@@ -17,7 +17,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
     const url = new URL(request.url);
     const search = url.searchParams.get("search");
-    
+
     const response = await fetchProducts(
       {
         pagination: { skip: 0, take: TAKE },
@@ -38,9 +38,13 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Index() {
   const data = useLoaderData<TProductsLoaderData>();
-
+  const location = useLocation();
+  
   return (
-    <ProductsProvider products={data.products}>
+    <ProductsProvider
+      key={location.search.split("=")[1] ?? ""}
+      products={data.products}
+    >
       <ProductsLayout />
     </ProductsProvider>
   );

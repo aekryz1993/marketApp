@@ -5,12 +5,10 @@ import {
   createContext,
   useCallback,
   useReducer,
-  useSyncExternalStore,
 } from "react";
 
 import { reducer } from "./reducer";
 import { initialProducts } from "./helper";
-import { compareArrayOfObjects, useDeepMemo } from "~/hooks/useDeepMemo";
 
 export const ProductsContext = createContext<TContext | undefined>(undefined);
 
@@ -22,6 +20,7 @@ export const ProductsProvider = ({
   products: TProduct[];
 }) => {
   const [state, dispatch] = useReducer(reducer, initialProducts(products));
+
 
   const fetchProducts = useCallback(
     ({ products }: { products: TProduct[] }) => {
@@ -46,19 +45,6 @@ export const ProductsProvider = ({
       });
     },
     []
-  );
-
-  const memoProducts: TProduct[] = useDeepMemo(products, compareArrayOfObjects);
-
-  const updateNewProducts = useCallback(() => {
-    resetProducts({ products: memoProducts });
-    return () => {};
-  }, [memoProducts, resetProducts]);
-
-  useSyncExternalStore(
-    updateNewProducts,
-    () => {},
-    () => true
   );
 
   const value = {

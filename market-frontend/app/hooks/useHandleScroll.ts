@@ -5,7 +5,8 @@ export const useHandleScroll = () => {
     (event: React.UIEvent<HTMLElement, UIEvent>) => {
       const element = event.target as HTMLElement;
       return (
-        element.scrollTop > element.scrollHeight - element.clientHeight * 3 && element.scrollTop < element.scrollHeight - element.clientHeight
+        element.scrollTop > element.scrollHeight - element.clientHeight * 3
+        //  && element.scrollTop < element.scrollHeight - element.clientHeight
       );
     },
     []
