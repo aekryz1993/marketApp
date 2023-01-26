@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import clsx from "clsx";
 
 import { Box, Container } from "../utilities";
@@ -22,15 +22,17 @@ export const Categories = () => {
   return (
     <Container classes={categoriesContainerClasses}>
       {categories.map((category) => (
-        <Link
+        <NavLink
           key={category.name}
           to={`/${category.pathname}`}
           onClick={handleReset}
+          prefetch="intent"
+          preventScrollReset
         >
           <Box classes={clsx(dropdownSlot, categoryBoxClasses)}>
             <span className={categoryNameClasses}>{category.label}</span>
           </Box>
-        </Link>
+        </NavLink>
       ))}
     </Container>
   );

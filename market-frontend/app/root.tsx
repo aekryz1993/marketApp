@@ -24,6 +24,9 @@ import {
   validateUsername,
 } from "~/utils/helpers";
 import { SidebarProvider } from "~/context/sidebar";
+import { Loader } from "~/components/loader";
+import { useResizeW } from "~/hooks/useResizeW";
+import { Sidebar } from "~/components/sidebar";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -167,12 +170,20 @@ export let handle = {
 
 export default function App() {
   const { theme } = useLoaderData<TRootLoaderData>();
+  const sizeW = useResizeW();
 
   return (
     <ThemeProvider specifiedTheme={theme}>
       <SidebarProvider>
         <Document>
-          <Outlet />
+          {!sizeW ? (
+            <Loader dimensions="w-28 h-28" />
+          ) : (
+            <>
+              <Sidebar sizeW={sizeW} />
+              <Outlet />
+            </>
+          )}
         </Document>
       </SidebarProvider>
     </ThemeProvider>
@@ -182,15 +193,18 @@ export default function App() {
 export function CatchBoundary() {
   const caught = useCatch();
   const { theme } = useLoaderData<TRootLoaderData>();
+
   return (
     <ThemeProvider specifiedTheme={theme}>
-      <Document title={`${caught.status} ${caught.statusText}`}>
-        <div>
-          <h1>
-            {caught.status} {caught.statusText}
-          </h1>
-        </div>
-      </Document>
+      <SidebarProvider>
+        <Document title={`${caught.status} ${caught.statusText}`}>
+          <div>
+            <h1>
+              {caught.status} {caught.statusText}
+            </h1>
+          </div>
+        </Document>
+      </SidebarProvider>
     </ThemeProvider>
   );
 }
@@ -200,12 +214,14 @@ export function ErrorBoundary({ error }: { error: Error }) {
 
   return (
     <ThemeProvider specifiedTheme={theme}>
-      <Document title="Uh-oh!">
-        <div>
-          <h1>App Error</h1>
-          <pre>{error.message}</pre>
-        </div>
-      </Document>
+      <SidebarProvider>
+        <Document title="Uh-oh!">
+          <div>
+            <h1>App Error</h1>
+            <pre>{error.message}</pre>
+          </div>
+        </Document>
+      </SidebarProvider>
     </ThemeProvider>
   );
 }

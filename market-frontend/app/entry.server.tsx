@@ -82,7 +82,7 @@ async function handleBotRequest(
 
   let ns = i18next.getRouteNamespaces(remixContext);
 
-  const App = (
+  const App = () => (
     <I18nextProvider i18n={instance}>
       <ApolloProvider client={client}>
         <RemixServer context={remixContext} url={request.url} />
@@ -105,13 +105,13 @@ async function handleBotRequest(
   return new Promise(async (resolve, reject) => {
     let didError = false;
 
-    await getDataFromTree(App);
+    await getDataFromTree(<App />);
 
     const initialState = client.extract();
 
     const { pipe, abort } = renderToPipeableStream(
       <>
-        {App}
+        <App />
         <script
           dangerouslySetInnerHTML={{
             __html: `window.__APOLLO_STATE__=${JSON.stringify(
@@ -169,7 +169,7 @@ async function handleBrowserRequest(
   // And here we detect what namespaces the routes about to render want to use
   let ns = i18next.getRouteNamespaces(remixContext);
 
-  const App = (
+  const App = () => (
     <I18nextProvider i18n={instance}>
       <ApolloProvider client={client}>
         <RemixServer context={remixContext} url={request.url} />
@@ -192,13 +192,13 @@ async function handleBrowserRequest(
   return new Promise(async (resolve, reject) => {
     let didError = false;
 
-    await getDataFromTree(App);
+    await getDataFromTree(<App />);
 
     const initialState = client.extract();
 
     const { pipe, abort } = renderToPipeableStream(
       <>
-        {App}
+        <App />
         <script
           dangerouslySetInnerHTML={{
             __html: `window.__APOLLO_STATE__=${JSON.stringify(

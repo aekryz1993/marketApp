@@ -37,6 +37,7 @@ export const useSearchTags = () => {
     setIsOpened,
     handleClose,
     debouncedCallback,
+    setEmptySearch,
     emptySearch,
     data,
     loading,

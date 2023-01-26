@@ -1,10 +1,8 @@
 import type { LoaderFunction } from "@remix-run/node";
-import type { TProductsLoaderData } from "~/types/data";
 import { OrderBy, Category } from "~/types/enums";
 
 import { json, redirect } from "@remix-run/node";
-import { useCatch, useLoaderData, useParams } from "@remix-run/react";
-import { ProductsProvider } from "~/context/products";
+import { useCatch } from "@remix-run/react";
 
 import { TAKE, fetchProducts } from "~/endpoints/query/products";
 import { ProductsLayout } from "~/components/products";
@@ -50,14 +48,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 };
 
 export default function CategoryPage() {
-  const data = useLoaderData<TProductsLoaderData>();
-  const params = useParams()
-
-  return (
-    <ProductsProvider key={params.category ?? ""} products={data.products}>
-      <ProductsLayout />
-    </ProductsProvider>
-  );
+  return <ProductsLayout />;
 }
 
 export function CatchBoundary() {

@@ -30,6 +30,7 @@ export const SearchBar = () => {
     isOpened,
     setIsOpened,
     handleClose,
+    setEmptySearch,
   } = useSearchTags();
 
   return (
@@ -68,6 +69,8 @@ export const SearchBar = () => {
             <SearchedItems
               items={emptySearch ? [] : data?.tags.tags}
               setIsOpened={setIsOpened}
+              searchInputRef={searchInputRef}
+              setEmptySearch={setEmptySearch}
             />
           )}
         </Dropdown>

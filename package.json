@@ -6,7 +6,9 @@
   "scripts": {
     "server": "npm run dev --prefix backend",
     "client": "npm run dev --prefix market-frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "client:prod": "npm run start --prefix market-frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "concurrently \"npm run server\" \"npm run client:prod\""
   },
   "author": "Abdelkader Riazi",
   "license": "ISC",

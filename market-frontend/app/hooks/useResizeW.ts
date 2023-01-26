@@ -10,7 +10,7 @@ export const useResizeW = () => {
   }, []);
 
   const throttledCallback = useThrottle(handleResize, 1000, {});
-  
+
   useEffect(() => {
     setSize(window.innerWidth);
     window.addEventListener("resize", throttledCallback);
