@@ -1,10 +1,9 @@
 import { useFetcher } from "@remix-run/react";
 import {
   createContext,
-  useCallback,
   useContext,
+  useEffect,
   useState,
-  useSyncExternalStore,
 } from "react";
 
 import { useCallbackRef } from "~/hooks/useCallbackRef";
@@ -77,16 +76,14 @@ function ThemeProvider({
 
   const savePersistTheme = useCallbackRef(persistTheme);
 
-  const subscribe = useCallback(() => {
-    if (theme)
+  useEffect(() => {
+    if (theme) {
       savePersistTheme.current.submit(
         { theme },
         { action: "action/set-theme", method: "post" }
       );
-    return () => {};
-  }, [savePersistTheme, theme]);
-
-  useSyncExternalStore(subscribe, () => {}, () => true);
+    }
+  }, [savePersistTheme, theme])
 
   return (
     <ThemeContext.Provider value={[theme, setTheme]}>

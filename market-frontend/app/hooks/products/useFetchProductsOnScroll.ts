@@ -58,9 +58,9 @@ export const useFetchProductsOnScroll = () => {
     });
   }, [fetchProductsQuery, handleCompleted, variables]);
 
-  const throttledFetchProducts = useThrottle(handleFetchProducts, 10, {
+  const throttledFetchProducts = useThrottle(10, {
     trailing: false,
-  });
+  }, handleFetchProducts);
 
   const fetchCondition = currentPage < totalPages && !loading;
 
@@ -68,7 +68,7 @@ export const useFetchProductsOnScroll = () => {
     (event: React.UIEvent<HTMLElement, UIEvent>) => {
       const isReached = handleReachEndScroll(event);
       if (isReached && fetchCondition) {
-        throttledFetchProducts();
+        throttledFetchProducts({});
       }
     },
     [fetchCondition, throttledFetchProducts, handleReachEndScroll]

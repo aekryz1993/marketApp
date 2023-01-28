@@ -1,6 +1,6 @@
 import type { TListenEventCallback } from "../useBroadcastChannel";
 
-import { useCallback, useSyncExternalStore } from "react";
+import { useCallback, useEffect } from "react";
 
 import { clearTimeoutIfExist } from ".";
 
@@ -36,9 +36,7 @@ export const useReceiveMessage = ({
     [persistRefresh, timerId]
   );
 
-  useSyncExternalStore(
-    () => subscribeMessage(callback),
-    () => {},
-    () => true
-  );
+  useEffect(() => {
+    subscribeMessage(callback);
+  }, [callback, subscribeMessage]);
 };

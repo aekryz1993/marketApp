@@ -1,4 +1,4 @@
-import { useCallback, useSyncExternalStore } from "react";
+import { useCallback, useEffect } from "react";
 
 import { Theme } from "~/context/theme";
 
@@ -15,9 +15,7 @@ export const useThemeBroadcastChannel = ({
     setTheme((prev) => (prev === Theme.DARK ? Theme.LIGHT : Theme.DARK));
   }, [setTheme]);
 
-  useSyncExternalStore(
-    () => subscribeMessage(callback),
-    () => {},
-    () => true
-  );
+  useEffect(() => {
+    subscribeMessage(callback);
+  }, [callback, subscribeMessage]);
 };

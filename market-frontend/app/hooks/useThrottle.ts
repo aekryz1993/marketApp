@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
 export const useThrottle = (
-  callback: (...args: any) => void,
   delay: number = 500,
   {
     leading = true,
@@ -9,7 +8,8 @@ export const useThrottle = (
   }: {
     leading?: boolean;
     trailing?: boolean;
-  }
+  },
+  callbackHook?: (...args: any) => void
 ) => {
   const timerIdRef = useRef<NodeJS.Timeout | number | null>(null);
   const flagRef = useRef(true);
@@ -23,17 +23,19 @@ export const useThrottle = (
   );
 
   const throttledCallback = useCallback(
-    (...args: any) => {
+    ({ callback }: { callback?: (...args: any) => void }, ...args: any) => {
       if (flagRef.current) {
         flagRef.current = false;
-        if (options.leading) callback(...args);
+        if (options.leading)
+          callbackHook ? callbackHook(...args) : callback?.(...args);
         timerIdRef.current = setTimeout(() => {
-          if (options.trailing) callback(...args);
+          if (options.trailing)
+            callbackHook ? callbackHook(...args) : callback?.(...args);
           flagRef.current = true;
         }, delay);
       }
     },
-    [callback, delay, options]
+    [callbackHook, delay, options]
   );
 
   useEffect(() => {

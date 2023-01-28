@@ -1,6 +1,6 @@
 import type { TAuthInfo } from "~/types/data";
 
-import { useCallback, useRef, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { useSetRefreshTimer } from "./useSetRefreshTimer";
 import { usePostMessage } from "./usePostMessage";
@@ -39,10 +39,10 @@ export const useRefreshToken = (authInfo: TAuthInfo | null) => {
     if (!timerId.current && authInfo?.token && !isHiddenClient)
       return authInfo?.expiresIn;
     return null;
-  }, [authInfo?.expiresIn, authInfo?.token, isHiddenClient])
+  }, [authInfo?.expiresIn, authInfo?.token, isHiddenClient]);
 
-  const subscribeRefreshToken = useCallback(() => {
-    const expiresIn = getExpiresIn()
+  useEffect(() => {
+    const expiresIn = getExpiresIn();
     if (expiresIn) {
       setRefreshTimer(timerId, expiresIn ?? 0);
     }
@@ -51,12 +51,6 @@ export const useRefreshToken = (authInfo: TAuthInfo | null) => {
       clearTimeoutIfExist(timerId);
     };
   }, [getExpiresIn, postDataToOtherClientTabs, setRefreshTimer]);
-
-  useSyncExternalStore(
-    subscribeRefreshToken,
-    () => {},
-    () => true
-  );
 };
 
 export const clearTimeoutIfExist = (

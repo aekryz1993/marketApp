@@ -1,8 +1,4 @@
-import {
-  useCallback,
-  useRef,
-  useSyncExternalStore,
-} from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 function createRootElement(id: string, rootClasses?: string) {
   const rootContainer = document.createElement("div");
@@ -39,22 +35,22 @@ export const usePortal = ({
     event.stopPropagation();
   }, []);
 
-  const rootElemSubscribe = useCallback(() => {
+  useEffect(() => {
     const existingParent = document.querySelector(`#${id}`);
-    parentElemRef.current = existingParent || createRootElement(id, rootClasses);
+    parentElemRef.current =
+      existingParent || createRootElement(id, rootClasses);
     if (!existingParent) {
       addRootElement(parentElemRef.current);
     }
     parentElemRef.current.appendChild(rootElemRef.current as Element);
-    return () => null;
   }, [id, rootClasses]);
 
-  const eventsSubscribe = useCallback(() => {
+  useEffect(() => {
     if (handleClose) {
       parentElemRef.current?.addEventListener("click", handleClose);
       rootElemRef.current?.addEventListener("click", stopPropagationChild);
     }
-    return function removeElement() {
+    return () => {
       rootElemRef.current?.remove();
       if (!parentElemRef.current?.childElementCount) {
         parentElemRef.current?.remove();
@@ -68,16 +64,6 @@ export const usePortal = ({
       }
     };
   }, [handleClose, stopPropagationChild]);
-
-  useSyncExternalStore(
-    () => rootElemSubscribe(),
-    () => {}
-  );
-
-  useSyncExternalStore(
-    () => eventsSubscribe(),
-    () => {}
-  );
 
   function getRootElem() {
     if (!rootElemRef.current) {

@@ -17,8 +17,11 @@ export const MainLayout = () => {
   } = useProducts();
 
   const breakPoint = useBreakPoints();
+  // console.log(breakPoint)
 
   const handleScroll = useFetchProductsOnScroll();
+
+  if (!breakPoint) return null
 
   return (
       <Main onScroll={handleScroll}>
