@@ -25,8 +25,8 @@ export const enums = `
 
   enum Currency {
     DZD
-    Dollar
-    Euro
+    EUR
+    USD
   }
 
   enum Condition {

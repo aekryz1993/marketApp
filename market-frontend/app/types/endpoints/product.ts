@@ -18,7 +18,7 @@ export interface TProductsInput {
     priceMax?: number;
     category?: Category;
     condition?: Condition;
-    location?: string;
+    locationId?: string;
   };
 }
 
@@ -31,6 +31,15 @@ export interface TPrice {
   id: string;
   currency: Currency;
   amount: number;
+  formattedAmount: string;
+}
+
+export interface TLocation {
+  id: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  countryCode: string;
 }
 
 export interface TImageSrc {
@@ -70,6 +79,11 @@ export interface TTagsResponse {
   statusCode: number;
 }
 
+export interface TLocationsResponse {
+  tags: TLocation[];
+  statusCode: number;
+}
+
 export interface TProduct {
   id: string;
   title: string;
@@ -81,9 +95,9 @@ export interface TProduct {
   stock: number;
   createdAt: string;
   updatedAt: string;
-  currentPrice: TPrice;
+  currentPrice: TPrice[];
   tags: TTag[];
-  previousPrice?: TPrice | null;
+  previousPrice?: TPrice[] | null;
   images: TImage[];
-  location?: string;
+  location?: TLocation;
 }

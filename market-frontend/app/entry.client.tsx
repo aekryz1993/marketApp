@@ -11,30 +11,33 @@ import { getInitialNamespaces } from "remix-i18next";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 
 import i18n from "./i18n";
+import { BreakPointProvider } from "./context/breakPoint";
 
 function Client() {
   const defaultOptions: DefaultOptions = {
     watchQuery: {
-      fetchPolicy: 'no-cache',
-      errorPolicy: 'ignore',
+      fetchPolicy: "no-cache",
+      errorPolicy: "ignore",
     },
     query: {
-      fetchPolicy: 'no-cache',
-      errorPolicy: 'all',
+      fetchPolicy: "no-cache",
+      errorPolicy: "all",
     },
-  }
+  };
 
   const client = new ApolloClient({
     uri: window?.__ENV__?.HTTP_ENDPOINT ?? "http://127.0.0.1:4000/graphql",
     cache: new InMemoryCache().restore(window.__APOLLO_STATE__),
-    defaultOptions
+    defaultOptions,
   });
 
   return (
     <StrictMode>
       <I18nextProvider i18n={i18next}>
         <ApolloProvider client={client}>
-          <RemixBrowser />
+          <BreakPointProvider>
+            <RemixBrowser />
+          </BreakPointProvider>
         </ApolloProvider>
       </I18nextProvider>
     </StrictMode>
@@ -48,23 +51,17 @@ function hydrate() {
 }
 
 i18next
-  .use(initReactI18next) // Tell i18next to use the react-i18next plugin
-  .use(LanguageDetector) // Setup a client-side language detector
-  .use(Backend) // Setup your backend
+  .use(initReactI18next)
+  .use(LanguageDetector)
+  .use(Backend)
   .init({
-    ...i18n, // spread the configuration
-    // This function detects the namespaces your routes rendered while SSR use
+    ...i18n,
     ns: getInitialNamespaces(),
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",
     },
     detection: {
-      // Here only enable htmlTag detection, we'll detect the language only
-      // server-side with remix-i18next, by using the `<html lang>` attribute
-      // we can communicate to the client the language detected server-side
       order: ["htmlTag"],
-      // Because we only use htmlTag, there's no reason to cache the language
-      // on the browser, so we disable it
       caches: [],
     },
   })
@@ -72,8 +69,6 @@ i18next
     if (window.requestIdleCallback) {
       window.requestIdleCallback(hydrate);
     } else {
-      // Safari doesn't support requestIdleCallback
-      // https://caniuse.com/requestidlecallback
       window.setTimeout(hydrate, 1);
     }
   });

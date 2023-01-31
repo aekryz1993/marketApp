@@ -28,6 +28,7 @@
     "i18next-fs-backend": "^1.1.5",
     "i18next-http-backend": "^1.4.4",
     "isbot": "^3.6.5",
+    "ol": "^7.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^11.18.6",

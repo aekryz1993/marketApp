@@ -1,3 +1,5 @@
+import type { TTag } from "~/types/endpoints/product";
+
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { useRef } from "react";
@@ -15,23 +17,29 @@ import {
 } from "../utilities/input/styled";
 import { Box, Container } from "../utilities";
 import { SearchedItems } from "./searched-items";
-import { useSearchTags } from "~/hooks/products/useSearchTags";
 import { Dropdown } from "../utilities/dropdown";
 import { Loader } from "../loader";
+import { useFetch } from "~/hooks/products/useFetch";
+import { TAGS } from "~/endpoints/query/tags";
+import { useSearch } from "~/hooks/products/useSearch";
 
 export const SearchBar = () => {
   const searchInputRef = useRef<HTMLInputElement | null>(null);
 
+
+  const { fetchQuery, loading, data } = useFetch<TTag>({
+    name: "tags",
+    query: TAGS,
+  });
+
   const {
     debouncedCallback,
     emptySearch,
-    data,
-    loading,
     isOpened,
     setIsOpened,
     handleClose,
     setEmptySearch,
-  } = useSearchTags();
+  } = useSearch<TTag>({ fetchQuery });
 
   return (
     <>
@@ -67,7 +75,7 @@ export const SearchBar = () => {
             <Loader dimensions={loaderClasses} />
           ) : (
             <SearchedItems
-              items={emptySearch ? [] : data?.tags.tags}
+              items={emptySearch ? [] : data?.tags}
               setIsOpened={setIsOpened}
               searchInputRef={searchInputRef}
               setEmptySearch={setEmptySearch}

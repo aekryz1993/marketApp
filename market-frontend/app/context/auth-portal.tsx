@@ -34,7 +34,7 @@ export const AuthPortalProvider = ({
 export const useAuthPortal = () => {
   const context = useContext(Context);
   if (context === undefined)
-    throw new Error("useAuthPortal must be used within AuthPortalProvider");
+    throw new Error("useAuthPortal must be used within the AuthPortalProvider");
 
   return context;
 };

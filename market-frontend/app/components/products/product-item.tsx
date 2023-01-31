@@ -26,15 +26,14 @@ export const ProductItem = ({
       <figcaption className={figureCaptionClasses}>
         <Box>
           <p className={productPriceClasses}>
-            {product.currentPrice.currency}
-            {product.currentPrice.amount}
+            {product.currentPrice[0].formattedAmount}
           </p>
         </Box>
         <Box>
           <p className={productTitleClasses}>{product.title}</p>
         </Box>
         <Box>
-          <p className={productLocationClasses}>{product.location}</p>
+          <p className={productLocationClasses}>{product.location?.name}</p>
         </Box>
       </figcaption>
     </Card>

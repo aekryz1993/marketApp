@@ -95,7 +95,7 @@ function ThemeProvider({
 function useTheme() {
   const context = useContext(ThemeContext);
   if (context === undefined) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+    throw new Error("useTheme must be used within the ThemeProvider");
   }
   return context;
 }

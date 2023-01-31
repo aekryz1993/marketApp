@@ -1,25 +1,33 @@
-// import fs from "fs/promises";
-// import fsSync from "fs";
 import { faker } from "@faker-js/faker";
 import fetch from "cross-fetch";
+import fx from "money";
+import currencyJs from "currency.js";
 
 import { cloudinary } from "../../services";
 
+fx.rates = { EUR: 0.92, USD: 1, DZD: 136 };
+
 const conditions = ["New", "Like_New", "Good", "Fair"];
 
+const currencyFormat = {
+  DZD: "DA",
+  EUR: "€",
+  USD: "$",
+};
+
 const categories = [
-  // { id: "vehicles", label: "Vehicles" },
-  // { id: "propertyrentals", label: "Property_Rentals" },
-  // { id: "apparel", label: "Apparel" },
-  // { id: "electronics", label: "Electronics" },
-  // { id: "entertainment", label: "Entertainment" },
-  // { id: "family", label: "Family" },
-  // { id: "garden", label: "Garden_AND_Outdoor" },
-  // { id: "hobbies", label: "Hobbies" },
-  // { id: "home", label: "Home_Goods" },
-  // { id: "home-improvements", label: "Home_Improvement_Supplies" },
-  // { id: "propertyforsale", label: "Home_Sales" },
-  // { id: "instruments", label: "Musical_Instruments" },
+  { id: "vehicles", label: "Vehicles" },
+  { id: "propertyrentals", label: "Property_Rentals" },
+  { id: "apparel", label: "Apparel" },
+  { id: "electronics", label: "Electronics" },
+  { id: "entertainment", label: "Entertainment" },
+  { id: "family", label: "Family" },
+  { id: "garden", label: "Garden_AND_Outdoor" },
+  { id: "hobbies", label: "Hobbies" },
+  { id: "home", label: "Home_Goods" },
+  { id: "home-improvements", label: "Home_Improvement_Supplies" },
+  { id: "propertyforsale", label: "Home_Sales" },
+  { id: "instruments", label: "Musical_Instruments" },
   { id: "office-supplies", label: "Office_Supplies" },
   { id: "pets", label: "Pet_Supplies" },
   { id: "sports", label: "Sporting_Goods" },
@@ -32,6 +40,13 @@ const generateDates = () => {
 
   return { updatedAt, createdAt };
 };
+
+const convertPrice = (amount) => currencyJs(amount).value;
+
+const convertPriceFormat = ({ amount, currency }) =>
+  currencyJs(amount, {
+    pattern: `${currencyFormat[currency]}#`,
+  }).format();
 
 async function addProductsToDB(product, userId, prisma) {
   try {
@@ -52,12 +67,50 @@ async function addProductsToDB(product, userId, prisma) {
       imagesId.push({ id: createdImage.id });
     }
 
+    const amountEuro = fx(product.price).from(product.currency).to("EUR");
+    const amountUsd = fx(product.price).from(product.currency).to("USD");
+
+    const currentPrice = {
+      createMany: {
+        data: [
+          {
+            amount: product.price,
+            formattedAmount: convertPriceFormat({
+              amount: product.price,
+              currency: product.currency,
+            }),
+            currency: product.currency,
+          },
+          {
+            amount: convertPrice(amountEuro),
+            formattedAmount: convertPriceFormat({
+              amount: amountEuro,
+              currency: "EUR",
+            }),
+            currency: "EUR",
+          },
+          {
+            amount: convertPrice(amountUsd),
+            formattedAmount: convertPriceFormat({
+              amount: amountUsd,
+              currency: "USD",
+            }),
+            currency: "USD",
+          },
+        ],
+      },
+    };
+
     await prisma.product.create({
       data: {
         title: product.title,
         description: product.description,
         category: product.category,
-        location: product.location,
+        location: {
+          connect: {
+            id: product.locationId,
+          },
+        },
         condition: product.condition,
         createdAt: product.createdAt,
         updatedAt: product.updatedAt,
@@ -69,12 +122,7 @@ async function addProductsToDB(product, userId, prisma) {
         images: {
           connect: imagesId,
         },
-        currentPrice: {
-          create: {
-            amount: product.price,
-            currency: product.currency,
-          },
-        },
+        currentPrice,
         tags: {
           createMany: {
             data: tags(product.tags),
@@ -110,10 +158,13 @@ async function createProducts(users, prisma) {
           const pagePhotos = await photosResponse.json();
 
           const imagesPromise = pagePhotos.photos.map(async (photo) => {
-            const squareImage = await cloudinary.v2.uploader.upload(
-              photo.src.large2x,
-              { height: 261, width: 261, crop: "scale" }
-            ).catch(error => console.error(error));
+            const squareImage = await cloudinary.v2.uploader
+              .upload(photo.src.large2x, {
+                height: 261,
+                width: 261,
+                crop: "scale",
+              })
+              .catch((error) => console.error(error));
             return {
               alt: photo.alt,
               src: { ...photo.src, square: squareImage.url },
@@ -126,7 +177,7 @@ async function createProducts(users, prisma) {
             images,
             category: category.label,
             description: faker.commerce.productDescription(),
-            location: faker.address.city(),
+            locationId: user.location.id,
             price: parseFloat(faker.commerce.price()),
             currency: "DZD",
             userId: user.id,
@@ -143,40 +194,6 @@ async function createProducts(users, prisma) {
         }
       });
     });
-
-    // const dir = "prisma/seed/data";
-    // if (!fsSync.existsSync(dir)) {
-    //   fsSync.mkdirSync(dir);
-    // }
-    // const files = await fs.readdir(dir);
-
-    // files?.forEach(async (file) => {
-    //   const productsData = await fs.readFile(`${dir}/${file}`);
-    //   const parsedProductsData = JSON.parse(productsData);
-    //   const take = Math.ceil(parsedProductsData.length / users.length);
-    //   users.forEach(async (user, index) => {
-    //     const productsByUser = parsedProductsData
-    //       .slice(index * take)
-    //       .slice(0, take);
-
-    //     const products = productsByUser.map(({ images, category }) => ({
-    //       title: faker.commerce.productName(),
-    //       images,
-    //       category,
-    //       description: faker.commerce.productDescription(),
-    //       location: faker.address.city(),
-    //       price: parseFloat(faker.commerce.price()),
-    //       currency: "DZD",
-    //       userId: user.id,
-    //       condition:
-    //         conditions[faker.finance.amount(0, conditions.length - 1, 0)],
-    //       tags: [...Array(4)].map(() => faker.word.adjective()),
-    //     }));
-    //     for (let product of products) {
-    //       await addProductsToDB(product, user.id, prisma);
-    //     }
-    //   });
-    // });
   } catch (error) {
     console.error(error);
   }

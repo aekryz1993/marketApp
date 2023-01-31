@@ -8,42 +8,14 @@ export const product = `
     condition: Condition
     category: Category
     brand: String
-    location: String
+    location: Location
     sold: Boolean!
     stock: Int!
     ownerId: ID!
-    currentPrice: Price
-    previousPrice: Price
+    currentPrice: [Price]
+    previousPrice: [Price]
     createdAt: Date!
     updatedAt: Date!
-  }
-
-  type Price {
-    id: ID!
-    amount: Float!
-    currency: Currency!
-    productOfCurrentPriceId: String
-    productOfPreviousPriceId: String
-  }
-
-  type Image {
-    id: ID!
-    alt: String
-    src: ImageSrc!
-    productId: ID!
-  }
-
-  type ImageSrc {
-    id: ID!
-    original: String!
-    square: String
-    large2x: String
-    large: String
-    medium: String
-    small: String
-    portrait: String
-    landscape: String
-    tiny: String
   }
 
   type ProductsResponse {
@@ -89,6 +61,6 @@ export const product = `
     priceMax: Float
     category: Category
     condition: Condition
-    location: String
+    locationId: String
   }
 `;

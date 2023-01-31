@@ -25,8 +25,8 @@ import {
 } from "~/utils/helpers";
 import { SidebarProvider } from "~/context/sidebar";
 import { Loader } from "~/components/loader";
-import { useResizeW } from "~/hooks/useResizeW";
 import { Sidebar } from "~/components/sidebar";
+import { useBreakPointsContext } from "./context/breakPoint";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -34,7 +34,7 @@ export function links() {
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "MarketApp",
   viewport: "width=device-width,initial-scale=1",
 });
 
@@ -170,17 +170,17 @@ export let handle = {
 
 export default function App() {
   const { theme } = useLoaderData<TRootLoaderData>();
-  const sizeW = useResizeW();
+  const breakPoint = useBreakPointsContext();
 
   return (
     <ThemeProvider specifiedTheme={theme}>
       <SidebarProvider>
         <Document>
-          {!sizeW ? (
+          {!breakPoint ? (
             <Loader dimensions="w-28 h-28" />
           ) : (
             <>
-              <Sidebar sizeW={sizeW} />
+              <Sidebar sizeW={breakPoint.windowWidth} />
               <Outlet />
             </>
           )}

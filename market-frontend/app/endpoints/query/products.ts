@@ -28,40 +28,37 @@ export const PRODUCTS = gql`
       products {
         id
         title
-        createdAt
-        updatedAt
-        currentPrice {
-          id
-          currency
-          amount
-        }
-        previousPrice {
-          id
-          currency
-          amount
-        }
         images {
           id
           alt
           src {
             id
-            original
             square
-            large2x
-            large
-            medium
-            small
-            portrait
-            landscape
-            tiny
           }
         }
-        location
+        location {
+          id
+          name
+        }
+        currentPrice {
+          id
+          amount
+          currency
+          formattedAmount
+        }
+        previousPrice {
+          id
+          amount
+          currency
+          formattedAmount
+        }
+        updatedAt
+        createdAt
       }
-      totalItems
-      totalPages
       currentPage
       statusCode
+      totalItems
+      totalPages
     }
   }
 `;

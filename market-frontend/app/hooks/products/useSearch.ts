@@ -1,12 +1,16 @@
 import { useCallback, useState } from "react";
 
-import { useFetchTags } from "./useFetchTags";
+import type { LazyQueryExecFunction, OperationVariables } from "@apollo/client";
+
 import { useDebounce } from "../useDebounce";
 
-export const useSearchTags = () => {
+export const useSearch = <TypeQuery>({fetchQuery}: {fetchQuery: LazyQueryExecFunction<{
+  [x: string]: {
+      [x: string]: TypeQuery[];
+  };
+}, OperationVariables>}) => {
   const [emptySearch, setEmptySearch] = useState(true);
   const [isOpened, setIsOpened] = useState(false);
-  const { fetchTagsQuery, loading, data } = useFetchTags();
 
   const handleChange = useCallback(
     (currentTarget: EventTarget & HTMLInputElement) => {
@@ -17,14 +21,14 @@ export const useSearchTags = () => {
       }
       setEmptySearch(false);
       setIsOpened(true);
-      fetchTagsQuery({
+      fetchQuery({
         variables: {
           pagination: { skip: 0, take: 5 },
           search: currentTarget.value,
         },
       });
     },
-    [fetchTagsQuery]
+    [fetchQuery]
   );
 
   const debouncedCallback = useDebounce({ callback: handleChange, delay: 800 });
@@ -39,8 +43,6 @@ export const useSearchTags = () => {
     debouncedCallback,
     setEmptySearch,
     emptySearch,
-    data,
-    loading,
     isOpened,
   };
 };

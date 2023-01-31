@@ -7,21 +7,20 @@ import {
   productsContainerClasses,
 } from "./styles";
 import { useFetchProductsOnScroll } from "~/hooks/products/useFetchProductsOnScroll";
-import { useBreakPoints } from "~/hooks/useBreakpoints";
 import { cardStyle } from "../utilities/card/styled";
 import { Loader } from "../loader";
+import { useBreakPointsContext } from "~/context/breakPoint";
 
 export const MainLayout = () => {
   const {
     productsState: { products, loading },
   } = useProducts();
 
-  const breakPoint = useBreakPoints();
-  // console.log(breakPoint)
+  const breakPointContext = useBreakPointsContext();
 
   const handleScroll = useFetchProductsOnScroll();
 
-  if (!breakPoint) return null
+  if (!breakPointContext) return null
 
   return (
       <Main onScroll={handleScroll}>
@@ -39,7 +38,7 @@ export const MainLayout = () => {
                 <ProductItem
                   key={product.id}
                   product={product}
-                  itemWidth={cardStyle(breakPoint.breakPoint)}
+                  itemWidth={cardStyle(breakPointContext.breakPoint)}
                 />
               ))}
             </Container>

@@ -6,7 +6,7 @@ export const useBreakPoints = () => {
   const windowWidth = useResizeW();
 
   const breakPoint = useMemo(() => {
-    if (!windowWidth) return 
+    if (!windowWidth) return null
     if (windowWidth <= SizeQuery.xs) return { breakPoint: "xs", windowWidth };
     if (windowWidth <= SizeQuery.sm) return { breakPoint: "sm", windowWidth };
     if (windowWidth <= SizeQuery.md) return { breakPoint: "md", windowWidth };

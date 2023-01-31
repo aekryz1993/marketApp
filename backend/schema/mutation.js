@@ -6,5 +6,6 @@ export const mutation = `
     signup(username: String!, password: String!): AuthResponse
     logout: LogoutResponse
     createProduct(args: InputMutateProduct): CreateProductResponse
+    updateUser(args: InputUpdateUser): MutationUserResponse
   }
 `;

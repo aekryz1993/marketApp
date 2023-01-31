@@ -1,3 +1,11 @@
+const filteredPriceAmount = (_price) =>
+  _price.currentPrice.find((item) => (item.currency = "DZD")).amount;
+
+const priceSort = {
+  asc: (a, b) => filteredPriceAmount(a) - filteredPriceAmount(b),
+  desc: (a, b) => filteredPriceAmount(b) - filteredPriceAmount(a),
+};
+
 async function products(
   _,
   { pagination, search, currency, orderBy, filterBy },
@@ -12,7 +20,11 @@ async function products(
   const where = {
     owner,
     category: filterBy?.category,
-    location: filterBy?.location,
+    location: {
+      is: {
+        id: filterBy?.locationId,
+      },
+    },
     condition: filterBy?.condition,
     OR: [
       {
@@ -39,7 +51,7 @@ async function products(
       },
     ],
     currentPrice: {
-      is: {
+      some: {
         currency,
         amount: {
           gte: filterBy?.priceMin,
@@ -54,11 +66,7 @@ async function products(
     take: pagination?.take,
     where,
     orderBy: orderBy?.price
-      ? {
-          currentPrice: {
-            amount: orderBy?.price,
-          },
-        }
+      ? undefined
       : {
           createdAt: orderBy?.createdAt ?? "desc",
         },
@@ -68,10 +76,14 @@ async function products(
     },
   });
 
+  const sortedProducts = orderBy?.price
+    ? products.sort(priceSort[orderBy?.price])
+    : products;
+
   const totalItems = await prisma.product.count({ where });
 
   return {
-    products,
+    products: sortedProducts,
     totalItems,
     totalPages: Math.ceil(totalItems / pagination?.take),
     currentPage: Math.ceil((pagination?.skip + 1) / pagination?.take),

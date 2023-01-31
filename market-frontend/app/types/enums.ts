@@ -25,8 +25,8 @@ export enum Category {
 
 export enum Currency {
   DZD = "DZD",
-  Dollar = "Dollar",
-  Euro = "Euro",
+  EUR = "EUR",
+  USD = "Euro",
 }
 
 export enum Condition {

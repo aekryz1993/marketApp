@@ -94,6 +94,7 @@ module.exports = {
       colors: {
         white: "#FFFFFF",
         transparent: "transparent",
+        white_transparent: "rgba(255, 255, 255, 0.5)",
         alert: {
           danger_lt: "#ff4444",
           warning_lt: "#ffbb33",

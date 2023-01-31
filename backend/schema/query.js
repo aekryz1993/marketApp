@@ -12,5 +12,10 @@ export const query = `
       pagination: InputPagination
       search: String!
     ): TagsResponse
+
+    locations(
+      pagination: InputPagination
+      search: String!
+    ): LocationsResponse
   }
 `;

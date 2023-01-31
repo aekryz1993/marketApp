@@ -8,7 +8,7 @@ export const useProducts = () => {
   const context = useContext(ProductsContext);
 
   if (context === undefined)
-    throw new Error("useProducts must be used within a ProductsProvider");
+    throw new Error("useProducts must be used within the ProductsProvider");
 
   return context;
 };

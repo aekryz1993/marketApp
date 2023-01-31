@@ -5,11 +5,11 @@ import { useCallback, useMemo } from "react";
 import { useLoaderData, useLocation } from "@remix-run/react";
 
 import { useHandleScroll } from "~/hooks/useHandleScroll";
-import { TAKE } from "~/endpoints/query/products";
+import { PRODUCTS, TAKE } from "~/endpoints/query/products";
 import { useProducts } from "~/context/products";
-import { useFetchProducts } from "./useFetchProducts";
 import { useThrottle } from "./../useThrottle";
 import { OrderBy } from "~/types/enums";
+import { useFetch } from "./useFetch";
 
 export const useFetchProductsOnScroll = () => {
   const { totalPages, categoryName } = useLoaderData<TProductsLoaderData>();
@@ -20,14 +20,17 @@ export const useFetchProductsOnScroll = () => {
 
   const location = useLocation();
 
-  const { fetchProductsQuery, loading } = useFetchProducts();
+  const { fetchQuery, loading } = useFetch<TProduct>({
+    name: "products",
+    query: PRODUCTS,
+  });
 
   const { handleReachEndScroll } = useHandleScroll();
 
   const handleCompleted = useCallback(
     (response: {
-      products: {
-        products: TProduct;
+      [key in string]: {
+        [key in string]: TProduct[];
       };
     }) => {
       const data = response.products;
@@ -51,16 +54,20 @@ export const useFetchProductsOnScroll = () => {
   );
 
   const handleFetchProducts = useCallback(() => {
-    fetchProductsQuery({
+    fetchQuery({
       variables,
       fetchPolicy: "no-cache",
       onCompleted: handleCompleted,
     });
-  }, [fetchProductsQuery, handleCompleted, variables]);
+  }, [fetchQuery, handleCompleted, variables]);
 
-  const throttledFetchProducts = useThrottle(10, {
-    trailing: false,
-  }, handleFetchProducts);
+  const throttledFetchProducts = useThrottle(
+    10,
+    {
+      trailing: false,
+    },
+    handleFetchProducts
+  );
 
   const fetchCondition = currentPage < totalPages && !loading;
 

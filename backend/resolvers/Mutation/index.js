@@ -1,13 +1,6 @@
-import {
-  createProduct
-} from "./product";
-import {
-  login,
-  refreshToken,
-  checkToken,
-  signup,
-  logout,
-} from "./auth";
+import { createProduct } from "./product";
+import { login, refreshToken, checkToken, signup, logout } from "./auth";
+import { updateUser } from "./user";
 
 const Mutation = {
   createProduct,
@@ -16,6 +9,7 @@ const Mutation = {
   checkToken,
   signup,
   logout,
+  updateUser,
 };
 
 export default Mutation;

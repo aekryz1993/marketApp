@@ -1,7 +1,20 @@
 export const image = `
   type Image {
     id: ID!
-    url: String!
-    productId: ID!
+    alt: String
+    src: ImageSrc!
+  }
+
+  type ImageSrc {
+    id: ID!
+    original: String!
+    square: String
+    large2x: String
+    large: String
+    medium: String
+    small: String
+    portrait: String
+    landscape: String
+    tiny: String
   }
 `;

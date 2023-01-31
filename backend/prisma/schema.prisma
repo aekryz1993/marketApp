@@ -16,11 +16,14 @@ model User {
   username         String    @unique
   hashedPassword   String
   profilePicture   String?
+  currency         Currency  @default(DZD)
   sellingProducts  Product[] @relation(name: "UserSellingProducts")
   buyingProducts   Product[] @relation(fields: [buyingProductIDs], references: [id])
   buyingProductIDs String[]  @db.ObjectId
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
+  location         Location? @relation(fields: [locationId], references: [id])
+  locationId       String?   @db.ObjectId
 }
 
 model Product {
@@ -35,11 +38,10 @@ model Product {
   stock         Int        @default(1)
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
-  location      String?
-  // location      Location?  @relation(fields: [locationId], references: [id])
-  // locationId    String?    @db.ObjectId
-  currentPrice  Price?     @relation(name: "CurrentProductPrice")
-  previousPrice Price?     @relation(name: "PrevioustProductPrice")
+  location      Location?  @relation(fields: [locationId], references: [id])
+  locationId    String?    @db.ObjectId
+  currentPrice  Price[]    @relation(name: "CurrentProductPrice")
+  previousPrice Price[]    @relation(name: "PrevioustProductPrice")
   tags          Tag[]
   owner         User?      @relation("UserSellingProducts", fields: [ownerId], references: [id])
   ownerId       String?    @db.ObjectId
@@ -71,16 +73,19 @@ model ImageSrc {
 }
 
 model Location {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  // latitude  Float
-  // longitude Float
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  latitude    Float
+  longitude   Float
+  countryCode String
+  products    Product[]
+  users       User[]
 }
 
 model Price {
   id                       String   @id @default(auto()) @map("_id") @db.ObjectId
   amount                   Float
-  // formattedAmount          String
+  formattedAmount          String
   currency                 Currency
   productOfCurrentPrice    Product? @relation(name: "CurrentProductPrice", fields: [productOfCurrentPriceId], references: [id])
   productOfCurrentPriceId  String?  @unique @db.ObjectId
@@ -116,8 +121,8 @@ enum Category {
 
 enum Currency {
   DZD
-  Dollar
-  Euro
+  EUR
+  USD
 }
 
 enum Condition {

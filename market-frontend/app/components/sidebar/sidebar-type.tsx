@@ -8,6 +8,7 @@ import { FixedSidebar } from "./fixed-sidebar";
 import { topSectionClasses } from "./styled";
 import { ToggledSidebar } from "./toggled-sidebar";
 import { CategoriesBar } from "../categories-bar";
+import { Filter } from "../filter-products";
 
 const componentMap = {
   FIX: FixedSidebar,
@@ -23,6 +24,7 @@ export const SidebarType = memo(({ type }: { type: SidebarTypes }) => {
         <SearchBar />
         <CreateListing />
       </Container>
+      <Filter />
       <CategoriesBar />
     </Component>
   );

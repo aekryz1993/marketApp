@@ -9,6 +9,8 @@ import { user } from "./user";
 import { auth } from "./auth";
 import { subscription } from "./subscription";
 import { tag } from "./tag";
+import { price } from "./price";
+import { location } from "./location";
 
 const typeDefs = gql`
   scalar Date
@@ -29,6 +31,10 @@ const typeDefs = gql`
 
   ${product}
 
+  ${price}
+
+  ${location}
+  
   ${tag}
 `;
 

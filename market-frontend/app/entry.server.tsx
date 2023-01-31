@@ -21,6 +21,7 @@ import { getDataFromTree } from "@apollo/client/react/ssr";
 
 import i18next from "./i18next.server";
 import i18n from "./i18n";
+import { BreakPointProvider } from "./context/breakPoint";
 
 const ABORT_DELAY = 5000;
 
@@ -32,14 +33,14 @@ export default function handleRequest(
 ) {
   const defaultOptions: DefaultOptions = {
     watchQuery: {
-      fetchPolicy: 'no-cache',
-      errorPolicy: 'ignore',
+      fetchPolicy: "no-cache",
+      errorPolicy: "ignore",
     },
     query: {
-      fetchPolicy: 'no-cache',
-      errorPolicy: 'all',
+      fetchPolicy: "no-cache",
+      errorPolicy: "all",
     },
-  }
+  };
 
   const client = new ApolloClient({
     ssrMode: true,
@@ -85,7 +86,9 @@ async function handleBotRequest(
   const App = () => (
     <I18nextProvider i18n={instance}>
       <ApolloProvider client={client}>
-        <RemixServer context={remixContext} url={request.url} />
+        <BreakPointProvider>
+          <RemixServer context={remixContext} url={request.url} />
+        </BreakPointProvider>
       </ApolloProvider>
     </I18nextProvider>
   );
@@ -164,26 +167,26 @@ async function handleBrowserRequest(
 ) {
   let instance = createInstance();
 
-  // Then we could detect locale from the request
   let lng = await i18next.getLocale(request);
-  // And here we detect what namespaces the routes about to render want to use
   let ns = i18next.getRouteNamespaces(remixContext);
 
   const App = () => (
     <I18nextProvider i18n={instance}>
       <ApolloProvider client={client}>
-        <RemixServer context={remixContext} url={request.url} />
+        <BreakPointProvider>
+          <RemixServer context={remixContext} url={request.url} />
+        </BreakPointProvider>
       </ApolloProvider>
     </I18nextProvider>
   );
 
   await instance
-    .use(initReactI18next) // Tell our instance to use react-i18next
-    .use(Backend) // Setup our backend
+    .use(initReactI18next)
+    .use(Backend)
     .init({
-      ...i18n, // spread the configuration
-      lng, // The locale we detected above
-      ns, // The namespaces the routes about to render wants to use
+      ...i18n,
+      lng,
+      ns,
       backend: {
         loadPath: resolve("./public/locales/{{lng}}/{{ns}}.json"),
       },

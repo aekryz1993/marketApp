@@ -12,6 +12,15 @@ export const LOGIN = gql`
       user {
         id
         username
+        currency
+        location {
+          id
+          name
+          longitude
+          latitude
+          countryCode
+        }
+        updatedAt
       }
       token
       expiresIn
@@ -26,6 +35,15 @@ export const SIGNUP = gql`
       user {
         id
         username
+        currency
+        location {
+          id
+          name
+          longitude
+          latitude
+          countryCode
+        }
+        updatedAt
       }
       token
       expiresIn
@@ -40,6 +58,15 @@ export const REFRESH_TOKEN = gql`
       user {
         id
         username
+        currency
+        location {
+          id
+          name
+          longitude
+          latitude
+          countryCode
+        }
+        updatedAt
       }
       token
       expiresIn
@@ -54,6 +81,15 @@ export const CHECK_TOKEN = gql`
       user {
         id
         username
+        currency
+        location {
+          id
+          name
+          longitude
+          latitude
+          countryCode
+        }
+        updatedAt
       }
       token
       expiresIn

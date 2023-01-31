@@ -6,8 +6,8 @@ export const Head = ({ title }: { title: string }) => {
 
   return (
     <head>
-      <Links />
       <Meta />
+      <Links />
       <title>{title}</title>
       <SsrTheme ssrTheme={Boolean(theme)} />
     </head>
