@@ -16,6 +16,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
     const url = new URL(request.url);
     const search = url.searchParams.get("search");
+    const locationId = url.searchParams.get("locationId");
 
     if (search) return redirect(`/?search=${search}`);
 
@@ -33,7 +34,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       {
         pagination: { skip: 0, take: TAKE },
         orderBy: { createdAt: OrderBy.desc },
-        filterBy: { category: categoryName },
+        filterBy: {
+          category: categoryName,
+          locationId: locationId ? locationId : undefined,
+        },
       },
       token
     );

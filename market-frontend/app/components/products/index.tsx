@@ -14,7 +14,7 @@ export const ProductsLayout = () => {
   return (
     <>
       <ProductsProvider
-        key={params?.category ?? location.search.split("=")[1] ?? ""}
+        key={location.search.split("=")[1] ?? params?.category ?? ""}
         products={data.products}
       >
         <MainLayout />

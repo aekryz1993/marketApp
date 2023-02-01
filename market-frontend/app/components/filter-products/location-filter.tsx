@@ -1,7 +1,5 @@
-import type { TRootLoaderData } from "~/types/data";
-
 import { useCallback, useState } from "react";
-import { useLoaderData } from "@remix-run/react";
+import { useLocation } from "@remix-run/react";
 
 import { Box, Container } from "../utilities";
 import {
@@ -14,15 +12,26 @@ import {
 import { Portal } from "../portal";
 import { portalContainerClasses, portalRootClasses } from "../auth/styled";
 import { LocationForm } from "./location-form";
+import { getSearchStringParam } from "~/utils/helpers";
 
 export const LocationFilter = () => {
-  const { authInfo } = useLoaderData<TRootLoaderData>();
+  const location = useLocation();
 
-  const [isPortalOpen, setIsPortalOpen] = useState(true);
+  const [isPortalOpen, setIsPortalOpen] = useState(false);
 
   const handlePortalClose = useCallback(() => {
     setIsPortalOpen(false);
   }, []);
+
+  const cityLocationName = getSearchStringParam(
+    "locationName",
+    location.search
+  );
+
+  const cityLocationCountry = getSearchStringParam(
+    "locationCountry",
+    location.search
+  );
 
   return (
     <>
@@ -33,7 +42,8 @@ export const LocationFilter = () => {
         }}
       >
         <p className={locationTextClasses}>
-          {authInfo?.token ? authInfo.user?.location.name : "All"}
+          {cityLocationName.length > 0 ? cityLocationName : "All locations"}
+          {cityLocationCountry.length > 0 ? ', '+cityLocationCountry : ""}
         </p>
       </Box>
       {isPortalOpen && (
@@ -47,7 +57,7 @@ export const LocationFilter = () => {
             <h1 className={locationPortalHeaderTextClasses}>Change location</h1>
           </Container>
           <Container classes={locationPortalMainClasses}>
-            <LocationForm />
+            <LocationForm handleClose={handlePortalClose} />
           </Container>
         </Portal>
       )}

@@ -13,12 +13,16 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const url = new URL(request.url);
   const search = url.searchParams.get("search");
+  const locationId = url.searchParams.get("locationId");
 
   const response = await fetchProducts(
     {
       pagination: { skip: 0, take: TAKE },
       orderBy: { createdAt: OrderBy.desc },
       search: search ?? undefined,
+      filterBy: {
+        locationId: locationId ? locationId : undefined,
+      },
     },
     token
   );

@@ -76,6 +76,26 @@ const categories: { name: Category; label: string; pathname: string }[] = [
   { name: Category.Toys_AND_Games, label: "Toys & Games", pathname: "toys" },
 ];
 
+function getSearchStringParam(name: string, locationSearch: string) {
+  return decodeURI(
+    locationSearch
+      .slice(1)
+      .split("&")
+      .find((item) => item.startsWith(name))
+      ?.split("=")[1] ?? ""
+  ).replace(/\+/g, " ");
+}
+
+function getSearchNumberParam(name: string, locationSearch: string) {
+  return parseFloat(
+    locationSearch
+      .slice(1)
+      .split("&")
+      .find((item) => item.startsWith(name))
+      ?.split("=")[1] ?? "0"
+  );
+}
+
 export {
   languages,
   setContext,
@@ -83,4 +103,6 @@ export {
   validateUsername,
   validatePassword,
   categories,
+  getSearchStringParam,
+  getSearchNumberParam,
 };

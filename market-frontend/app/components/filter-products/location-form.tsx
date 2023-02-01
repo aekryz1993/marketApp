@@ -1,58 +1,68 @@
-import type { TLocation } from "~/types/endpoints/product";
-
-import { Form, useLocation } from "@remix-run/react";
-import { useRef } from "react";
-import { MapPinIcon } from "@heroicons/react/24/solid";
+import { Form, useLocation, useTransition } from "@remix-run/react";
+import { useEffect, useRef, useState } from "react";
 
 import {
+  locationApplyButtonClasses,
+  locationApplyButtonContainerClasses,
   locationFormContainer,
-  locationSearchIconInputClasses,
-  locationSearchNameBoxClasses,
-  locationSearchNameInputClasses,
 } from "./styled";
-import { InputWithRef } from "../utilities/input";
-import { Box } from "../utilities";
 import { OLMap } from "./ol-map";
-import { useFetch } from "~/hooks/products/useFetch";
-import { LOCATIONS } from "~/endpoints/query/locations";
-import { useSearch } from "~/hooks/products/useSearch";
+import { LocationSearch } from "./location-search";
+import { Box } from "../utilities";
+import { getSearchNumberParam, getSearchStringParam } from "~/utils/helpers";
 
-export const LocationForm = () => {
+export const LocationForm = ({ handleClose }: { handleClose: () => void }) => {
   const location = useLocation();
 
-  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const transition = useTransition();
 
-  const { fetchQuery, loading, data } = useFetch<TLocation>({
-    name: "locations",
-    query: LOCATIONS,
-  });
+  const isSubmittingRef = useRef(false);
 
-  const { debouncedCallback } = useSearch<TLocation>({ fetchQuery });
+  const [city, setCity] = useState<
+    { longitude: number; latitude: number; id: string; countryCode: string; } | undefined
+  >(() => ({
+    id: getSearchStringParam("locationId", location.search),
+    longitude: getSearchNumberParam("locationLong", location.search),
+    latitude: getSearchNumberParam("locationLat", location.search),
+    countryCode: getSearchStringParam("locationCountry", location.search),
+  }));
+
+  if (transition.state === "submitting") {
+    isSubmittingRef.current = true;
+  }
+
+  useEffect(() => {
+    if (transition.state === "idle" && isSubmittingRef.current) {
+      isSubmittingRef.current = false;
+      handleClose();
+    }
+  }, [transition.state, handleClose]);
 
   return (
     <Form
-      method="post"
+      method="get"
       action={location.pathname}
       className={locationFormContainer}
     >
-      <Box classes={locationSearchNameBoxClasses}>
-        <InputWithRef
-          name="search"
-          placeholder="Enter a location name..."
-          classes={locationSearchNameInputClasses}
-          autoComplete="off"
-          ref={searchInputRef}
-          onChange={(event) => {
-            const currentTarget = event.currentTarget;
-            return debouncedCallback(currentTarget);
-          }}
-        />
-        <MapPinIcon className={locationSearchIconInputClasses} />
-      </Box>
-      <OLMap
-        longitude={data?.locations[0].longitude}
-        latitude={data?.locations[0].latitude}
+      <input type="hidden" name="locationId" value={city?.id ?? ""} />
+      <input type="hidden" name="locationLong" value={city?.longitude ?? ""} />
+      <input type="hidden" name="locationLat" value={city?.latitude ?? ""} />
+      <input
+        type="hidden"
+        name="locationCountry"
+        value={city?.countryCode ?? ""}
       />
+      <LocationSearch setCity={setCity} />
+      <OLMap longitude={city?.longitude} latitude={city?.latitude} />
+      <Box classes={locationApplyButtonContainerClasses}>
+        <button type="submit" className={locationApplyButtonClasses}>
+          {transition.state === "submitting" ? (
+            <div className="h-5 w-5 animate-spin rounded-full border border-l-4" />
+          ) : (
+            "Apply"
+          )}
+        </button>
+      </Box>
     </Form>
   );
 };

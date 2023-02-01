@@ -29,6 +29,8 @@ export const OLMap = ({
         const OSM = await importOSM();
         const TileLayer = await importOTileLayer();
 
+        mapRef.current?.firstElementChild?.remove()
+
         new Map({
           layers: [
             new TileLayer({
