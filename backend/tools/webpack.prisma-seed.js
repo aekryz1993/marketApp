@@ -1,5 +1,4 @@
 const path = require("path");
-const { merge } = require("webpack-merge");
 const nodeExternals = require("webpack-node-externals");
 
 const CURRENT_WORKING_DIR = process.cwd();

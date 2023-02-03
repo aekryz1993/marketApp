@@ -36,3 +36,12 @@ export type TProductsLoaderData = Omit<TProductsResponse, "statusCode"> & {
   token?: string;
   categoryName?: Category;
 };
+
+export interface TImageBody {
+  alt: string;
+  originalSrc: string;
+  squareSrc: string;
+}
+
+export type EventTargetExtended = EventTarget &
+  HTMLInputElement & { files: FileList };

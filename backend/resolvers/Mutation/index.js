@@ -1,6 +1,6 @@
-import { createProduct } from "./product";
-import { login, refreshToken, checkToken, signup, logout } from "./auth";
-import { updateUser } from "./user";
+import { createProduct } from "./product.js";
+import { login, refreshToken, checkToken, signup, logout } from "./auth.js";
+import { updateUser } from "./user.js";
 
 const Mutation = {
   createProduct,

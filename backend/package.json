@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack --env development --config ./tools/webpack.dev.js --watch",
     "build": "webpack --env production --config ./tools/webpack.prod.js",
-    "start": "node ./public/main.js",
+    "start": "npm run build && node ./public/main.js",
     "prisma:generate": "npx prisma generate",
     "prisma:seed": "webpack --config ./tools/webpack.prisma-seed.js && npx prisma db seed"
   },
@@ -28,9 +28,13 @@
     "graphql-ws": "^5.11.2",
     "jsonwebtoken": "^9.0.0",
     "money": "^0.2.0",
+    "uninstall": "^0.0.0",
     "ws": "^8.11.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
     "dotenv-webpack": "^8.0.1",
     "nodemon-webpack-plugin": "^4.8.1",

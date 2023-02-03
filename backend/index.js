@@ -17,6 +17,7 @@ export const pubsub = new PubSub();
 
 async function main() {
   const app = express();
+
   const httpServer = createServer(app);
 
   const schema = makeExecutableSchema({
@@ -99,9 +100,9 @@ async function main() {
     )
   );
   console.log(
-    `🚀 Server ready at http://${process.env.HOST || 'localhost'}:${process.env.PORT || 4000}${
-      server.graphqlPath
-    }`
+    `🚀 Server ready at http://${process.env.HOST || "localhost"}:${
+      process.env.PORT || 4000
+    }${server.graphqlPath}`
   );
 }
 

@@ -9,7 +9,7 @@ import {
   encryptPassword,
   getTokenPayload,
   signToken,
-} from "../../utils";
+} from "../../utils.js";
 
 async function login(_, { username, password }, { prisma }) {
   const user = await prisma.user.findUnique({

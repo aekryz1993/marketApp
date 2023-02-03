@@ -6,13 +6,15 @@
   "scripts": {
     "server": "npm run dev --prefix backend",
     "client": "npm run dev --prefix market-frontend",
+    "server:prod": "npm run start --prefix backend",
     "client:prod": "npm run start --prefix market-frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "start": "concurrently \"npm run server\" \"npm run client:prod\""
+    "start": "concurrently \"npm run server:prod\" \"npm run client:prod\""
   },
   "author": "Abdelkader Riazi",
   "license": "ISC",
   "devDependencies": {
+    "@types/uuid": "^9.0.0",
     "concurrently": "^7.6.0"
   }
 }

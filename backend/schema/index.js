@@ -3,7 +3,7 @@ import { gql } from "apollo-server-core/dist/gql";
 import { enums } from "./enum";
 import { image } from "./image";
 import { mutation } from "./mutation";
-import { product } from "./product";
+import { product } from "./product.js";
 import { query } from "./query";
 import { user } from "./user";
 import { auth } from "./auth";
@@ -34,7 +34,7 @@ const typeDefs = gql`
   ${price}
 
   ${location}
-  
+
   ${tag}
 `;
 

@@ -26,25 +26,18 @@ export const product = `
     statusCode: Int!
   }
 
+  type MutateProductResponse {
+    product: Product!
+    message: String!
+    statusCode: Int!
+  }
+
   type CreateProductResponse {
     product: Product
     message: String!
     statusCode: Int!
   }
-
-  input InputMutateProduct {
-    title: String!
-    price: Float
-    description: String
-    category: Category
-    images: [String!]!
-    brand: String
-    location: String
-    stock: Int
-    condition: Condition
-    tags: [String]
-  }
-
+  
   input InputOrderBy {
     price: OrderBy
     createdAt: OrderBy
@@ -62,5 +55,19 @@ export const product = `
     category: Category
     condition: Condition
     locationId: String
+  }
+
+  input InputMutateProduct {
+    title: String!
+    images: [String]
+    brand: String
+    description: String
+    category: Category!
+    condition: Condition
+    sold: Boolean
+    stock: Int
+    location: String
+    price: Float!
+    tags: [String]
   }
 `;

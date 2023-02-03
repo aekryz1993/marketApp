@@ -5,7 +5,7 @@ import { Box } from "../utilities"
 import { createListingBoxClasses, createListingLabelClasses, createListingPlusIconClasses } from "./styled"
 
 export const CreateListing = () => {
-  return <Link to="/new">
+  return <Link to="/create">
     <Box classes={createListingBoxClasses}>
       <PlusIcon className={createListingPlusIconClasses} />
       <span className={createListingLabelClasses}>Create new listing</span>
