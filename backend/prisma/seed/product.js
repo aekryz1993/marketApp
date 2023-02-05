@@ -1,19 +1,20 @@
 import { faker } from "@faker-js/faker";
 import fetch from "cross-fetch";
-import fx from "money";
-import currencyJs from "currency.js";
+// import fx from "money";
+// import currencyJs from "currency.js";
 
 import { cloudinary } from "../../services";
+import { convertPrice, convertPriceFormat, money } from "../../utils";
 
-fx.rates = { EUR: 0.92, USD: 1, DZD: 136 };
+// fx.rates = { EUR: 0.92, USD: 1, DZD: 136 };
 
 const conditions = ["New", "Like_New", "Good", "Fair"];
 
-const currencyFormat = {
-  DZD: "DA",
-  EUR: "€",
-  USD: "$",
-};
+// const currencyFormat = {
+//   DZD: "DA",
+//   EUR: "€",
+//   USD: "$",
+// };
 
 const categories = [
   { id: "vehicles", label: "Vehicles" },
@@ -41,12 +42,12 @@ const generateDates = () => {
   return { updatedAt, createdAt };
 };
 
-const convertPrice = (amount) => currencyJs(amount).value;
+// const convertPrice = (amount) => currencyJs(amount).value;
 
-const convertPriceFormat = ({ amount, currency }) =>
-  currencyJs(amount, {
-    pattern: `${currencyFormat[currency]}#`,
-  }).format();
+// const convertPriceFormat = ({ amount, currency }) =>
+//   currencyJs(amount, {
+//     pattern: `${currencyFormat[currency]}#`,
+//   }).format();
 
 async function addProductsToDB(product, userId, prisma) {
   try {
@@ -67,8 +68,8 @@ async function addProductsToDB(product, userId, prisma) {
       imagesId.push({ id: createdImage.id });
     }
 
-    const amountEuro = fx(product.price).from(product.currency).to("EUR");
-    const amountUsd = fx(product.price).from(product.currency).to("USD");
+    const amountEuro = money(product.price).from(product.currency).to("EUR");
+    const amountUsd = money(product.price).from(product.currency).to("USD");
 
     const currentPrice = {
       createMany: {

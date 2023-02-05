@@ -2,14 +2,10 @@ import type { ActionFunction } from "@remix-run/node";
 import type { EventTargetExtended } from "~/types/data";
 
 import { useEffect, useRef, useState } from "react";
-import {
-  useSubmit,
-  useTransition,
-} from "@remix-run/react";
+import { useSubmit, useTransition } from "@remix-run/react";
 import {
   json,
   unstable_composeUploadHandlers,
-  unstable_createMemoryUploadHandler,
   unstable_parseMultipartFormData,
 } from "@remix-run/node";
 import { v4 as uuid } from "uuid";
@@ -38,9 +34,7 @@ export const action: ActionFunction = async ({ request }) => {
       } catch (error: any) {
         console.error(error.message);
       }
-    },
-
-    unstable_createMemoryUploadHandler()
+    }
   );
   try {
     const formData = await unstable_parseMultipartFormData(
@@ -49,6 +43,8 @@ export const action: ActionFunction = async ({ request }) => {
     );
     const images = formData.getAll("images");
     const formattedImages = images.map((image) => JSON.parse(image as string));
+    console.log(formattedImages);
+
     return json({ data: formattedImages });
   } catch (error) {
     console.log(error);
@@ -56,7 +52,6 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function CreateProduct() {
-
   const [imagesPreview, setImagesPreview] = useState<
     { id: string; src: string; alt: string; file: File }[]
   >([]);
@@ -105,18 +100,14 @@ export default function CreateProduct() {
     }
   }, [transition.state]);
 
+
   return (
     <div>
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="flex flex-wrap items-center gap-2">
         {imagesPreview.length > 0 &&
           imagesPreview.map((img) => (
             <div key={img.id} className="relative">
-              <input
-                className="h-40 w-40"
-                type="image"
-                alt={img.alt}
-                src={img.src}
-              />
+              <img className="h-40 w-40" alt={img.alt} src={img.src} />
               <XMarkIcon
                 className="absolute top-2 right-2 h-8 w-8 cursor-pointer rounded-full bg-zinc-500 p-1 text-slate-50 focus:bg-slate-900"
                 onClick={() => {

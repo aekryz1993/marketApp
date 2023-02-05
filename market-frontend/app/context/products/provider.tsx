@@ -1,11 +1,9 @@
 import type { TContext } from "./types";
 import type { TProduct } from "~/types/endpoints/product";
+import type { TProductsLoaderData } from "~/types/data";
 
-import {
-  createContext,
-  useCallback,
-  useReducer,
-} from "react";
+import { createContext, useCallback, useReducer } from "react";
+import { useLoaderData } from "@remix-run/react";
 
 import { reducer } from "./reducer";
 import { initialProducts } from "./helper";
@@ -14,13 +12,12 @@ export const ProductsContext = createContext<TContext | undefined>(undefined);
 
 export const ProductsProvider = ({
   children,
-  products = [],
 }: {
   children: React.ReactNode;
-  products: TProduct[];
 }) => {
-  const [state, dispatch] = useReducer(reducer, initialProducts(products));
+  const data = useLoaderData<TProductsLoaderData>();
 
+  const [state, dispatch] = useReducer(reducer, initialProducts(data.products));
 
   const fetchProducts = useCallback(
     ({ products }: { products: TProduct[] }) => {
@@ -28,6 +25,10 @@ export const ProductsProvider = ({
     },
     []
   );
+
+  const submitting = useCallback(() => {
+    dispatch({ type: "SUBMITTING" });
+  }, [])
 
   const resetProducts = useCallback(
     ({
@@ -51,6 +52,7 @@ export const ProductsProvider = ({
     productsState: { ...state },
     fetchProducts,
     resetProducts,
+    submitting,
   };
 
   return (

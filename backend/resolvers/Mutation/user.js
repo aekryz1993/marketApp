@@ -1,9 +1,9 @@
 import { ForbiddenError } from "apollo-server-core";
 
-async function updateUser(_, args, { prisma, userId, token }) {
+async function updateUser(_, {body}, { prisma, userId, token }) {
   if (!userId || !token) throw new ForbiddenError("Forbidden access");
 
-  const { locationId, username, password, currency } = args;
+  const { locationId, username, password, currency } = body;
 
   const updateUserQuery = ({ fieldName, value }) =>
     prisma.user.update({

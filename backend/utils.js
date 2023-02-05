@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { ForbiddenError } from "apollo-server-core";
+import money from "money";
+import currencyJs from "currency.js";
 
 const APP_SECRET = new TextEncoder().encode("s3cr3t");
 const expiresIn = () => Date.now() + 24 * 24 * 60 * 60 * 1000;
@@ -62,7 +64,7 @@ const getUserAuth = (req, authToken) => {
       const payload = getTokenPayload(token);
       if (payload?.statusCode === 403)
         throw new ForbiddenError(payload.errorMessage);
-      const { sub, exp} = payload;
+      const { sub, exp } = payload;
 
       if (exp - Date.now() <= 0)
         return {
@@ -81,7 +83,7 @@ const getUserAuth = (req, authToken) => {
     const payload = getTokenPayload(authToken);
     if (payload?.statusCode === 403)
       throw new ForbiddenError(payload.errorMessage);
-    const { sub, exp} = payload;
+    const { sub, exp } = payload;
 
     if (exp - Date.now() <= 0)
       return {
@@ -119,6 +121,55 @@ const checkPassword = (password, hashedPassword) => {
   }
 };
 
+const currencyFormat = {
+  DZD: "DA",
+  EUR: "€",
+  USD: "$",
+};
+
+money.rates = { EUR: 0.92, USD: 1, DZD: 136 };
+
+const convertPrice = (amount) => currencyJs(amount).value;
+
+const convertPriceFormat = ({ amount, currency }) =>
+  currencyJs(amount, {
+    pattern: `${currencyFormat[currency]}#`,
+  }).format();
+
+const buildPriceData =
+  (amountFirst, firstCurrency) =>
+  (amountSec, secCurrency) =>
+  (amountThird, thirdCurrency) => ({
+    createMany: {
+      data: [
+        {
+          amount: amountFirst,
+          formattedAmount: convertPriceFormat({
+            amount: amountFirst,
+            currency: firstCurrency,
+          }),
+          currency: firstCurrency,
+        },
+        {
+          amount: convertPrice(amountSec),
+          formattedAmount: convertPriceFormat({
+            amount: amountSec,
+            currency: secCurrency,
+          }),
+          currency: secCurrency,
+        },
+        {
+          amount: convertPrice(amountThird),
+          formattedAmount: convertPriceFormat({
+            amount: amountThird,
+            currency: thirdCurrency,
+          }),
+          currency: thirdCurrency,
+        },
+      ],
+    },
+  });
+
 export {
   APP_SECRET,
   expiresIn,
@@ -128,4 +179,9 @@ export {
   getUserAuth,
   encryptPassword,
   checkPassword,
+  currencyFormat,
+  money,
+  convertPrice,
+  convertPriceFormat,
+  buildPriceData,
 };

@@ -17,4 +17,10 @@ export const image = `
     landscape: String
     tiny: String
   }
+
+  input inputProductImage {
+    alt: String!
+    original: String!
+    square: String!
+  }
 `;

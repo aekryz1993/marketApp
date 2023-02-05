@@ -20,30 +20,27 @@ export const MainLayout = () => {
 
   const handleScroll = useFetchProductsOnScroll();
 
-  if (!breakPointContext) return null
+  if (!breakPointContext) return null;
 
   return (
-      <Main onScroll={handleScroll}>
-        <Container>
-          <Container className={headerContainerClasses}>
-            <Box>
-              <h1 className={headerTitleClasses}>Today's picks</h1>
-            </Box>
-          </Container>
-          {loading ? (
-            <Loader dimensions="w-20 h-20" />
-          ) : (
-            <Container classes={productsContainerClasses}>
-              {products.map((product) => (
-                <ProductItem
-                  key={product.id}
-                  product={product}
-                  itemWidth={cardStyle(breakPointContext.breakPoint)}
-                />
-              ))}
-            </Container>
-          )}
+    <Main onScroll={handleScroll}>
+      <Container>
+        <Container className={headerContainerClasses}>
+          <Box>
+            <h1 className={headerTitleClasses}>Today's picks</h1>
+          </Box>
         </Container>
-      </Main>
+        <Container classes={productsContainerClasses}>
+          {products.map((product) => (
+            <ProductItem
+              key={product.id}
+              product={product}
+              itemWidth={cardStyle(breakPointContext.breakPoint)}
+            />
+          ))}
+          {loading && <Loader dimensions="w-20 h-20" />}
+        </Container>
+      </Container>
+    </Main>
   );
 };

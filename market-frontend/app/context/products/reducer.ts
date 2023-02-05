@@ -6,8 +6,8 @@ export const reducer = (state: TState, action: TAction) => {
   const actions = {
     FETCH_PRODUCTS: () =>
       fetchProducts({ state, payload: action.payload as Required<TPayload> }),
-    RESET_PRODUCTS: () =>
-      resetProducts({ state, payload: action.payload }),
+    RESET_PRODUCTS: () => resetProducts({ state, payload: action.payload }),
+    SUBMITTING: () => ({ ...state, loading: true }),
     DEFAULT: () => {
       throw new Error("Unknown action");
     },

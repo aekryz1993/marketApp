@@ -59,14 +59,15 @@ export const product = `
 
   input InputMutateProduct {
     title: String!
-    images: [String]
+    images: [inputProductImage!]!
     brand: String
     description: String
+    currency: Currency!
     category: Category!
     condition: Condition
     sold: Boolean
     stock: Int
-    location: String
+    locationId: String
     price: Float!
     tags: [String]
   }

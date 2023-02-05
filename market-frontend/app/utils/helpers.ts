@@ -96,6 +96,13 @@ function getSearchNumberParam(name: string, locationSearch: string) {
   );
 }
 
+const findSearchParamValue = (search?: string) => (key: string) =>
+  search
+    ?.slice(1)
+    .split("&")
+    .find((item) => item.startsWith(key))
+    ?.split("=")[1];
+
 export {
   languages,
   setContext,
@@ -105,4 +112,5 @@ export {
   categories,
   getSearchStringParam,
   getSearchNumberParam,
+  findSearchParamValue,
 };

@@ -16,6 +16,7 @@ export const useFetchProductsOnScroll = () => {
   const {
     productsState: { currentPage },
     fetchProducts,
+    submitting,
   } = useProducts();
 
   const location = useLocation();
@@ -36,6 +37,7 @@ export const useFetchProductsOnScroll = () => {
       const data = response.products;
       fetchProducts({
         products: data.products,
+        loading: false,
       });
     },
     [fetchProducts]
@@ -54,12 +56,13 @@ export const useFetchProductsOnScroll = () => {
   );
 
   const handleFetchProducts = useCallback(() => {
+    submitting();
     fetchQuery({
       variables,
       fetchPolicy: "no-cache",
       onCompleted: handleCompleted,
     });
-  }, [fetchQuery, handleCompleted, variables]);
+  }, [fetchQuery, submitting, handleCompleted, variables]);
 
   const throttledFetchProducts = useThrottle(
     10,

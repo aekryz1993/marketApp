@@ -43,6 +43,8 @@ model Product {
   currentPrice  Price[]    @relation(name: "CurrentProductPrice")
   previousPrice Price[]    @relation(name: "PrevioustProductPrice")
   tags          Tag[]
+  // tags          Tag[]      @relation(fields: [tagIds], references: [id])
+  // tagIds        String[]   @db.ObjectId
   owner         User?      @relation("UserSellingProducts", fields: [ownerId], references: [id])
   ownerId       String?    @db.ObjectId
   buyers        User[]     @relation(fields: [buyerIDs], references: [id])
@@ -96,6 +98,8 @@ model Price {
 model Tag {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   text      String
+  // products   Product[] @relation(fields: [productIds], references: [id])
+  // productIds String[]  @db.ObjectId
   product   Product? @relation(fields: [productId], references: [id])
   productId String?  @db.ObjectId
 }

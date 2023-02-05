@@ -10,9 +10,9 @@ export const mutation = `
     
     logout: LogoutResponse
     
-    createProduct(args: InputMutateProduct): MutateProductResponse
+    createProduct(body: InputMutateProduct): MutateProductResponse
     
-    updateUser(args: InputUpdateUser): MutationUserResponse
+    updateUser(body: InputUpdateUser): MutationUserResponse
     
   }
 `;

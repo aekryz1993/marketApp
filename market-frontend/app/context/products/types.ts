@@ -13,7 +13,7 @@ export interface TPayload {
   loading?: boolean;
 }
 
-export type TActionType = "FETCH_PRODUCTS" | "RESET_PRODUCTS";
+export type TActionType = "FETCH_PRODUCTS" | "RESET_PRODUCTS" | "SUBMITTING";
 
 export interface TAction {
   type: TActionType;
@@ -24,4 +24,5 @@ export interface TContext {
   productsState: TState;
   fetchProducts: TDispatch;
   resetProducts: TDispatch;
+  submitting: TDispatch;
 }

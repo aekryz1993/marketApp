@@ -1,7 +1,7 @@
 import type { Theme } from "~/context/theme";
 import type { TUser } from "./endpoints/user";
 import type { TProductsResponse } from "./endpoints/product";
-import type { Category } from "./enums";
+import type { Category, OrderBy } from "./enums";
 
 export interface TAppearanceData {
   locale: string;
@@ -45,3 +45,17 @@ export interface TImageBody {
 
 export type EventTargetExtended = EventTarget &
   HTMLInputElement & { files: FileList };
+
+export interface FetchProductsInputVars {
+  pagination: {
+    skip: number;
+    take: number;
+  };
+  orderBy: {
+    createdAt: OrderBy;
+  };
+  search: string;
+  filterBy: {
+    category: Category | undefined;
+  };
+}
