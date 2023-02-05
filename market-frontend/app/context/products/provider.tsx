@@ -15,9 +15,9 @@ export const ProductsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const data = useLoaderData<TProductsLoaderData>();
+  const { products } = useLoaderData<TProductsLoaderData>();
 
-  const [state, dispatch] = useReducer(reducer, initialProducts(data.products));
+  const [state, dispatch] = useReducer(reducer, initialProducts(products));
 
   const fetchProducts = useCallback(
     ({ products }: { products: TProduct[] }) => {
@@ -28,7 +28,7 @@ export const ProductsProvider = ({
 
   const submitting = useCallback(() => {
     dispatch({ type: "SUBMITTING" });
-  }, [])
+  }, []);
 
   const resetProducts = useCallback(
     ({

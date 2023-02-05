@@ -33,7 +33,6 @@ export type AuthActionData = {
 };
 
 export type TProductsLoaderData = Omit<TProductsResponse, "statusCode"> & {
-  token?: string;
   categoryName?: Category;
 };
 

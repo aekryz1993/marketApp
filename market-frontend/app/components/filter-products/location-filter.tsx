@@ -12,7 +12,7 @@ import {
 import { Portal } from "../portal";
 import { portalContainerClasses, portalRootClasses } from "../auth/styled";
 import { LocationForm } from "./location-form";
-import { getSearchStringParam } from "~/utils/helpers";
+import { findSearchParamValue } from "~/utils/helpers";
 
 export const LocationFilter = () => {
   const location = useLocation();
@@ -23,14 +23,12 @@ export const LocationFilter = () => {
     setIsPortalOpen(false);
   }, []);
 
-  const cityLocationName = getSearchStringParam(
-    "locationName",
-    location.search
+  const cityLocationName = findSearchParamValue(location.search)(
+    "locationName"
   );
 
-  const cityLocationCountry = getSearchStringParam(
-    "locationCountry",
-    location.search
+  const cityLocationCountry = findSearchParamValue(location.search)(
+    "locationCountry"
   );
 
   return (
@@ -43,7 +41,7 @@ export const LocationFilter = () => {
       >
         <p className={locationTextClasses}>
           {cityLocationName.length > 0 ? cityLocationName : "All locations"}
-          {cityLocationCountry.length > 0 ? ', '+cityLocationCountry : ""}
+          {cityLocationCountry.length > 0 ? ", " + cityLocationCountry : ""}
         </p>
       </Box>
       {isPortalOpen && (

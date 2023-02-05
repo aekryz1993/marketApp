@@ -1,15 +1,9 @@
-import type { ActionFunction } from "@remix-run/node";
 import type { EventTargetExtended } from "~/types/data";
 
 import { useEffect, useRef, useState } from "react";
 import { useSubmit, useTransition } from "@remix-run/react";
 import { v4 as uuid } from "uuid";
 import { PlusCircleIcon, XMarkIcon } from "@heroicons/react/24/solid";
-
-import { createProductAction } from "~/ssr/actions/create-product.server";
-
-export const action: ActionFunction = async ({ request }) =>
-  createProductAction({ request });
 
 export default function CreateProduct() {
   const [imagesPreview, setImagesPreview] = useState<

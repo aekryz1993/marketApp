@@ -10,6 +10,7 @@ import { useProducts } from "~/context/products";
 import { useThrottle } from "./../useThrottle";
 import { OrderBy } from "~/types/enums";
 import { useFetch } from "./useFetch";
+import { findSearchParamValue } from "~/utils/helpers";
 
 export const useFetchProductsOnScroll = () => {
   const { totalPages, categoryName } = useLoaderData<TProductsLoaderData>();
@@ -47,7 +48,7 @@ export const useFetchProductsOnScroll = () => {
     () => ({
       pagination: { skip: currentPage * TAKE, take: TAKE },
       orderBy: { createdAt: OrderBy.desc },
-      search: location.search.split("=")[1] ?? undefined,
+      search: findSearchParamValue(location.search)("search") ?? undefined,
       filterBy: {
         category: categoryName,
       },

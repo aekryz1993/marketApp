@@ -9,7 +9,7 @@ import {
 import { OLMap } from "./ol-map";
 import { LocationSearch } from "./location-search";
 import { Box } from "../utilities";
-import { getSearchNumberParam, getSearchStringParam } from "~/utils/helpers";
+import { getSearchNumberParam, findSearchParamValue } from "~/utils/helpers";
 
 export const LocationForm = ({ handleClose }: { handleClose: () => void }) => {
   const location = useLocation();
@@ -19,12 +19,13 @@ export const LocationForm = ({ handleClose }: { handleClose: () => void }) => {
   const isSubmittingRef = useRef(false);
 
   const [city, setCity] = useState<
-    { longitude: number; latitude: number; id: string; countryCode: string; } | undefined
+    | { longitude: number; latitude: number; id: string; countryCode: string }
+    | undefined
   >(() => ({
-    id: getSearchStringParam("locationId", location.search),
+    id: findSearchParamValue(location.search)("locationId"),
     longitude: getSearchNumberParam("locationLong", location.search),
     latitude: getSearchNumberParam("locationLat", location.search),
-    countryCode: getSearchStringParam("locationCountry", location.search),
+    countryCode: findSearchParamValue(location.search)("locationCountry"),
   }));
 
   if (transition.state === "submitting") {

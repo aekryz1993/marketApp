@@ -2,12 +2,6 @@ import { useAuthPortal } from "~/context/auth-portal";
 import { Login } from "./login";
 import { Register } from "./register";
 
-// const componentMap = {
-//   LOGIN: lazy(() => import("./login")),
-//   REGISTER: lazy(() => import("./register")),
-//   EMPTY: () => null,
-// };
-
 const componentMap = {
   LOGIN: Login,
   REGISTER: Register,

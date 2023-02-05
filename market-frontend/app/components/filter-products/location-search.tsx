@@ -18,7 +18,7 @@ import { Dropdown } from "../utilities/dropdown";
 import { Loader } from "../loader";
 import { loaderClasses } from "../search-bar/styled";
 import { dropdownSlot } from "../utilities/dropdown/styled";
-import { getSearchStringParam } from "~/utils/helpers";
+import { findSearchParamValue } from "~/utils/helpers";
 
 export const LocationSearch = ({
   setCity,
@@ -64,9 +64,8 @@ export const LocationSearch = ({
     });
   };
 
-  const cityLocationName = getSearchStringParam(
-    "locationName",
-    location.search
+  const cityLocationName = findSearchParamValue(location.search)(
+    "locationName"
   );
 
   return (
