@@ -1,4 +1,4 @@
-import { Form, useLocation, useTransition } from "@remix-run/react";
+import { Form, useLocation, useSearchParams, useTransition } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 
 import {
@@ -9,10 +9,10 @@ import {
 import { OLMap } from "./ol-map";
 import { LocationSearch } from "./location-search";
 import { Box } from "../utilities";
-import { getSearchNumberParam, findSearchParamValue } from "~/utils/helpers";
 
 export const LocationForm = ({ handleClose }: { handleClose: () => void }) => {
   const location = useLocation();
+  const searchParams = useSearchParams();
 
   const transition = useTransition();
 
@@ -22,10 +22,10 @@ export const LocationForm = ({ handleClose }: { handleClose: () => void }) => {
     | { longitude: number; latitude: number; id: string; countryCode: string }
     | undefined
   >(() => ({
-    id: findSearchParamValue(location.search)("locationId"),
-    longitude: getSearchNumberParam("locationLong", location.search),
-    latitude: getSearchNumberParam("locationLat", location.search),
-    countryCode: findSearchParamValue(location.search)("locationCountry"),
+    id: searchParams[0].get("locationId") ?? "",
+    longitude: parseFloat(searchParams[0].get("locationLong") ?? "0"),
+    latitude: parseFloat(searchParams[0].get("locationLat") ?? "0"),
+    countryCode: searchParams[0].get("locationCountry") ?? "",
   }));
 
   if (transition.state === "submitting") {

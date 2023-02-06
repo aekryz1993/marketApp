@@ -11,17 +11,15 @@ import styles from "./tailwind.css";
 import { ThemeProvider } from "./context/theme";
 import { Document } from "./components/document";
 import { SidebarProvider } from "~/context/sidebar";
-import { Loader } from "~/components/loader";
-import { Sidebar } from "~/components/sidebar";
-import { useBreakPointsContext } from "./context/breakPoint";
 import { authAction } from "./ssr/actions/auth.service";
 import { rootLoader } from "./ssr/loaders/root.service";
+import { AuthPortalProvider } from "./context/auth-portal";
 
 export const action: ActionFunction = async ({ request }) =>
-  authAction({request});
+  authAction({ request });
 
 export const loader: LoaderFunction = async ({ request }) =>
-  rootLoader({request});
+  rootLoader({ request });
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -39,21 +37,15 @@ export let handle = {
 
 export default function App() {
   const { theme, authInfo } = useLoaderData<TRootLoaderData>();
-  const breakPoint = useBreakPointsContext();
 
   return (
     <ThemeProvider specifiedTheme={theme}>
       <SidebarProvider>
-        <Document>
-          {!breakPoint ? (
-            <Loader dimensions="w-28 h-28" />
-          ) : (
-            <>
-              <Sidebar sizeW={breakPoint.windowWidth} />
-              <Outlet context={{authInfo}} />
-            </>
-          )}
-        </Document>
+        <AuthPortalProvider>
+          <Document>
+            <Outlet context={{ authInfo }} />
+          </Document>
+        </AuthPortalProvider>
       </SidebarProvider>
     </ThemeProvider>
   );

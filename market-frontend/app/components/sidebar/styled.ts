@@ -12,7 +12,7 @@ const topSectionClasses =
   "w-full h-fit pb-4 border-b border-b-gray-200 dark:border-b-gray-700 flex flex-col gap-4";
 
 const createListingBoxClasses =
-  "flex justify-center items-center gap-2 bg-btn-bg_lt dark:bg-btn-bg_dark text-text-label_lt dark:text-text-label_dark rounded-md py-2";
+  "flex justify-center items-center gap-2 bg-btn-bg_lt dark:bg-btn-bg_dark text-text-label_lt dark:text-text-label_dark rounded-md py-2 cursor-pointer select-none";
 
 const createListingPlusIconClasses = "w-4 h-4 font-black";
 const createListingLabelClasses = "align-bottom";

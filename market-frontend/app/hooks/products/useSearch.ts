@@ -1,14 +1,21 @@
-import { useCallback, useState } from "react";
-
 import type { LazyQueryExecFunction, OperationVariables } from "@apollo/client";
+
+import { useCallback, useState } from "react";
 
 import { useDebounce } from "../useDebounce";
 
-export const useSearch = <TypeQuery>({fetchQuery}: {fetchQuery: LazyQueryExecFunction<{
-  [x: string]: {
-      [x: string]: TypeQuery[];
-  };
-}, OperationVariables>}) => {
+export const useSearch = <TypeQuery>({
+  fetchQuery,
+}: {
+  fetchQuery: LazyQueryExecFunction<
+    {
+      [x: string]: {
+        [x: string]: TypeQuery[];
+      };
+    },
+    OperationVariables
+  >;
+}) => {
   const [emptySearch, setEmptySearch] = useState(true);
   const [isOpened, setIsOpened] = useState(false);
 

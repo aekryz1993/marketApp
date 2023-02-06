@@ -6,7 +6,7 @@ const categoriesContainerClasses = "flex flex-col";
 
 const categoryBoxClasses = "rounded-lg";
 
-const categoryNameClasses = "font-medium text-lg";
+const categoryNameClasses = "select-none font-medium text-lg";
 
 export {
   categoriesBarContainerClasses,

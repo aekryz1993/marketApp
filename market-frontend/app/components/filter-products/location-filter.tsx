@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { useLocation } from "@remix-run/react";
+import { useSearchParams } from "@remix-run/react";
 
 import { Box, Container } from "../utilities";
 import {
@@ -12,24 +12,19 @@ import {
 import { Portal } from "../portal";
 import { portalContainerClasses, portalRootClasses } from "../auth/styled";
 import { LocationForm } from "./location-form";
-import { findSearchParamValue } from "~/utils/helpers";
 
 export const LocationFilter = () => {
-  const location = useLocation();
-
+  const searchParams = useSearchParams();
+  
   const [isPortalOpen, setIsPortalOpen] = useState(false);
 
   const handlePortalClose = useCallback(() => {
     setIsPortalOpen(false);
   }, []);
 
-  const cityLocationName = findSearchParamValue(location.search)(
-    "locationName"
-  );
+  const cityLocationName = searchParams[0].get("locationName") ?? "";
 
-  const cityLocationCountry = findSearchParamValue(location.search)(
-    "locationCountry"
-  );
+  const cityLocationCountry = searchParams[0].get("locationCountry") ?? "";
 
   return (
     <>

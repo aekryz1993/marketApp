@@ -8,7 +8,7 @@ async function tags(_, { pagination, search }, { prisma }) {
     text: {
       startsWith: search,
       mode: "insensitive",
-    },
+    }
   };
 
   const tags = await prisma.tag.findMany({

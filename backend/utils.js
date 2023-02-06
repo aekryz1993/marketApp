@@ -47,12 +47,12 @@ export async function getUserId(ctx) {
 const getUserAuth = (req, authToken) => {
   if (req) {
     const authHeader = req.headers.authorization;
-    if (!authHeader)
+    if (!authHeader || authHeader.length === 0){
       return {
         userId: null,
         token: null,
         expiresIn: undefined,
-      };
+      };}
     if (authHeader) {
       const token = authHeader.replace("Bearer ", "");
       if (!token)

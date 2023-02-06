@@ -9,28 +9,47 @@ import {
   validateUsername,
 } from "~/utils/helpers";
 
-export const authAction = async ({ request }: Pick<LoaderArgs, "request">) => {
-  const form = await request.formData();
-  const username = form.get("username");
-  const password = form.get("password");
-  const authType = form.get("authType");
-
-  if (
-    typeof username !== "string" ||
-    typeof password !== "string" ||
-    typeof authType !== "string"
-  ) {
-    return loginBadRequest({
-      formError: `Form not submitted correctly.`,
-    });
-  }
-
+const getFields = ({
+  username,
+  password,
+}: {
+  username: string;
+  password: string;
+}) => {
   const fields = { username, password };
   const fieldErrors = {
     username: validateUsername(username),
     password: validatePassword(password),
   };
 
+  return { fields, fieldErrors };
+};
+
+export const authAction = async ({ request }: Pick<LoaderArgs, "request">) => {
+  const form = await request.formData();
+  const username = form.get("username");
+  const password = form.get("password");
+  const authType = form.get("authType");
+
+  if (authType === "reset") return null
+
+  if (typeof authType !== "string") {
+    return loginBadRequest({
+      formError: `Form not submitted correctly.`,
+    });
+  }
+
+  const isInvalidUserBody =
+    typeof username !== "string" || typeof password !== "string";
+
+  if (isInvalidUserBody) {
+    return loginBadRequest({
+      formError: `Form not submitted correctly.`,
+    });
+  }
+
+  const { fieldErrors, fields } = getFields({ username, password });
+  
   if (Object.values(fieldErrors).some(Boolean))
     return loginBadRequest({ fieldErrors, fields });
 

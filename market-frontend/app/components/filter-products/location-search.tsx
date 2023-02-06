@@ -1,6 +1,6 @@
 import type { TLocation } from "~/types/endpoints/product";
 
-import { useLocation } from "@remix-run/react";
+import { useSearchParams } from "@remix-run/react";
 
 import { useRef } from "react";
 import { Box, Container } from "../utilities";
@@ -18,7 +18,6 @@ import { Dropdown } from "../utilities/dropdown";
 import { Loader } from "../loader";
 import { loaderClasses } from "../search-bar/styled";
 import { dropdownSlot } from "../utilities/dropdown/styled";
-import { findSearchParamValue } from "~/utils/helpers";
 
 export const LocationSearch = ({
   setCity,
@@ -36,7 +35,7 @@ export const LocationSearch = ({
   >;
 }) => {
   const searchInputRef = useRef<HTMLInputElement | null>(null);
-  const location = useLocation();
+  const searchParams = useSearchParams();
 
   const { fetchQuery, loading, data } = useFetch<TLocation>({
     name: "locations",
@@ -64,9 +63,7 @@ export const LocationSearch = ({
     });
   };
 
-  const cityLocationName = findSearchParamValue(location.search)(
-    "locationName"
-  );
+  const cityLocationName = searchParams[0].get("locationName") ?? "";
 
   return (
     <Box classes={locationSearchNameBoxClasses}>

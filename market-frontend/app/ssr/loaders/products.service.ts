@@ -32,6 +32,8 @@ export const productsLoader = async ({
         token
       );
 
+
+
       if (response.data?.products.statusCode === 200) {
         const { statusCode, ...data } = response.data.products;
         return json({ ...data, token });

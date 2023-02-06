@@ -11,7 +11,7 @@ const languages = {
 
 const setContext = (token?: string | null) => ({
   headers: {
-    Authorization: token ? `Bearer ${token}` : null,
+    Authorization: token ? `Bearer ${token}` : "",
   },
 });
 

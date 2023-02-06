@@ -6,6 +6,7 @@ import clsx from "clsx";
 
 const ActionFrom = ({
   actionType,
+  action,
   buttonLabel,
   reloadDocument,
   replace,
@@ -13,6 +14,7 @@ const ActionFrom = ({
   children,
 }: {
   actionType?: string;
+  action: string;
   reloadDocument?: boolean;
   buttonLabel?: string;
   replace?: boolean;
@@ -22,6 +24,7 @@ const ActionFrom = ({
   return (
     <Form
       method="post"
+      action={action}
       className={clsx(styledForm ? formClasses : null)}
       replace={replace ? true : false}
       reloadDocument={reloadDocument ? true : false}

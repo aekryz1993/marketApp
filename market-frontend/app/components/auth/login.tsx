@@ -1,3 +1,6 @@
+
+import { useLocation } from "@remix-run/react";
+
 import { useAuthPortal } from "~/context/auth-portal";
 import { Portal } from "../portal";
 import {
@@ -11,6 +14,9 @@ import { Container } from "../utilities";
 
 export const Login = () => {
   const { handleClose } = useAuthPortal();
+  const location = useLocation();
+
+  const locationPath = `${location.pathname}${location.search}`;
 
   return (
     <Portal
@@ -20,7 +26,13 @@ export const Login = () => {
       handleClose={handleClose}
     >
       <Container classes={containerClasses}>
-        <ActionFrom actionType="login" buttonLabel="Login" styledForm replace>
+        <ActionFrom
+          actionType="login"
+          buttonLabel="Login"
+          action={locationPath}
+          styledForm
+          replace
+        >
           <AuthFormInputs currentScreen="login" />
         </ActionFrom>
       </Container>
