@@ -1,1 +1,1 @@
-export type TDispatch = (...args: any) => void;
+export type TDispatch<TArgs = any> = (...args: Array<TArgs>) => void;

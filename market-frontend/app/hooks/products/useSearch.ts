@@ -38,7 +38,7 @@ export const useSearch = <TypeQuery>({
     [fetchQuery]
   );
 
-  const debouncedCallback = useDebounce({ callback: handleChange, delay: 800 });
+  const debouncedCallback = useDebounce({ callbackHook: handleChange, delay: 800 });
 
   const handleClose = useCallback(() => {
     setIsOpened(false);

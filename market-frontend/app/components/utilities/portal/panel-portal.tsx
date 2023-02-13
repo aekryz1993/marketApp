@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import { usePortal } from "~/hooks/usePortal";
 
-export const Portal = ({
+export const PanelPortal = ({
   id,
   children,
   rootClasses,
@@ -23,7 +23,6 @@ export const Portal = ({
     handleClose,
     rootStyle,
   });
-  console.log(rootStyle)
   return ReactDOM.createPortal(children, target);
 };
 

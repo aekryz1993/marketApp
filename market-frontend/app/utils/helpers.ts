@@ -1,4 +1,5 @@
 import type { AuthActionData } from "~/types/data";
+import type { RouteMatch } from "@remix-run/react";
 
 import { json } from "@remix-run/node";
 
@@ -95,6 +96,9 @@ const findSearchParamValue = (search?: string) => (key: string) =>
       ?.split("=")[1] ?? ""
   ).replace(/\+/g, " ");
 
+const getAuthInfo = (matchers: RouteMatch[]) =>
+  matchers.find((matcher) => matcher.id === "root")?.data.authInfo;
+
 export {
   languages,
   setContext,
@@ -104,4 +108,5 @@ export {
   categories,
   getSearchNumberParam,
   findSearchParamValue,
+  getAuthInfo,
 };

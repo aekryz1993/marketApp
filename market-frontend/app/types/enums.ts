@@ -26,7 +26,20 @@ export enum Category {
 export enum Currency {
   DZD = "DZD",
   EUR = "EUR",
-  USD = "Euro",
+  USD = "USD",
+}
+
+export enum CurrencySymbol {
+  DZD = "DA",
+  EUR = "€",
+  USD = "$",
+}
+
+export enum ConditionKey {
+  New = "New",
+  Like_New = "Like_New",
+  Good = "Good",
+  Fair = "Fair",
 }
 
 export enum Condition {

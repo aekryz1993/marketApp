@@ -1,22 +1,22 @@
 import { useCallback, useEffect, useRef } from "react";
 
 export const useDebounce = ({
-  callback,
+  callbackHook,
   delay = 500,
 }: {
-  callback: (...args: any) => void;
+  callbackHook?: (...args: any) => void;
   delay?: number;
 }) => {
   const timerIdRef = useRef<NodeJS.Timeout | number | null>(null);
 
   const debouncedCallback = useCallback(
-    (...args: any) => {
+    ({ callback }: { callback?: (...args: any) => void }, ...args: any) => {
       if (timerIdRef.current) clearTimeout(timerIdRef.current);
       timerIdRef.current = setTimeout(() => {
-        callback(...args);
+        callbackHook ? callbackHook(...args) : callback?.(...args);
       }, delay);
     },
-    [callback, delay]
+    [callbackHook, delay]
   );
 
   useEffect(() => {

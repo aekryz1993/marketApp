@@ -1,7 +1,8 @@
 import { useSyncExternalStore } from "react";
+
 import { useThrottle } from "./useThrottle";
 
-function subscribe(throttledCallback: any) {
+function subscribe(throttledCallback: () => void) {
   window.addEventListener("resize", throttledCallback);
   return () => window.removeEventListener("resize", throttledCallback);
 }

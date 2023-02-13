@@ -1,10 +1,5 @@
 import { useFetcher } from "@remix-run/react";
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import { useCallbackRef } from "~/hooks/useCallbackRef";
 
@@ -83,7 +78,7 @@ function ThemeProvider({
         { action: "action/set-theme", method: "post" }
       );
     }
-  }, [savePersistTheme, theme])
+  }, [savePersistTheme, theme]);
 
   return (
     <ThemeContext.Provider value={[theme, setTheme]}>
@@ -94,7 +89,7 @@ function ThemeProvider({
 
 function useTheme() {
   const context = useContext(ThemeContext);
-  if (context === undefined) {
+  if (typeof context === "undefined") {
     throw new Error("useTheme must be used within the ThemeProvider");
   }
   return context;

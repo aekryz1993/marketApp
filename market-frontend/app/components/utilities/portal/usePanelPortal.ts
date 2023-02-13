@@ -1,35 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 
-const style = (
-  node: HTMLDivElement,
-  styles: {
-    [key: string]: string;
-  }
-) => {
-  Object.keys(styles).forEach(
-    (key) => (node.style[key as any] = styles[key])
-  );
-};
-
-function createRootElement(id: string, rootClasses?: string, rootStyle?: { [key: string]: string }) {
-  const rootContainer = document.createElement("div");
-  rootContainer.setAttribute("id", id);
-  if (rootStyle) {
-    style(rootContainer, rootStyle);
-  }
-  rootClasses?.split(" ").forEach((cls) => {
-    if (cls) rootContainer.classList.add(cls);
-  });
-  return rootContainer;
-}
-
-function addRootElement(rootElem: Element) {
-  if (document.body.lastElementChild)
-    document.body.insertBefore(
-      rootElem,
-      document.body.lastElementChild.nextElementSibling
-    );
-}
+import { addRootElement, createRootElement } from "./helper";
 
 export const usePortal = ({
   id,

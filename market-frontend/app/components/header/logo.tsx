@@ -1,17 +1,25 @@
-import { useLocation, useNavigate } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 
 export const Logo = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  return (
+    <ConditionalNavLink>
+      <h1 className="cursor-pointer select-none text-3xl lg:text-4xl">
+        MarketApp
+      </h1>
+    </ConditionalNavLink>
+  );
+};
 
-  const handleNavigation = () => {
-    if (location.pathname === "/" && location.search.length === 0) return;
-    navigate("/");
-  };
+const ConditionalNavLink = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
 
   return (
-    <button onClick={handleNavigation}>
-      <h1 className="cursor-pointer text-3xl lg:text-4xl">MarketApp</h1>
-    </button>
+    <>
+      {location.pathname === "/" ? (
+        <>{ children }</>
+      ) : (
+        <Link to="/" prefetch="intent">{children}</Link>
+      )}
+    </>
   );
 };

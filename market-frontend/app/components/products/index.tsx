@@ -1,6 +1,6 @@
 import type { TRootLoaderData } from "~/types/data";
 
-import { useLocation, useTransition, useOutletContext } from "@remix-run/react";
+import { useOutletContext } from "@remix-run/react";
 
 import { MainLayout } from "./main-layout";
 import { ProductsProvider } from "~/context/products";
@@ -8,31 +8,24 @@ import { Loader } from "../loader";
 import { useBreakPointsContext } from "~/context/breakPoint";
 import { Sidebar } from "../sidebar";
 import { Auth } from "../auth";
+import { useProductsKey } from "./useProductsKey";
 
 export const ProductsLayout = () => {
   const { authInfo } = useOutletContext<Pick<TRootLoaderData, "authInfo">>();
   const breakPoint = useBreakPointsContext();
-
-  const location = useLocation();
-  const transition = useTransition();
-
-  const currentKey = `${location.pathname}${location.search.slice(1)}`;
-  const nextKey = `${
-    transition.location?.pathname
-  }${transition.location?.search.slice(1)}`;
-
-  const loadingCondition =
-    transition.state !== "idle" && currentKey !== nextKey;
-
-  const key = authInfo?.token ? authInfo?.token + nextKey : nextKey;
+  const { key, loadingCondition } = useProductsKey(authInfo?.token);
 
   return (
     <>
-      {!breakPoint ? (
-        <Loader dimensions="w-28 h-28" />
+      {!breakPoint?.windowWidth ? (
+        <div className="absolute top-[9999px]">
+          <ProductsProvider key={key ?? ""}>
+            <MainLayout />
+          </ProductsProvider>
+        </div>
       ) : (
         <>
-          <Sidebar sizeW={breakPoint.windowWidth} />
+          <Sidebar sizeW={breakPoint?.windowWidth} />
           <ProductsProvider key={key ?? ""}>
             {loadingCondition ? (
               <Loader dimensions="w-40 h-40" />

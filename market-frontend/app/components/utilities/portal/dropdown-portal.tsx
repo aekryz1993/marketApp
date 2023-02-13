@@ -1,31 +1,37 @@
 import ReactDOM from "react-dom";
-import { usePortal } from "~/hooks/usePortal";
 
-export const Portal = ({
+import { useDropdownPortal } from "./useDropdownPortal";
+
+export const DropdownPortal = ({
   id,
   children,
   rootClasses,
   containerClasses,
   handleClose,
-  rootStyle,
+  dropdownFieldRef,
+  isOpened,
 }: {
   id: string;
   children: React.ReactNode;
   rootClasses?: string;
   containerClasses?: string;
-  handleClose?: () => void;
+  handleClose: () => void;
   rootStyle?: { [key: string]: string };
+  dropdownFieldRef: React.RefObject<HTMLDivElement>;
+  isOpened: boolean;
 }) => {
-  const target = usePortal({
+  const target = useDropdownPortal({
     id,
     rootClasses,
     containerClasses,
     handleClose,
-    rootStyle,
+    dropdownFieldRef,
+    isOpened,
   });
-  console.log(rootStyle)
+  
   return ReactDOM.createPortal(children, target);
 };
+
 
 export function canUseDOM() {
   return !!(

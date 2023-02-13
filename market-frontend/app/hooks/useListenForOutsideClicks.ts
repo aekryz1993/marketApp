@@ -8,7 +8,7 @@ export const useListenForOutsideClicks = ({
 }: {
   handleClose: () => void;
   isOpened: boolean;
-  containerRef: React.MutableRefObject<HTMLDivElement | null>;
+  containerRef: React.MutableRefObject<HTMLDivElement | Element | null>;
   exceptedElementRef?: React.MutableRefObject<HTMLDivElement | null>;
 }) => {
   const handleCloseEvent = useCallback(

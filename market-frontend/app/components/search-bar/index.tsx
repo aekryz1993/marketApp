@@ -59,7 +59,7 @@ export const SearchBar = () => {
           ref={searchInputRef}
           onChange={(event) => {
             const currentTarget = event.currentTarget;
-            return debouncedCallback(currentTarget);
+            return debouncedCallback({}, currentTarget);
           }}
           onFocus={() => {
             if (!emptySearch) setIsOpened(true);

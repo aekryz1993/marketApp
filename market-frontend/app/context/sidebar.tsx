@@ -24,7 +24,7 @@ export const SidebarProvider = ({
 export const useToggleSidebar = () => {
   const context = useContext(Context);
 
-  if (context === undefined)
+  if (typeof context === "undefined")
     throw new Error("useToggleSidebar must be used within the SidebarProvider");
 
   return context;

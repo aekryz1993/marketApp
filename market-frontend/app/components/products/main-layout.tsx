@@ -20,8 +20,6 @@ export const MainLayout = () => {
 
   const handleScroll = useFetchProductsOnScroll();
 
-  if (!breakPointContext) return null;
-
   return (
     <Main onScroll={handleScroll}>
       <Container>
@@ -35,7 +33,7 @@ export const MainLayout = () => {
             <ProductItem
               key={product.id}
               product={product}
-              itemWidth={cardStyle(breakPointContext.breakPoint)}
+              itemWidth={cardStyle(breakPointContext?.breakPoint ?? "md")}
             />
           ))}
           {loading && <Loader dimensions="w-20 h-20" />}

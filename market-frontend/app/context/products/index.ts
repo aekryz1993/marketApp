@@ -7,7 +7,7 @@ export { ProductsProvider } from "./provider";
 export const useProducts = () => {
   const context = useContext(ProductsContext);
 
-  if (context === undefined)
+  if (typeof context === "undefined")
     throw new Error("useProducts must be used within the ProductsProvider");
 
   return context;

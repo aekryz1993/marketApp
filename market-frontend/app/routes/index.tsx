@@ -1,11 +1,7 @@
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/node";
 
 import { ProductsLayout } from "~/components/products";
-import { authAction } from "~/ssr/actions/auth.service";
 import { productsLoader } from "~/ssr/loaders/products.service";
-
-export const action: ActionFunction = async ({ request }) =>
-  authAction({ request });
 
 export const loader: LoaderFunction = async ({ request }) =>
   productsLoader({ request });

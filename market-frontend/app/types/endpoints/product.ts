@@ -92,7 +92,7 @@ export interface TProduct {
   brand?: string;
   category: Category;
   sold?: boolean;
-  stock: number;
+  stock?: number;
   createdAt: string;
   updatedAt: string;
   currentPrice: TPrice[];
