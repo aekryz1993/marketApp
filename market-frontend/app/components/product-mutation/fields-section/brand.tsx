@@ -1,6 +1,6 @@
 import type { TInputProps } from "../../utilities/input/type";
 
-import { InputField } from "~/components/utilities/input/custom-input";
+import { InputField } from "~/components/utilities/input/input-field";
 import { useProductMutationContext } from "~/context/product-mutation";
 
 export const Brand = () => {
@@ -16,8 +16,7 @@ export const Brand = () => {
 
   return (
     <InputField
-      type="text"
-      value={brand}
+      value={brand ?? ""}
       label="Brand"
       onChange={handleChange}
     />

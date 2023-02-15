@@ -21,7 +21,7 @@ export const UploadedPhotos = () => {
             <XMarkIcon
               className="absolute top-2 right-2 h-6 w-6 cursor-pointer rounded-full bg-zinc-500 p-1 text-slate-50 focus:bg-slate-900"
               onClick={() => {
-                deleteImage({id: image.id});
+                deleteImage({ id: image.id });
               }}
             />
           </div>

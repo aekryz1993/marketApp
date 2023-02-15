@@ -6,7 +6,7 @@ import {
   locationApplyButtonContainerClasses,
   locationFormContainer,
 } from "./styled";
-import { OLMap } from "./ol-map";
+import { OLMap } from "../utilities/ol-map";
 import { LocationSearch } from "./location-search";
 import { Box } from "../utilities";
 

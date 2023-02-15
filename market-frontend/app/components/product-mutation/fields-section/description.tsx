@@ -1,6 +1,6 @@
 import type { TTextareaProps } from "../../utilities/input/type";
 
-import { TextareaField } from "~/components/utilities/input/custom-textarea";
+import { TextareaField } from "~/components/utilities/input/input-field";
 import { useProductMutationContext } from "~/context/product-mutation";
 
 export const Description = () => {

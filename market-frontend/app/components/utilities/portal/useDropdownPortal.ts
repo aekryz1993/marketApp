@@ -61,6 +61,7 @@ export const useDropdownPortal = ({
     isOpened,
     handleClose,
     containerRef: parentElemRef,
+    exceptedElementRef: dropdownFieldRef
   });
 
   const style = useMemo(

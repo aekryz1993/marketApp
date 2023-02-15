@@ -20,7 +20,7 @@ export const useSearch = <TypeQuery>({
   const [isOpened, setIsOpened] = useState(false);
 
   const handleChange = useCallback(
-    (currentTarget: EventTarget & HTMLInputElement) => {
+    (currentTarget: (EventTarget & HTMLInputElement) | { value: string }) => {
       if (currentTarget.value.length === 0) {
         setEmptySearch(true);
         setIsOpened(false);
@@ -46,6 +46,7 @@ export const useSearch = <TypeQuery>({
 
   return {
     setIsOpened,
+    handleSearchChange: handleChange,
     handleClose,
     debouncedCallback,
     setEmptySearch,

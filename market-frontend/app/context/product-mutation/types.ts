@@ -1,3 +1,4 @@
+import type { TLocation } from "~/types/endpoints/product";
 import type {
   Category,
   Condition,
@@ -19,7 +20,7 @@ export interface TKeyValue<TKey, TValue> {
   value: TValue;
 }
 
-export type TConditionState = TKeyValue<ConditionKey | "NOT_SELECTED", Condition | "Condition"> 
+export type TConditionState = TKeyValue<ConditionKey | "NOT_SELECTED", Condition | "Condition">
 
 export type TCurrencyState = TKeyValue<Currency, CurrencySymbol>
 
@@ -35,17 +36,19 @@ export interface TState {
   currentPrice: number | undefined;
   currency: TCurrencyState;
   tags: string[];
-  locationId?: string;
+  location?: TLocation;
 }
 
 export interface TFieldPayload {
   fieldName: string;
   fieldValue:
-    | string
-    | TCurrencyState
-    | Category
-    | TConditionState
-    | number;
+  | string
+  | string[]
+  | TCurrencyState
+  | Category
+  | TConditionState
+  | TLocation
+  | number;
 }
 
 export interface TImagesPayload {

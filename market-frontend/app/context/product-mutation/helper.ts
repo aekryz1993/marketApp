@@ -33,7 +33,7 @@ const initialState: (args: TInitialStateArgs) => TState = ({
     value: userCurrency ? CurrencySymbol[userCurrency] : CurrencySymbol.DZD,
   },
   tags: data && Array.isArray(data?.tags) ? data?.tags : [],
-  locationId: data?.locationId,
+  location: data?.location,
 });
 
 const toggleField = ({

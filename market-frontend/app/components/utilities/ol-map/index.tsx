@@ -9,8 +9,8 @@ import {
   importOTileLayer,
   importProj,
 } from "~/utils/ol-modules";
+import { Box } from "../layout";
 import { mapClasses, mapContainerClasses } from "./styled";
-import { Box } from "../utilities";
 
 export const OLMap = ({
   longitude,

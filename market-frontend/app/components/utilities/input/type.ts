@@ -6,7 +6,7 @@ export interface TInputProps extends React.ComponentPropsWithoutRef<"input"> {
 export interface TUlProps extends React.ComponentPropsWithoutRef<"ul"> {
   classes?: string;
 }
-export interface TLi extends React.ComponentPropsWithoutRef<"li"> {}
+export interface TLi extends React.ComponentPropsWithoutRef<"li"> { }
 
 export interface TTextareaProps
   extends React.ComponentPropsWithoutRef<"textarea"> {
@@ -32,3 +32,7 @@ export interface TInputState {
   isFocus: boolean;
   isEmpty: boolean;
 }
+
+export interface TEventHandlerProps {
+  handleSetOpen?: () => void;
+} 

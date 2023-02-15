@@ -2,18 +2,15 @@ import type { TLiProps } from "../utility-types";
 
 import clsx from "clsx";
 
-import { cardClasses, figureClasses } from "./styled";
+import { cardClasses, cardWidth, figureClasses } from "./styled";
 
-const Card = (
-  props: TLiProps & { itemwidth: { width: string} }
-) => {
+const Card = (props: TLiProps) => {
   const { children, classes, className, ...divProps } = props;
 
   return (
     <li
       {...divProps}
-      style={props.itemwidth}
-      className={clsx(cardClasses, classes, className)}
+      className={clsx(cardClasses, cardWidth, classes, className)}
     >
       <figure className={figureClasses}>{children}</figure>
     </li>

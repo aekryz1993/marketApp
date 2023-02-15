@@ -23,9 +23,6 @@ const locationSearchNameInputClasses =
 const locationSearchIconInputClasses =
   "absolute w-6 h-6 top-2/4 -translate-y-2/4 left-6";
 
-const mapContainerClasses =
-  "relative w-full h-[308px] px-4 rounded-md overflow-y-hidden";
-const mapClasses = "w-full h-full rounded-md";
 
 const locationApplyButtonContainerClasses = "w-full px-4 py-2";
 const locationApplyButtonClasses =
@@ -44,8 +41,6 @@ export {
   locationSearchNameBoxClasses,
   locationSearchNameInputClasses,
   locationSearchIconInputClasses,
-  mapContainerClasses,
-  mapClasses,
   locationApplyButtonContainerClasses,
   locationApplyButtonClasses,
 };

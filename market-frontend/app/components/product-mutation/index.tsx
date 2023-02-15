@@ -5,11 +5,11 @@ import { Container } from "../utilities";
 import {
   formContainerClasses,
   leftContainerClasses,
-  previewContainerClasses,
 } from "./styled";
 import { ImagesSection } from "./images-section";
 import { FieldsSection } from "./fields-section";
 import { ContainerElementProvider } from "~/context/container-element-context";
+import { PreviewSection } from "./preview-section";
 
 export const ProductMutation = () => {
   const formContainerRef = useRef<HTMLDivElement>(null);
@@ -19,7 +19,7 @@ export const ProductMutation = () => {
       <ContainerElementProvider containerElement={formContainerRef}>
         <Container classes="flex w-full">
           <Container classes={leftContainerClasses}>
-            <Container classes="basis-1/12">
+            <Container classes="basis-1/12 pl-2">
               <h1 className="pt-4 pb-2 text-3xl font-black">Item For Sell</h1>
             </Container>
             <div className={formContainerClasses} ref={formContainerRef}>
@@ -30,9 +30,7 @@ export const ProductMutation = () => {
               <></>
             </Container>
           </Container>
-          <Container classes={previewContainerClasses}>
-            <></>
-          </Container>
+          <PreviewSection />
         </Container>
       </ContainerElementProvider>
     </ProductMutationProvider>

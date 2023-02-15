@@ -11,13 +11,11 @@ import {
 
 export const ProductItem = ({
   product,
-  itemWidth,
 }: {
   product: TProduct;
-  itemWidth: { width: string };
 }) => {
   return (
-    <Card itemwidth={itemWidth}>
+    <Card>
       <img
         src={product.images[0].src.square}
         alt={product.images[0].alt}

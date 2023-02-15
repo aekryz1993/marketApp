@@ -7,16 +7,12 @@ import {
   productsContainerClasses,
 } from "./styles";
 import { useFetchProductsOnScroll } from "~/hooks/products/useFetchProductsOnScroll";
-import { cardStyle } from "../utilities/card/styled";
 import { Loader } from "../loader";
-import { useBreakPointsContext } from "~/context/breakPoint";
 
 export const MainLayout = () => {
   const {
     productsState: { products, loading },
   } = useProducts();
-
-  const breakPointContext = useBreakPointsContext();
 
   const handleScroll = useFetchProductsOnScroll();
 
@@ -30,11 +26,7 @@ export const MainLayout = () => {
         </Container>
         <Container classes={productsContainerClasses}>
           {products.map((product) => (
-            <ProductItem
-              key={product.id}
-              product={product}
-              itemWidth={cardStyle(breakPointContext?.breakPoint ?? "md")}
-            />
+            <ProductItem key={product.id} product={product} />
           ))}
           {loading && <Loader dimensions="w-20 h-20" />}
         </Container>

@@ -24,7 +24,7 @@ export const ImagesSection = () => {
       </p>
       <Box className={setPhotosBoxClasses(imagesPreview.length === 0)}>
         <UploadedPhotos />
-        <AddPhotoUploaderButton />
+        {imagesPreview.length < 10 && <AddPhotoUploaderButton />}
       </Box>
       {imagesPreview.length > 10 && (
         <div className="py-2">

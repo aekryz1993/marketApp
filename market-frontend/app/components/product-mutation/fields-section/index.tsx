@@ -5,8 +5,9 @@ import { Price } from "./price";
 import { CategoryField as Category } from "./category";
 import { ConditionField as Condition } from "./condition";
 import { Brand } from "./brand";
-import { Stock } from "./stock";
 import { Description } from "./description";
+import { TagsField as Tags } from "./tags";
+import { LocationField as Location } from "./location";
 
 export const FieldsSection = () => {
   return (
@@ -16,8 +17,9 @@ export const FieldsSection = () => {
       <Price />
       <Category />
       <Condition />
+      <Location />
       <Brand />
-      <Stock />
+      <Tags />
     </Container>
   );
 };
