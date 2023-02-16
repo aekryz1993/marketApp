@@ -15,9 +15,13 @@ import { mapClasses, mapContainerClasses } from "./styled";
 export const OLMap = ({
   longitude,
   latitude,
+  width,
+  height,
 }: {
   longitude?: number;
   latitude?: number;
+  width?: string;
+  height?: string;
 }) => {
   const mapRef = useRef<HTMLDivElement | null>(null);
 
@@ -40,7 +44,7 @@ export const OLMap = ({
           target: mapRef.current ?? "",
           view: new View({
             center: locationWebMercator,
-            zoom: !longitude ?? !latitude ? 2 : 8,
+            zoom: !longitude ?? !latitude ? 0 : 8,
           }),
         });
       })();
@@ -67,7 +71,7 @@ export const OLMap = ({
   }, [handleMapChange, latitude, longitude]);
 
   return (
-    <Box classes={mapContainerClasses}>
+    <Box style={{height, width}} classes={mapContainerClasses}>
       <div ref={mapRef} className={mapClasses} />
     </Box>
   );

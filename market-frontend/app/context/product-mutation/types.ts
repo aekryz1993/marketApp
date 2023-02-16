@@ -13,6 +13,8 @@ export interface TImageBody {
   src: string;
   alt: string;
   file: File;
+  width: number;
+  height: number
 }
 
 export interface TKeyValue<TKey, TValue> {
@@ -48,7 +50,8 @@ export interface TFieldPayload {
   | Category
   | TConditionState
   | TLocation
-  | number;
+  | number
+  | undefined;
 }
 
 export interface TImagesPayload {

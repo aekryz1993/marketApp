@@ -17,7 +17,7 @@ export const TagsContainer = ({
         tags.map((tag) => (
           <Box
             key={tag}
-            classes="bg-gray-300 px-3 py-1 rounded-full flex gap-2 items-center cursor-pointer hover:bg-gray-400"
+            classes="bg-gray-300 px-3 py-1 rounded-full flex gap-2 text-center cursor-pointer hover:bg-gray-400"
             onClick={() => handleRemoveTag(tag)}
           >
             <span className="max-w-[220px] overflow-hidden text-ellipsis whitespace-nowrap font-bold">

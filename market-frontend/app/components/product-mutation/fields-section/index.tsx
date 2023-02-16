@@ -13,8 +13,8 @@ export const FieldsSection = () => {
   return (
     <Container classes={fieldsSectionContainerClasses}>
       <Title />
-      <Description />
       <Price />
+      <Description />
       <Category />
       <Condition />
       <Location />

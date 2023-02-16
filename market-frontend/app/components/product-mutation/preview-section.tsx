@@ -1,9 +1,10 @@
 import { Box, Container } from "../utilities";
+import { PreviewImages } from "./preview-images";
+import { PreviewItems } from "./preview-items";
 import {
   imagePreviewContainerClasses,
   previewContainerClasses,
   previewSectionClasses,
-  productInfoPreviewContainerClasses,
   productInfoPreviewSideClasses,
 } from "./styled";
 
@@ -20,13 +21,11 @@ export const PreviewSection = () => {
           </Box>
           <Container classes="flex grow m-4 overflow-y-hidden basis-0">
             <Container classes={imagePreviewContainerClasses}>
-              <></>
+              <PreviewImages />
             </Container>
             <Container classes={productInfoPreviewSideClasses}>
               <Container classes="flex flex-col shrink-0 w-full min-h-0">
-                <Container classes={productInfoPreviewContainerClasses}>
-                  
-                </Container>
+                <PreviewItems />
               </Container>
             </Container>
           </Container>

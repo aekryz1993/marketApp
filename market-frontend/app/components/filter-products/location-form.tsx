@@ -1,4 +1,9 @@
-import { Form, useLocation, useSearchParams, useTransition } from "@remix-run/react";
+import {
+  Form,
+  useLocation,
+  useSearchParams,
+  useTransition,
+} from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 
 import {
@@ -54,7 +59,13 @@ export const LocationForm = ({ handleClose }: { handleClose: () => void }) => {
         value={city?.countryCode ?? ""}
       />
       <LocationSearch setCity={setCity} />
-      <OLMap longitude={city?.longitude} latitude={city?.latitude} />
+      <Box classes="px-4">
+        <OLMap
+          height="308px"
+          longitude={city?.longitude}
+          latitude={city?.latitude}
+        />
+      </Box>
       <Box classes={locationApplyButtonContainerClasses}>
         <button type="submit" className={locationApplyButtonClasses}>
           {transition.state === "submitting" ? (

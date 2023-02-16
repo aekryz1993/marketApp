@@ -17,7 +17,7 @@ const imagePreviewContainerClasses = "flex flex-col grow bg-bg-input_lt dark:bg-
 
 const productInfoPreviewSideClasses = "flex w-full basis-[360px] rounded-r-lg border border-gray-300 dark:border-gray-600"
 
-const productInfoPreviewContainerClasses = "flex flex-col grow shrink w-full overflow-x-hidden overflow-y-auto overscroll-y-contain basis-full"
+const productInfoPreviewContainerClasses = "flex flex-col grow shrink max-w-full overflow-x-hidden overflow-y-auto overscroll-y-contain basis-full px-3 py-2 select-none"
 
 const setPhotosBoxClasses = (empty: boolean) =>
   clsx(

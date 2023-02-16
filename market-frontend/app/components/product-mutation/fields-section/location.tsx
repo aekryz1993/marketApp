@@ -19,7 +19,10 @@ export const LocationField = () => {
 
   const fieldRef = useRef<HTMLInputElement>(null);
 
-  const { toggleField } = useProductMutationContext();
+  const {
+    productMutationState: { location },
+    toggleField,
+  } = useProductMutationContext();
 
   const { fetchQuery, loading, data } = useFetch<TLocation>({
     name: "locations",
@@ -36,6 +39,7 @@ export const LocationField = () => {
   } = useSearch<TLocation>({ fetchQuery });
 
   const handleChange: TInputProps["onChange"] = (event) => {
+    if (location) toggleField({ fieldName: "location", fieldValue: undefined });
     const text = event.target.value;
     setText(text);
     const value = text.split(",")[0].trim();

@@ -99,6 +99,26 @@ const findSearchParamValue = (search?: string) => (key: string) =>
 const getAuthInfo = (matchers: RouteMatch[]) =>
   matchers.find((matcher) => matcher.id === "root")?.data.authInfo;
 
+
+const getImageSize: (file: File) => Promise<{
+  width: number;
+  height: number;
+}> = (file) => new Promise((resolve) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = (_event) => {
+    const image = new Image();
+    if (image && _event.target?.result)
+      image.src = _event.target.result as string;
+
+    image.onload = () => {
+      const width = image.width;
+      const height = image.height;
+      resolve({ width, height })
+    };
+  };
+})
+
 export {
   languages,
   setContext,
@@ -109,4 +129,5 @@ export {
   getSearchNumberParam,
   findSearchParamValue,
   getAuthInfo,
+  getImageSize,
 };

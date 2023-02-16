@@ -9,7 +9,7 @@ html {
 
   color: var(--text-colour);
   background-color: var(--background-colour);
-  font-family: "Helvetica, Arial, sans-serif";
+  font-family: Helvetica, Arial, sans-serif;
   font-size: var(--base-font-size);
 }
 
@@ -88,5 +88,9 @@ textarea {
     content: "";
     clear: both;
     display: table;
+  }
+
+  .overflow-clip-m-box {
+    overflow-clip-margin: content-box;
   }
 }

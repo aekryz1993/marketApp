@@ -6,6 +6,7 @@ import { v4 as uuid } from "uuid";
 import { useProductMutationContext } from "~/context/product-mutation";
 import clsx from "clsx";
 import { Box } from "../utilities";
+import { getImageSize } from "~/utils/helpers";
 
 export const AddPhotoUploaderButton = () => {
   const {
@@ -16,17 +17,23 @@ export const AddPhotoUploaderButton = () => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const target = event.target as EventTargetExtended;
     const files = target.files;
-    const uploadedImages = [];
-
-    for (let file of files) {
-      uploadedImages.push({
-        id: uuid(),
-        src: URL.createObjectURL(file),
-        alt: file.name,
-        file,
-      });
-    }
-    toggleImages({ uploadedImages });
+    (async () => {
+      const uploadedImages = [];
+      for (let file of files) {
+        if (!file.type.startsWith("image")) return;
+        const src = URL.createObjectURL(file);
+        const { width, height } = await getImageSize(file);
+        uploadedImages.push({
+          id: uuid(),
+          src,
+          alt: file.name,
+          file,
+          width,
+          height,
+        });
+      }
+      toggleImages({ uploadedImages });
+    })();
   };
 
   return (
@@ -45,9 +52,8 @@ export const AddPhotoUploaderButton = () => {
       >
         <div
           className={clsx(
-            "bg-gray-300 flex items-center justify-center",
-            imagesPreview.length === 0 ?
-              "h-12 w-12 rounded-full" : "h-6 w-6"
+            "flex items-center justify-center bg-gray-300",
+            imagesPreview.length === 0 ? "h-12 w-12 rounded-full" : "h-6 w-6"
           )}
         >
           <PhotoIcon
