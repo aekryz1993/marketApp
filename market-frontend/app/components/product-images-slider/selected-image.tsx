@@ -1,6 +1,6 @@
 import { useProductMutationContext } from "~/context/product-mutation";
-import { Container } from "../utilities";
 import { useLayoutEffect, useRef, useState } from "react";
+import { useProductSliderContext } from "~/context/product-slider";
 
 export const SelectedImage = () => {
   const [imageSize, setImageSize] = useState<{
@@ -20,6 +20,10 @@ export const SelectedImage = () => {
   const imageOriginWidth = imagesPreview[0].width;
   const imageOriginHeight = imagesPreview[0].height;
 
+  const {
+    productSliderState: { selected },
+  } = useProductSliderContext();
+
   useLayoutEffect(() => {
     const imageHeight = containerRef.current?.getBoundingClientRect().height;
 
@@ -32,17 +36,17 @@ export const SelectedImage = () => {
 
   return (
     <div
-      className="flex h-full w-full grow items-center justify-center overflow-hidden z-10"
+      className="z-10 flex h-full w-full grow items-center justify-center overflow-hidden"
       ref={containerRef}
     >
       <div>
         <span>
           <img
-            alt={imagesPreview[0].alt}
-            src={imagesPreview[0].src}
+            alt={imagesPreview[selected].alt}
+            src={imagesPreview[selected].src}
             width={imageSize.width}
             height={imageSize.height}
-            className="overflow-clip-m-box aspect-[3/4] overflow-clip"
+            className="overflow-clip-m-box overflow-clip"
             style={{
               width: `${imageSize.width}px`,
               height: `${imageSize.height}px`,

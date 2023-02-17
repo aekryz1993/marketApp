@@ -9,13 +9,13 @@ const previewSectionClasses =
 const formContainerClasses =
   "px-2 pb-2 flex flex-col gap-2 overflow-y-auto overscroll-contain";
 
-const fieldsSectionContainerClasses = "flex flex-col gap-2";
+const fieldsSectionContainerClasses = "flex flex-col gap-2 shrink-0";
 
 const previewContainerClasses = "w-[972px] h-full min-h-0 mt-14 mb-8 mx-6 bg-bg-sec_lt dark:bg-bg-sec_dark rounded-lg self-center shadow-3xl flex flex-col";
 
-const imagePreviewContainerClasses = "flex flex-col grow bg-bg-input_lt dark:bg-bg-input_dark rounded-l-lg border border-gray-300 dark:border-gray-600"
+const imagePreviewContainerClasses = "relative flex flex-col grow overflow-hidden rounded-l-lg border border-gray-300 dark:border-gray-600"
 
-const productInfoPreviewSideClasses = "flex w-full basis-[360px] rounded-r-lg border border-gray-300 dark:border-gray-600"
+const productInfoPreviewSideClasses = "flex w-full shrink-0 basis-[360px] rounded-r-lg border border-gray-300 dark:border-gray-600"
 
 const productInfoPreviewContainerClasses = "flex flex-col grow shrink max-w-full overflow-x-hidden overflow-y-auto overscroll-y-contain basis-full px-3 py-2 select-none"
 
