@@ -1,9 +1,9 @@
 import clsx from "clsx";
 
 import { ProductImagesSlider } from "~/components/product-images-slider";
+import { imagePreviewContainerClasses } from "~/components/product-images-slider/styled";
 import { Box, Container } from "~/components/utilities";
 import { useProductMutationContext } from "~/context/product-mutation";
-import { imagePreviewContainerClasses } from "../styled";
 
 export const PreviewImages = () => {
   const {
@@ -35,7 +35,7 @@ export const PreviewImages = () => {
         </Container>
       ) : (
         <Container classes={clsx(imagePreviewContainerClasses, "bg-black")}>
-          <ProductImagesSlider />
+          <ProductImagesSlider images={imagesPreview} />
         </Container>
       )}
     </>

@@ -25,6 +25,8 @@ async function createProduct(_, { body }, { prisma, userId, token }) {
     const createdImage = await prisma.image.create({
       data: {
         alt: image.alt,
+        width: image.width,
+        height: image.height,
         src: {
           create: { original: image.original, square: image.square },
         },

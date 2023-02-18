@@ -2,6 +2,8 @@ export const image = `
   type Image {
     id: ID!
     alt: String
+    width: Int!
+    height: Int!
     src: ImageSrc!
   }
 
@@ -22,5 +24,7 @@ export const image = `
     alt: String!
     original: String!
     square: String!
+    width: Int!
+    height: Int!
   }
 `;

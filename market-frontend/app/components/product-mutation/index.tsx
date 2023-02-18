@@ -2,14 +2,12 @@ import { useRef } from "react";
 
 import { ProductMutationProvider } from "~/context/product-mutation";
 import { Container } from "../utilities";
-import {
-  formContainerClasses,
-  leftContainerClasses,
-} from "./styled";
+import { formContainerClasses, leftContainerClasses } from "./styled";
 import { ImagesSection } from "./images-section";
 import { FieldsSection } from "./fields-section";
 import { ContainerElementProvider } from "~/context/container-element-context";
 import { PreviewSection } from "./preview-section";
+import { SubmissionSection } from "./Submission-section";
 
 export const ProductMutation = () => {
   const formContainerRef = useRef<HTMLDivElement>(null);
@@ -26,8 +24,8 @@ export const ProductMutation = () => {
               <ImagesSection />
               <FieldsSection />
             </div>
-            <Container classes="basis-2/12">
-              <></>
+            <Container classes="basis-1/12 shrink-0 border-t border-t-gray-300 dark:border-t-gray-50 px-4 py-2">
+              <SubmissionSection />
             </Container>
           </Container>
           <PreviewSection />

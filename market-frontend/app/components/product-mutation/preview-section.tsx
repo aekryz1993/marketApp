@@ -1,33 +1,15 @@
-import { Box, Container } from "../utilities";
+import { ProductLayout } from "~/product-layout";
 import { PreviewImages } from "./preview-images";
 import { PreviewItems } from "./preview-items";
-import {
-  previewContainerClasses,
-  previewSectionClasses,
-  productInfoPreviewSideClasses,
-} from "./styled";
+import { ProductItemsLayout } from "~/product-layout/items-layout";
 
 export const PreviewSection = () => {
   return (
-    <Container classes={previewSectionClasses}>
-      <Container classes="h-full flex flex-col grow min-w-0 z-0">
-        <Container
-          style={{ maxWidth: "calc(100% - 48px)" }}
-          classes={previewContainerClasses}
-        >
-          <Box classes="ml-4 mt-3 w-full overflow-y-hidden">
-            <h2 className="font-semibold tracking-wider">Preview</h2>
-          </Box>
-          <Container classes="flex grow m-4 overflow-hidden basis-0">
-            <PreviewImages />
-            <Container classes={productInfoPreviewSideClasses}>
-              <Container classes="flex flex-col shrink-0 w-full min-h-0">
-                <PreviewItems />
-              </Container>
-            </Container>
-          </Container>
-        </Container>
-      </Container>
-    </Container>
+    <ProductLayout>
+      <PreviewImages />
+      <ProductItemsLayout>
+        <PreviewItems />
+      </ProductItemsLayout>
+    </ProductLayout>
   );
 };

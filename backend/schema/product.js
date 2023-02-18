@@ -26,6 +26,11 @@ export const product = `
     statusCode: Int!
   }
 
+  type ProductResponse {
+    product: Product!
+    statusCode: Int!
+  }
+
   type MutateProductResponse {
     product: Product!
     message: String!
@@ -64,10 +69,10 @@ export const product = `
     description: String
     currency: Currency!
     category: Category!
-    condition: Condition
+    condition: Condition!
     sold: Boolean
     stock: Int
-    locationId: String
+    locationId: String!
     price: Float!
     tags: [String]
   }

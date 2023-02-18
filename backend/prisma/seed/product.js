@@ -42,13 +42,6 @@ const generateDates = () => {
   return { updatedAt, createdAt };
 };
 
-// const convertPrice = (amount) => currencyJs(amount).value;
-
-// const convertPriceFormat = ({ amount, currency }) =>
-//   currencyJs(amount, {
-//     pattern: `${currencyFormat[currency]}#`,
-//   }).format();
-
 async function addProductsToDB(product, userId, prisma) {
   try {
     const tags = (texts) => texts?.map((text) => ({ text }));

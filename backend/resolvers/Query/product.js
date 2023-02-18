@@ -91,4 +91,13 @@ async function products(
   };
 }
 
-export { products };
+async function product(_, { productId }, { prisma }) {
+  const product = await prisma.product.findUnique({ where: { id: productId } });
+
+  return {
+    product,
+    statusCode: 200,
+  };
+}
+
+export { products, product };

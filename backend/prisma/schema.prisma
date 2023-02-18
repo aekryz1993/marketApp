@@ -55,6 +55,8 @@ model Image {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   src       ImageSrc?
   alt       String?
+  width     Int
+  height    Int
   product   Product?  @relation(fields: [productId], references: [id])
   productId String?   @db.ObjectId
 }

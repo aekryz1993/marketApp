@@ -17,5 +17,7 @@ export const query = `
       pagination: InputPagination
       search: String!
     ): LocationsResponse
+
+    product(productId: String!): ProductResponse
   }
 `;

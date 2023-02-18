@@ -1,7 +1,7 @@
 import type { Category, Condition, Currency, OrderBy } from "../enums";
 
 interface TPagination {
-  take: number; skip: number 
+  take: number; skip: number
 }
 
 export interface TProductsInput {
@@ -58,6 +58,8 @@ export interface TImageSrc {
 export interface TImage {
   id: string;
   alt?: string;
+  width: number;
+  height: number;
   src: TImageSrc;
 }
 
@@ -71,6 +73,11 @@ export interface TProductsResponse {
   totalItems: number;
   totalPages: number;
   currentPage: number;
+  statusCode: number;
+}
+
+export interface TProductResponse {
+  product: TProduct;
   statusCode: number;
 }
 
@@ -100,4 +107,30 @@ export interface TProduct {
   previousPrice?: TPrice[] | null;
   images: TImage[];
   location?: TLocation;
+}
+
+export interface TProductBody {
+  title?: string;
+  description?: string | null;
+  condition?: Condition;
+  brand?: string | null;
+  category?: Category;
+  price?: number;
+  tags?: string[] | null;
+  images?: TImagePhoto[];
+  locationId?: string;
+  currency?: Currency;
+}
+
+export interface TImagePhoto {
+  alt: string;
+  original: string;
+  square: string;
+  width: number
+  height: number
+}
+
+export interface TProductResponse {
+  product: TProduct;
+  statusCode: number;
 }

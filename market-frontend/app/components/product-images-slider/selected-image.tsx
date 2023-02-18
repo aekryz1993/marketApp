@@ -1,8 +1,14 @@
-import { useProductMutationContext } from "~/context/product-mutation";
+import type { TImageBody } from "~/context/product-mutation/types";
+import type { TImage } from "~/types/endpoints/product";
+
 import { useLayoutEffect, useRef, useState } from "react";
 import { useProductSliderContext } from "~/context/product-slider";
 
-export const SelectedImage = () => {
+export const SelectedImage = ({
+  images,
+}: {
+  images: TImageBody[] | TImage[];
+}) => {
   const [imageSize, setImageSize] = useState<{
     width: number;
     height: number;
@@ -11,18 +17,17 @@ export const SelectedImage = () => {
     height: 1,
   });
 
-  const {
-    productMutationState: { imagesPreview },
-  } = useProductMutationContext();
-
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const imageOriginWidth = imagesPreview[0].width;
-  const imageOriginHeight = imagesPreview[0].height;
 
   const {
     productSliderState: { selected },
   } = useProductSliderContext();
+
+  const imageOriginWidth = images[selected].width;
+  const imageOriginHeight = images[selected].height;
+
+  const previewImage = images[selected] as TImageBody;
+  const imageData = images[selected] as TImage;
 
   useLayoutEffect(() => {
     const imageHeight = containerRef.current?.getBoundingClientRect().height;
@@ -42,8 +47,8 @@ export const SelectedImage = () => {
       <div>
         <span>
           <img
-            alt={imagesPreview[selected].alt}
-            src={imagesPreview[selected].src}
+            alt={images[selected].alt}
+            src={imageData.src.original ?? previewImage.src}
             width={imageSize.width}
             height={imageSize.height}
             className="overflow-clip-m-box overflow-clip"

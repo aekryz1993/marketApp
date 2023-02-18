@@ -1,4 +1,5 @@
 import type {
+  TProductResponse,
   TProductsInput,
   TProductsResponse,
 } from "~/types/endpoints/product";
@@ -63,6 +64,59 @@ export const PRODUCTS = gql`
   }
 `;
 
+const PRODUCT = gql`
+  query Product($productId: String!) {
+    product(productId: $productId) {
+      product {
+        id
+        title
+        updatedAt
+        brand
+        category
+        condition
+        createdAt
+        currentPrice {
+          amount
+          currency
+          formattedAmount
+          id
+        }
+        description
+        images {
+          id
+          alt
+          width
+          height
+          src {
+            id
+            original
+          }
+        }
+        location {
+          id
+          name
+          longitude
+          latitude
+          countryCode
+        }
+        ownerId
+        previousPrice {
+          id
+          formattedAmount
+          currency
+          amount
+        }
+        sold
+        stock
+        tags {
+          id
+          text
+        }
+      }
+    }
+  }
+`
+
 export const fetchProducts = async (
   { pagination, search, currency, orderBy, filterBy }: TProductsInput,
   token?: string
@@ -74,6 +128,17 @@ export const fetchProducts = async (
       context: {
         headers: token ? { Authorization: `Bearer ${token}` } : undefined,
       },
+    });
+  return response;
+};
+
+export const fetchProduct = async (
+  productId: string
+) => {
+  const response: FetchResult<{ product: TProductResponse }> =
+    await httpClient.query({
+      query: PRODUCT,
+      variables: { productId }
     });
   return response;
 };
