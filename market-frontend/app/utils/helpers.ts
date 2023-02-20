@@ -119,6 +119,14 @@ const getImageSize: (file: File) => Promise<{
   };
 })
 
+const productsLocations = ['/', ...categories.map(category => `/${category.pathname}`)]
+
+const sidebarLocations = [...productsLocations, '/product']
+
+const isIncludesSidebar = (pathname: string) => pathname.split('/').length <= 3 && sidebarLocations.includes(pathname.split('/').slice(0, 2).join('/'))
+
+const checkIsViewProductLocation = (pathname: string) => pathname.split('/').length <= 3 && pathname.split('/')[1] === "product"
+
 export {
   languages,
   setContext,
@@ -130,4 +138,8 @@ export {
   findSearchParamValue,
   getAuthInfo,
   getImageSize,
+  productsLocations,
+  sidebarLocations,
+  isIncludesSidebar,
+  checkIsViewProductLocation
 };

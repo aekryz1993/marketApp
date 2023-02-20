@@ -11,7 +11,7 @@ const options = [
   { label: "Buying", pathname: "buying" },
   { label: "Selling", pathname: "selling" },
   { label: "Saved products", pathname: "wishes" },
-  { label: "Setting", pathname: "setting" },
+  { label: "Settings", pathname: "settings" },
 ];
 
 export const DropdownItems = () => {

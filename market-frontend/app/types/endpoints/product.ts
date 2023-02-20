@@ -1,4 +1,5 @@
 import type { Category, Condition, Currency, OrderBy } from "../enums";
+import type { TUser } from "./user";
 
 interface TPagination {
   take: number; skip: number
@@ -95,7 +96,7 @@ export interface TProduct {
   id: string;
   title: string;
   description?: string;
-  condition?: Condition;
+  condition: Condition;
   brand?: string;
   category: Category;
   sold?: boolean;
@@ -107,6 +108,7 @@ export interface TProduct {
   previousPrice?: TPrice[] | null;
   images: TImage[];
   location?: TLocation;
+  owner: TUser
 }
 
 export interface TProductBody {

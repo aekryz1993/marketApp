@@ -99,7 +99,31 @@ const PRODUCT = gql`
           latitude
           countryCode
         }
-        ownerId
+        owner {
+          id
+          username
+          profilePicture {
+            id
+            alt
+            height
+            src {
+              id
+              square
+              small
+            }
+            width
+          }
+          location {
+            id
+            name
+            countryCode
+            latitude
+            longitude
+          }
+          updatedAt
+          currency
+          createdAt
+        }
         previousPrice {
           id
           formattedAmount
@@ -113,6 +137,7 @@ const PRODUCT = gql`
           text
         }
       }
+      statusCode
     }
   }
 `

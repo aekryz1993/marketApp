@@ -11,10 +11,12 @@ export const productLoader = async ({
     if (!productId) return json({ error: 'product id must be provided' })
 
     const productResponse = await fetchProduct(productId)
+    
     if (productResponse?.data?.product.statusCode === 200) {
-      return json({ product: productResponse?.data?.product.product })
+      return json({ product: productResponse.data.product.product })
     }
   } catch (error: any) {
+    console.error(error)
     return json({ error: error.message });
   }
 };

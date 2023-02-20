@@ -35,4 +35,9 @@ export const enums = `
     Good
     Fair
   }
+  
+  enum NotificationName {
+    Selling
+    Buying
+  }
 `;

@@ -23,7 +23,7 @@ export const Portal = ({
     handleClose,
     rootStyle,
   });
-  console.log(rootStyle)
+  
   return ReactDOM.createPortal(children, target);
 };
 

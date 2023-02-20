@@ -14,6 +14,7 @@ import {
 import { OLMap } from "../utilities/ol-map";
 import { LocationSearch } from "./location-search";
 import { Box } from "../utilities";
+import { productsLocations } from "~/utils/helpers";
 
 export const LocationForm = ({ handleClose }: { handleClose: () => void }) => {
   const location = useLocation();
@@ -47,7 +48,9 @@ export const LocationForm = ({ handleClose }: { handleClose: () => void }) => {
   return (
     <Form
       method="get"
-      action={location.pathname}
+      action={
+        productsLocations.includes(location.pathname) ? location.pathname : "/"
+      }
       className={locationFormContainer}
     >
       <input type="hidden" name="locationId" value={city?.id ?? ""} />

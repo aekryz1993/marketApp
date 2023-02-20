@@ -1,24 +1,21 @@
+import type { TLocation } from "~/types/endpoints/product";
+
 import { Box, Container } from "~/components/utilities";
 import { OLMap } from "~/components/utilities/ol-map";
-import { useProductMutationContext } from "~/context/product-mutation";
 
-export const LocationMap = () => {
-  const {
-    productMutationState: { location },
-  } = useProductMutationContext();
-
+export const LocationMap = ({ location }: { location?: TLocation }) => {
   return (
     <>
       {!!location && (
         <Container classes="flex flex-col">
           <OLMap
             height="120px"
-            width="328px"
+            width="w-full"
             latitude={location?.latitude}
             longitude={location?.longitude}
           />
           <Box classes="mt-1">
-            <span className="font-bold text-sm">{location.name}</span>
+            <span className="text-sm font-bold">{location.name}</span>
           </Box>
           <Box classes="-mt-1">
             <span className="text-xs text-neutral-500 dark:text-neutral-50">

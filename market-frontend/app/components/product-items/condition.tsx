@@ -1,13 +1,8 @@
 import type { TConditionState } from "~/context/product-mutation/types";
 
 import { Box } from "~/components/utilities";
-// import { useProductMutationContext } from "~/context/product-mutation";
 
 export const Condition = ({condition}: {condition: TConditionState}) => {
-  // const {
-  //   productMutationState: { condition },
-  // } = useProductMutationContext();
-
   return (
     <>
       {condition.key !== "NOT_SELECTED" && (

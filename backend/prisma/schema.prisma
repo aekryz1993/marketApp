@@ -12,43 +12,48 @@ datasource db {
 }
 
 model User {
-  id               String    @id @default(auto()) @map("_id") @db.ObjectId
-  username         String    @unique
-  hashedPassword   String
-  profilePicture   String?
-  currency         Currency  @default(DZD)
-  sellingProducts  Product[] @relation(name: "UserSellingProducts")
-  buyingProducts   Product[] @relation(fields: [buyingProductIDs], references: [id])
-  buyingProductIDs String[]  @db.ObjectId
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
-  location         Location? @relation(fields: [locationId], references: [id])
-  locationId       String?   @db.ObjectId
+  id                   String         @id @default(auto()) @map("_id") @db.ObjectId
+  username             String         @unique
+  hashedPassword       String
+  profilePicture       String?
+  currency             Currency       @default(DZD)
+  sellingProducts      Product[]      @relation(name: "UserSellingProducts")
+  buyingProducts       Product[]      @relation(fields: [buyingProductIDs], references: [id])
+  buyingProductIDs     String[]       @db.ObjectId
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  location             Location?      @relation(fields: [locationId], references: [id])
+  locationId           String?        @db.ObjectId
+  messages             Message[]
+  buyingConversations  Conversation[] @relation("bayer")
+  sellingConversations Conversation[] @relation("seller")
+  notifications        Notification[]
 }
 
 model Product {
-  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
   title         String
   images        Image[]
   brand         String?
   description   String?
   category      Category
   condition     Condition?
-  sold          Boolean    @default(false)
-  stock         Int        @default(1)
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  location      Location?  @relation(fields: [locationId], references: [id])
-  locationId    String?    @db.ObjectId
-  currentPrice  Price[]    @relation(name: "CurrentProductPrice")
-  previousPrice Price[]    @relation(name: "PrevioustProductPrice")
+  sold          Boolean        @default(false)
+  stock         Int            @default(1)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  location      Location?      @relation(fields: [locationId], references: [id])
+  locationId    String?        @db.ObjectId
+  currentPrice  Price[]        @relation(name: "CurrentProductPrice")
+  previousPrice Price[]        @relation(name: "PrevioustProductPrice")
   tags          Tag[]
   // tags          Tag[]      @relation(fields: [tagIds], references: [id])
   // tagIds        String[]   @db.ObjectId
-  owner         User?      @relation("UserSellingProducts", fields: [ownerId], references: [id])
-  ownerId       String?    @db.ObjectId
-  buyers        User[]     @relation(fields: [buyerIDs], references: [id])
-  buyerIDs      String[]   @db.ObjectId
+  owner         User?          @relation("UserSellingProducts", fields: [ownerId], references: [id])
+  ownerId       String?        @db.ObjectId
+  buyers        User[]         @relation(fields: [buyerIDs], references: [id])
+  buyerIDs      String[]       @db.ObjectId
+  conversations Conversation[]
 }
 
 model Image {
@@ -106,6 +111,34 @@ model Tag {
   productId String?  @db.ObjectId
 }
 
+model Conversation {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  messages  Message[]
+  buyer     User      @relation(name: "bayer", fields: [buyerId], references: [id])
+  buyerId   String    @db.ObjectId
+  seller    User      @relation(name: "seller", fields: [sellerId], references: [id])
+  sellerId  String    @db.ObjectId
+  product   Product   @relation(fields: [productId], references: [id])
+  productId String    @db.ObjectId
+}
+
+model Message {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  text           String
+  owner          User         @relation(fields: [ownerId], references: [id])
+  ownerId        String       @db.ObjectId
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId String       @db.ObjectId
+}
+
+model Notification {
+  id      String           @id @default(auto()) @map("_id") @db.ObjectId
+  counter Int              @default(1)
+  owner   User             @relation(fields: [ownerId], references: [id])
+  ownerId String           @db.ObjectId
+  name    NotificationName
+}
+
 enum Category {
   Vehicles
   Property_Rentals          @map("Property Rentals")
@@ -136,4 +169,9 @@ enum Condition {
   Like_New @map("Used - Like New")
   Good     @map("Used - Good")
   Fair     @map("Used - Fair")
+}
+
+enum NotificationName {
+  Selling
+  Buying
 }

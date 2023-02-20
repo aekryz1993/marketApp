@@ -13,6 +13,7 @@ export const mutation = `
     createProduct(body: InputMutateProduct): MutateProductResponse
     
     updateUser(body: InputUpdateUser): MutationUserResponse
-    
+
+    sendMessageFromBuyer(sellerId: String!, productId: String!, messageText: String!): SendMessageResponse
   }
 `;

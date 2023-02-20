@@ -11,7 +11,7 @@ export const product = `
     location: Location
     sold: Boolean!
     stock: Int!
-    ownerId: ID!
+    owner: User
     currentPrice: [Price]
     previousPrice: [Price]
     createdAt: Date!

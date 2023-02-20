@@ -1,14 +1,16 @@
-import { Box, Container } from "~/components/utilities";
-import { useProductMutationContext } from "~/context/product-mutation";
+import { useLocation } from "@remix-run/react";
 
-export const Tags = () => {
-  const {
-    productMutationState: { tags },
-  } = useProductMutationContext();
+import { Box, Container } from "~/components/utilities";
+import { checkIsViewProductLocation } from "~/utils/helpers";
+
+export const Tags = ({ tags }: { tags: string[] }) => {
+  const location = useLocation()
+
+  const isViewProductLocation = checkIsViewProductLocation(location.pathname);
 
   return (
     <>
-      {tags.length > 0 && (
+      {tags.length > 0 && !isViewProductLocation && (
         <Container classes="flex flex-col pt-2 mb-5 text-sm">
           <div className="mb-2 shrink-0">
             <span>Tags</span>

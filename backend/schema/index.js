@@ -11,6 +11,8 @@ import { subscription } from "./subscription";
 import { tag } from "./tag";
 import { price } from "./price";
 import { location } from "./location";
+import { message } from "./message";
+import { conversation } from "./conversation";
 
 const typeDefs = gql`
   scalar Date
@@ -36,6 +38,10 @@ const typeDefs = gql`
   ${location}
 
   ${tag}
+
+  ${message}
+
+  ${conversation}
 `;
 
 export default typeDefs;

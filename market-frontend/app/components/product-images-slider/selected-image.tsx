@@ -1,7 +1,7 @@
 import type { TImageBody } from "~/context/product-mutation/types";
 import type { TImage } from "~/types/endpoints/product";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useProductSliderContext } from "~/context/product-slider";
 
 export const SelectedImage = ({
@@ -29,7 +29,7 @@ export const SelectedImage = ({
   const previewImage = images[selected] as TImageBody;
   const imageData = images[selected] as TImage;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const imageHeight = containerRef.current?.getBoundingClientRect().height;
 
     if (!imageHeight) return;

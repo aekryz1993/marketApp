@@ -42,6 +42,7 @@ async function createUsers(prisma) {
     const userBody = {
       username: `user_${parseInt(index)}`,
       hashedPassword: await encryptPassword(`user_${parseInt(index)}`),
+      currency: 'DZD'
     };
 
     const existUser = await prisma.user.findUnique({

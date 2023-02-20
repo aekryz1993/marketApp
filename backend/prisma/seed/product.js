@@ -1,20 +1,10 @@
 import { faker } from "@faker-js/faker";
 import fetch from "cross-fetch";
-// import fx from "money";
-// import currencyJs from "currency.js";
 
 import { cloudinary } from "../../services";
 import { convertPrice, convertPriceFormat, money } from "../../utils";
 
-// fx.rates = { EUR: 0.92, USD: 1, DZD: 136 };
-
 const conditions = ["New", "Like_New", "Good", "Fair"];
-
-// const currencyFormat = {
-//   DZD: "DA",
-//   EUR: "€",
-//   USD: "$",
-// };
 
 const categories = [
   { id: "vehicles", label: "Vehicles" },
@@ -52,6 +42,8 @@ async function addProductsToDB(product, userId, prisma) {
       const createdImage = await prisma.image.create({
         data: {
           alt: image.alt,
+          width: image.width,
+          height: image.height,
           src: {
             create: { ...image.src },
           },
@@ -161,6 +153,8 @@ async function createProducts(users, prisma) {
               .catch((error) => console.error(error));
             return {
               alt: photo.alt,
+              width: photo.width,
+              height: photo.height,
               src: { ...photo.src, square: squareImage.url },
             };
           });
