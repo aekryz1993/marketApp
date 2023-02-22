@@ -1,10 +1,9 @@
 const containerClasses =
-  "h-full drop-shadow-lg overflow-y-auto bg-bg-sec_lt dark:bg-bg-sec_dark px-4 pt-4 pb-2 overflow-y-auto flex flex-col gap-4";
+  "h-[calc(100%-56px)] drop-shadow-lg overflow-y-auto bg-bg-sec_lt dark:bg-bg-sec_dark px-4 pt-4 pb-2 overflow-y-auto flex flex-col gap-4";
 
 const toggledContainerClasses =
-  "absolute top-0 w-full max-w-[24rem] transition-transform ease-in-out lg:hidden z-50";
+  "absolute top-14 w-full max-w-[24rem] transition-transform ease-in-out lg:relative lg:top-0 lg:h-full lg:shrink-0 z-50";
 
-const fixedContainerClasses = "hidden lg:flex min-w-[18rem] xl:min-w-[20rem]";
 
 const closedSidebarClasses = "-translate-x-full lg:translate-x-0";
 
@@ -24,7 +23,6 @@ const closeBtnIcon =
 export {
   containerClasses,
   toggledContainerClasses,
-  fixedContainerClasses,
   closedSidebarClasses,
   topSectionClasses,
   createListingBoxClasses,

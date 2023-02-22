@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       boxShadow: {
         '3xl': '1px 1px 15px 1px rgba(0, 0, 0, 0.1), -1px -1px 15px 1px rgba(0, 0, 0, 0.1)',
+        '4xl': '1px 1px 15px 1px rgba(0, 0, 0, 0.2), -1px -1px 15px 1px rgba(0, 0, 0, 0.2)',
       },
       rotate: {
         315: "315deg",

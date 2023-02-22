@@ -29,7 +29,7 @@ export type TProductProp = Required<Pick<TProductBody, "title">> &
 
 export const ProductItems = ({ product }: { product: TProductProp }) => (
   <>
-    <Container classes="py-4 border-b border-b-gray-200 dark:border-b-gray-700">
+    <Container classes="py-4 border-b border-b-gray-200 dark:border-b-gray-700 md:overflow-y-auto md:overscroll-y-contain">
       <div>
         <Title title={product.title} />
         <Price price={product.currentPrice} currency={product.currency} />

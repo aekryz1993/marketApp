@@ -6,25 +6,92 @@ import { gql } from "@apollo/client";
 import { setContext } from "~/utils/helpers";
 import { httpClient } from "~/graphql-client";
 
+const authFields = `
+  user {
+    id
+    username
+    currency
+    location {
+      id
+      name
+      longitude
+      latitude
+      countryCode
+    }
+    notifications {
+      id
+      counter
+      name
+    }
+    sellingConversations {
+      id
+      buyer {
+        id
+        username
+      }
+      seller {
+        id
+        username
+      }
+      product {
+        id
+        title
+        images {
+          id
+          alt
+          src {
+            id
+            square
+            tiny
+          }
+        }
+        currentPrice {
+          id
+          amount
+          currency
+        }
+      }
+    }
+    buyingConversations {
+      id
+      buyer {
+        id
+        username
+      }
+      seller {
+        id
+        username
+      }
+      product {
+        id
+        title
+        images {
+          id
+          alt
+          src {
+            id
+            square
+            tiny
+          }
+        }
+        currentPrice {
+          id
+          amount
+          currency
+        }
+      }
+    }
+    updatedAt
+  }
+  token
+  expiresIn
+  statusCode
+`
+
 export const LOGIN = gql`
   mutation Login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
-      user {
-        id
-        username
-        currency
-        location {
-          id
-          name
-          longitude
-          latitude
-          countryCode
-        }
-        updatedAt
-      }
-      token
-      expiresIn
-      statusCode
+      ${authFields}
     }
   }
 `;
@@ -32,22 +99,7 @@ export const LOGIN = gql`
 export const SIGNUP = gql`
   mutation Signup($username: String!, $password: String!) {
     signup(username: $username, password: $password) {
-      user {
-        id
-        username
-        currency
-        location {
-          id
-          name
-          longitude
-          latitude
-          countryCode
-        }
-        updatedAt
-      }
-      token
-      expiresIn
-      statusCode
+      ${authFields}
     }
   }
 `;
@@ -55,22 +107,7 @@ export const SIGNUP = gql`
 export const REFRESH_TOKEN = gql`
   mutation RefreshToken {
     refreshToken {
-      user {
-        id
-        username
-        currency
-        location {
-          id
-          name
-          longitude
-          latitude
-          countryCode
-        }
-        updatedAt
-      }
-      token
-      expiresIn
-      statusCode
+      ${authFields}
     }
   }
 `;
@@ -78,22 +115,7 @@ export const REFRESH_TOKEN = gql`
 export const CHECK_TOKEN = gql`
   mutation CheckToken {
     checkToken {
-      user {
-        id
-        username
-        currency
-        location {
-          id
-          name
-          longitude
-          latitude
-          countryCode
-        }
-        updatedAt
-      }
-      token
-      expiresIn
-      statusCode
+      ${authFields}
     }
   }
 `;

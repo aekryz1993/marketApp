@@ -1,4 +1,4 @@
-const bodyClasses = "overflow-y-hidden"
-const contentClasses = "flex pt-14 h-[100vh]" 
+const bodyClasses = "overflow-y-hidden flex flex-col"
+const contentClasses = "flex shrink grow max-h-[calc(100%-56px)]" 
 
 export {bodyClasses, contentClasses}

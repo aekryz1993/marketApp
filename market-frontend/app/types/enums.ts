@@ -62,3 +62,8 @@ export enum SizeQuery {
   "xl" = 1280,
   "2xl" = 1536,
 }
+
+export enum NotificationName {
+  Selling = "Selling",
+  Buying = "Buying"
+}

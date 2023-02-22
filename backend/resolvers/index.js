@@ -4,6 +4,7 @@ import Subscription from "./Subscription";
 import User from "./User";
 import Product from "./Product";
 import Image from "./Image";
+import Conversation from "./Conversation";
 
 const resolvers = {
   Query,
@@ -12,6 +13,7 @@ const resolvers = {
   User,
   Product,
   Image,
+  Conversation,
 };
 
 export default resolvers;

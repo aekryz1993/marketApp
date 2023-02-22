@@ -23,7 +23,7 @@ export const ProductImagesSlider = ({
 
   return (
     <ProductSliderProvider>
-      <Container classes={clsx("relative w-full h-full flex flex-col bg-black items-center grow select-none overflow-hidden", isViewProductLocation && "shrink-0 md:shrink h-2/6 md:h-auto")}>
+      <Container classes={clsx("relative w-full h-full flex flex-col bg-black items-center grow select-none overflow-hidden", isViewProductLocation && "shrink-0 md:shrink h-72 md:h-auto")}>
         <Background images={images} />
         <SelectedImage images={images} />
         <Slide images={images} />

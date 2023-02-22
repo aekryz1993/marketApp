@@ -18,5 +18,6 @@
     "tailwindcss",
     "témouchent",
     "typecheck"
-  ]
+  ],
+  "jshint.lintHTML": false
 }

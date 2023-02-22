@@ -20,10 +20,11 @@ export const ProductLayout = ({
     <Container classes={clsx(productSectionClasses)}>
       <Container classes="h-full flex flex-col grow min-w-0 z-0">
         <Container
-          style={{ maxWidth: "calc(100% - 48px)" }}
           classes={clsx(
             productContainerClasses,
-            !isViewProductLocation ? "w-[972px] mx-6 mt-14 mb-8" : "my-4 w-full"
+            !isViewProductLocation
+              ? "w-[972px] mx-6 mt-14 mb-8"
+              : "md:my-4 w-full"
           )}
         >
           {!isViewProductLocation ? (
@@ -33,8 +34,8 @@ export const ProductLayout = ({
           ) : null}
           <Container
             classes={clsx(
-              "flex flex-col md:flex-row grow overflow-hidden basis-0",
-              isViewProductLocation ? "" : "m-4 shrink-0"
+              "flex flex-col md:flex-row md:grow overflow-hidden basis-0",
+              isViewProductLocation ? "" : "md:m-4 shrink-0"
             )}
           >
             {children}

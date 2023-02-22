@@ -5,6 +5,9 @@ export const user = `
     currency: Currency
     profilePicture: Image
     location: Location
+    buyingConversations: [Conversation]
+    sellingConversations: [Conversation]
+    notifications: [Notification]
     createdAt: Date!
     updatedAt: Date!
   }

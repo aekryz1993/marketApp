@@ -14,13 +14,12 @@ import { Container } from "../utilities";
 import { Sidebar } from "../sidebar";
 import { Loader } from "../loader";
 import { Auth } from "../auth";
-import { useBreakPointsContext } from "~/context/breakPoint";
 import { useProductsKey } from "../products/useProductsKey";
 import { isIncludesSidebar } from "~/utils/helpers";
+import { ConversationSectionProvider } from "~/context/conversation-section";
 
 export const Body = ({ children }: { children: React.ReactNode }) => {
   const { authInfo } = useLoaderData<Pick<TRootLoaderData, "authInfo">>();
-  const breakPoint = useBreakPointsContext();
   const { loadingCondition } = useProductsKey(authInfo?.token);
 
   const location = useLocation();
@@ -29,23 +28,15 @@ export const Body = ({ children }: { children: React.ReactNode }) => {
     <body className={bodyClasses}>
       <Header />
       <Container classes={contentClasses}>
-        <>
-          {!breakPoint?.windowWidth ? (
-            <>{children}</>
+        <ConversationSectionProvider userId={authInfo?.user?.id}>
+          {isIncludesSidebar(location.pathname) ? <Sidebar /> : null}
+          {loadingCondition ? (
+            <Loader dimensions="w-40 h-40" />
           ) : (
-            <>
-              {isIncludesSidebar(location.pathname) ? (
-                <Sidebar sizeW={breakPoint?.windowWidth} />
-              ) : null}
-              {loadingCondition ? (
-                <Loader dimensions="w-40 h-40" />
-              ) : (
-                <>{children}</>
-              )}
-              <Auth />
-            </>
+            <>{children}</>
           )}
-        </>
+          <Auth />
+        </ConversationSectionProvider>
       </Container>
       <ScrollRestoration />
       <Scripts />

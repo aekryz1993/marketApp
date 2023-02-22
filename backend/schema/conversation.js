@@ -1,8 +1,8 @@
 export const conversation = `
   type Conversation {
     id: ID!
-    buyerId: String!
-    sellerId: String!
-    productId: String!
+    buyer: User!
+    seller: User!
+    product: Product!
   }
 `;

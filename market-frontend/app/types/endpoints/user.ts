@@ -1,4 +1,6 @@
 import type { Currency, Typename } from "../enums";
+import type { TConversation } from "./conversation";
+import type { TNotification } from "./notification";
 import type { TLocation } from "./product";
 
 export interface TUserBody {
@@ -12,6 +14,9 @@ export interface TUser {
   password?: string;
   location: TLocation;
   currency: Currency;
+  buyingConversations: TConversation[]
+  sellingConversations: TConversation[]
+  notifications: TNotification[]
   __typename?: Typename.User;
 }
 

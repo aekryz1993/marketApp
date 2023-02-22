@@ -13,6 +13,7 @@ import { price } from "./price";
 import { location } from "./location";
 import { message } from "./message";
 import { conversation } from "./conversation";
+import { notification } from "./notification";
 
 const typeDefs = gql`
   scalar Date
@@ -42,6 +43,8 @@ const typeDefs = gql`
   ${message}
 
   ${conversation}
+
+  ${notification}
 `;
 
 export default typeDefs;
