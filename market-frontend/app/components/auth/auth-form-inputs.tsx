@@ -5,8 +5,6 @@ import { useActionData } from "@remix-run/react";
 import { useFieldsWithoutState } from "~/hooks/useFields";
 import { Field } from "../utilities/input";
 import { ErrorMessageField } from "../utilities/typography";
-import { useAuthPortal } from "~/context/auth-portal";
-import { ClosePortalBtn } from "../utilities/close-portal-btn";
 import { useEffect } from "react";
 
 export const AuthFormInputs = ({
@@ -16,7 +14,6 @@ export const AuthFormInputs = ({
 }) => {
   const actionData = useActionData<AuthActionData>();
 
-  const { handleClose } = useAuthPortal();
   const { fieldProps } = useFieldsWithoutState();
 
   useEffect(() => {
@@ -27,7 +24,6 @@ export const AuthFormInputs = ({
 
   return (
     <>
-      <ClosePortalBtn handleCloseEvent={handleClose} />
       <input type="hidden" name="authType" value={currentScreen} />
       <Field
         {...fieldProps({

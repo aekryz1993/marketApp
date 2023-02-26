@@ -1,5 +1,5 @@
 const closeBtnContainer =
-  "absolute top-4 right-4 p-2 rounded-full bg-text-inactive_lt dark:bg-bg-input_dark cursor-pointer hover:bg-bg-sec_hvr_lt dark:hover:bg-bg-sec_hvr_dark";
-const closeBtnIcon = "w-4 h-4";
+  "px-2 shrink-0";
+const closeBtnIcon = "h-8 w-8 cursor-pointer rounded-full bg-neutral-200 p-1 hover:bg-neutral-300 dark:bg-neutral-700 dark:hover:bg-neutral-600";
 
 export { closeBtnContainer, closeBtnIcon };

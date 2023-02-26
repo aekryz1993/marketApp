@@ -10,7 +10,8 @@ import { categories } from "~/utils/helpers";
 export const productsLoader = async ({
   request,
   params,
-}: Pick<LoaderArgs, "request"> & Partial<Pick<LoaderArgs, "params">>) => {
+  isSellerProducts
+}: Pick<LoaderArgs, "request"> & Partial<Pick<LoaderArgs, "params">> & { isSellerProducts?: boolean }) => {
   try {
     const authSession = await getAuthSession(request);
     const token = authSession.getToken();
@@ -18,6 +19,9 @@ export const productsLoader = async ({
     const url = new URL(request.url);
     const search = url.searchParams.get("search");
     const locationId = url.searchParams.get("locationId");
+
+    const formData = new FormData()
+    const ownProducts = isSellerProducts ?? await formData.get('ownProducts');
 
     if (!params || search) {
       const response = await fetchProducts(
@@ -27,6 +31,7 @@ export const productsLoader = async ({
           search: search ?? undefined,
           filterBy: {
             locationId: locationId ? locationId : undefined,
+            ownProducts: (typeof ownProducts === 'boolean' && ownProducts) || ((typeof ownProducts === "string" && ownProducts === 'true') ? true : false)
           },
         },
         token
@@ -58,6 +63,7 @@ export const productsLoader = async ({
         filterBy: {
           category: categoryName,
           locationId: locationId ? locationId : undefined,
+          ownProducts: (typeof ownProducts === "string" && ownProducts === 'true') ? true : false
         },
       },
       token

@@ -14,7 +14,7 @@ const ActionFrom = ({
   children,
 }: {
   actionType?: string;
-  action: string;
+  action?: string;
   reloadDocument?: boolean;
   buttonLabel?: string;
   replace?: boolean;

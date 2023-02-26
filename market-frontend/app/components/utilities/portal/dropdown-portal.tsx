@@ -10,6 +10,7 @@ export const DropdownPortal = ({
   handleClose,
   dropdownFieldRef,
   isOpened,
+  isInheritedWidth = false,
 }: {
   id: string;
   children: React.ReactNode;
@@ -19,6 +20,7 @@ export const DropdownPortal = ({
   rootStyle?: { [key: string]: string };
   dropdownFieldRef: React.RefObject<HTMLDivElement>;
   isOpened: boolean;
+  isInheritedWidth?: boolean;
 }) => {
   const target = useDropdownPortal({
     id,
@@ -27,11 +29,11 @@ export const DropdownPortal = ({
     handleClose,
     dropdownFieldRef,
     isOpened,
+    isInheritedWidth
   });
-  
+
   return ReactDOM.createPortal(children, target);
 };
-
 
 export function canUseDOM() {
   return !!(

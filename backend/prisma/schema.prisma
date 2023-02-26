@@ -64,6 +64,8 @@ model Image {
   height    Int
   product   Product?  @relation(fields: [productId], references: [id])
   productId String?   @db.ObjectId
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 model ImageSrc {
@@ -89,6 +91,7 @@ model Location {
   countryCode String
   products    Product[]
   users       User[]
+  createdAt     DateTime       @default(now())
 }
 
 model Price {
@@ -100,6 +103,7 @@ model Price {
   productOfCurrentPriceId  String?  @unique @db.ObjectId
   productOfPreviousPrice   Product? @relation(name: "PrevioustProductPrice", fields: [productOfPreviousPriceId], references: [id])
   productOfPreviousPriceId String?  @unique @db.ObjectId
+  createdAt     DateTime       @default(now())
 }
 
 model Tag {
@@ -109,6 +113,8 @@ model Tag {
   // productIds String[]  @db.ObjectId
   product   Product? @relation(fields: [productId], references: [id])
   productId String?  @db.ObjectId
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 model Conversation {
@@ -120,6 +126,7 @@ model Conversation {
   sellerId  String    @db.ObjectId
   product   Product   @relation(fields: [productId], references: [id])
   productId String    @db.ObjectId
+  createdAt DateTime  @default(now())
 }
 
 model Message {
@@ -129,14 +136,17 @@ model Message {
   ownerId        String       @db.ObjectId
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   conversationId String       @db.ObjectId
+  createdAt      DateTime     @default(now())
 }
 
 model Notification {
-  id      String           @id @default(auto()) @map("_id") @db.ObjectId
-  counter Int              @default(1)
-  owner   User             @relation(fields: [ownerId], references: [id])
-  ownerId String           @db.ObjectId
-  name    NotificationName
+  id        String           @id @default(auto()) @map("_id") @db.ObjectId
+  counter   Int              @default(1)
+  owner     User             @relation(fields: [ownerId], references: [id])
+  ownerId   String           @db.ObjectId
+  name      NotificationName
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
 }
 
 enum Category {

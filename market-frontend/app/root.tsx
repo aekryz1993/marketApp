@@ -14,7 +14,6 @@ import { SidebarProvider } from "~/context/sidebar";
 import { authAction } from "./ssr/actions/auth.service";
 import { rootLoader } from "./ssr/loaders/root.service";
 import { AuthPortalProvider } from "./context/auth-portal";
-import { ConversationSectionProvider } from "./context/conversation-section";
 
 export const action: ActionFunction = async ({ request }) =>
   authAction({ request });

@@ -13,7 +13,7 @@ async function products(
 ) {
   const owner = userId
     ? filterBy?.ownProducts
-      ? { is: { id: userId } }
+      ? { id: userId }
       : { isNot: { id: userId } }
     : undefined;
 

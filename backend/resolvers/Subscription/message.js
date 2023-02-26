@@ -6,7 +6,7 @@ const messageSent = {
   subscribe: withFilter(
     () => pubsub.asyncIterator(["MESSAGE_SENT"]),
     (payload, variables) => {
-      if (payload.sellerId === variables.clientId) return true;
+      if (payload.to === variables.clientId) return true;
     }
   ),
 };

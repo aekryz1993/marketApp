@@ -120,9 +120,9 @@ const PRODUCT = gql`
             latitude
             longitude
           }
+          createdAt
           updatedAt
           currency
-          createdAt
         }
         previousPrice {
           id

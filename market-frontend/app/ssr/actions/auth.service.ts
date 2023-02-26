@@ -25,8 +25,8 @@ const getFields = ({
   return { fields, fieldErrors };
 };
 
-export const authAction = async ({ request }: Pick<LoaderArgs, "request">) => {
-  const form = await request.formData();
+export const authAction = async ({ request, formData }: Pick<LoaderArgs, "request"> & { formData?: FormData }) => {
+  const form = formData ?? await request.formData();
   const username = form.get("username");
   const password = form.get("password");
   const authType = form.get("authType");
@@ -49,7 +49,7 @@ export const authAction = async ({ request }: Pick<LoaderArgs, "request">) => {
   }
 
   const { fieldErrors, fields } = getFields({ username, password });
-  
+
   if (Object.values(fieldErrors).some(Boolean))
     return loginBadRequest({ fieldErrors, fields });
 

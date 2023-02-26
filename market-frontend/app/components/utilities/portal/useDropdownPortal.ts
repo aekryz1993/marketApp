@@ -24,6 +24,7 @@ export const useDropdownPortal = ({
   handleClose,
   dropdownFieldRef,
   isOpened,
+  isInheritedWidth
 }: {
   id: string;
   rootClasses?: string;
@@ -31,6 +32,7 @@ export const useDropdownPortal = ({
   handleClose: () => void;
   dropdownFieldRef: React.RefObject<HTMLDivElement>;
   isOpened: boolean;
+  isInheritedWidth: boolean
 }) => {
   const rootElemRef = useRef<HTMLDivElement | null>(null);
   const parentElemRef = useRef<Element | null>(null);
@@ -51,7 +53,7 @@ export const useDropdownPortal = ({
     return {
       top: `${boundingClientRect?.bottom ? boundingClientRect?.bottom : 0}px`,
       left: `${boundingClientRect?.left ? boundingClientRect?.left : 0}px`,
-      width: `${dropdownFieldRef.current?.clientWidth}px`,
+      width: !isInheritedWidth ? `${dropdownFieldRef.current?.clientWidth}px` : "",
       transform: "",
       hidden: false,
     };
@@ -102,7 +104,7 @@ export const useDropdownPortal = ({
     } = {
       top: `${boundingClientRect?.bottom ? boundingClientRect?.bottom : 0}px`,
       left: `${boundingClientRect?.left ? boundingClientRect?.left : 0}px`,
-      width: `${dropdownFieldRef.current?.clientWidth}px`,
+      width: !isInheritedWidth ? `${dropdownFieldRef.current?.clientWidth}px` : "",
       transform: isInverse(
         containerRef.current?.clientHeight + containerBoundingClientRect.top,
         boundingClientRect?.bottom,
@@ -121,7 +123,7 @@ export const useDropdownPortal = ({
     };
 
     setPosition((prevState) => ({ ...prevState, ...style }));
-  }, [containerRef, dropdownFieldRef]);
+  }, [containerRef, dropdownFieldRef, isInheritedWidth]);
 
   const stopPropagationChild = useCallback((event: MouseEvent) => {
     event.stopPropagation();
@@ -150,15 +152,14 @@ export const useDropdownPortal = ({
 
     const transform = getTransform(
       containerRef.current.clientHeight +
-        containerRef.current.getBoundingClientRect().top,
+      containerRef.current.getBoundingClientRect().top,
       boundingClientRect.bottom,
       parentElemRef.current.getBoundingClientRect()?.height
     );
 
     parentElemRef.current.setAttribute(
       "style",
-      `top: ${style.top}; left: ${style.left}; width: ${
-        style.width
+      `top: ${style.top}; left: ${style.left}; width: ${style.width
       }; transform: ${transform}; display: ${style.hidden ? "none" : "block"}`
     );
   }, [dropdownFieldRef, id, style, rootClasses, containerRef]);

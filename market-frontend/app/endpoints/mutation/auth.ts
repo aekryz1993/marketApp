@@ -33,9 +33,18 @@ const authFields = `
         id
         username
       }
+      messages {
+        id
+        text
+        ownerId
+        createdAt
+      }
       product {
         id
         title
+        owner {
+          id
+        }
         images {
           id
           alt
@@ -62,9 +71,18 @@ const authFields = `
         id
         username
       }
+      messages {
+        id
+        text
+        ownerId
+        createdAt
+      }
       product {
         id
         title
+        owner {
+          id
+        }
         images {
           id
           alt
@@ -79,6 +97,12 @@ const authFields = `
           amount
           currency
         }
+      }
+      messages {
+        id
+        text
+        ownerId
+        createdAt
       }
     }
     updatedAt

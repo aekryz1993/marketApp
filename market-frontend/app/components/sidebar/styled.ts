@@ -1,5 +1,5 @@
 const containerClasses =
-  "h-[calc(100%-56px)] drop-shadow-lg overflow-y-auto bg-bg-sec_lt dark:bg-bg-sec_dark px-4 pt-4 pb-2 overflow-y-auto flex flex-col gap-4";
+  `drop-shadow-lg overflow-y-auto h-[calc(100%-56px)] bg-bg-sec_lt dark:bg-bg-sec_dark px-4 pt-4 pb-2 overflow-y-auto flex flex-col gap-4`;
 
 const toggledContainerClasses =
   "absolute top-14 w-full max-w-[24rem] transition-transform ease-in-out lg:relative lg:top-0 lg:h-full lg:shrink-0 z-50";

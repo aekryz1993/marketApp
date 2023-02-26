@@ -4,5 +4,7 @@ export const conversation = `
     buyer: User!
     seller: User!
     product: Product!
+    messages: [Message]
+    createdAt: Date!
   }
 `;

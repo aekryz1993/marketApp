@@ -5,7 +5,7 @@ import { flexCenterHorizontally } from "~/components/utilities/common";
 const containerClasses = clsx(
   flexCenterHorizontally,
   "justify-between shrink-0",
-  "px-2 lg:px-4 py-2 bg-bg-sec_lt dark:bg-bg-sec_dark drop-shadow h-14 border-b border-b-gray-100 dark:border-b-gray-900 z-10"
+  `px-2 lg:px-4 py-2 bg-bg-sec_lt dark:bg-bg-sec_dark drop-shadow h-[56px] border-b border-b-gray-100 dark:border-b-gray-900 z-10`
 );
 
 const sideBoxClasses = "md:gap-2 xl:gap-4";

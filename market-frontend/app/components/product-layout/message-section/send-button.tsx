@@ -2,7 +2,6 @@ import type { TConversation } from "~/types/endpoints/conversation";
 
 import { useLocation, useTransition } from "@remix-run/react";
 import clsx from "clsx";
-import { useEffect } from "react";
 
 import { Loader } from "~/components/loader";
 import { Container } from "~/components/utilities";
@@ -36,10 +35,6 @@ export const SendButton = ({
       addConversation({ conversation: productConversation });
     else maximizeConversation({conversationId: productConversation?.id})
   };
-
-  useEffect(() => {
-    
-  }, []);
 
   return (
     <Container classes="py-4">

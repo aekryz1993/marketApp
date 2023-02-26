@@ -1,7 +1,7 @@
 import { createProduct } from "./product.js";
 import { login, refreshToken, checkToken, signup, logout } from "./auth.js";
 import { updateUser } from "./user.js";
-import { sendMessageFromBuyer } from "./message.js";
+import { sendMessageFromBuyer, sendMessageFromSeller } from "./message.js";
 
 const Mutation = {
   createProduct,
@@ -12,6 +12,7 @@ const Mutation = {
   logout,
   updateUser,
   sendMessageFromBuyer,
+  sendMessageFromSeller,
 };
 
 export default Mutation;

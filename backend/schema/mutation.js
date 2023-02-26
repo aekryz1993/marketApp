@@ -15,5 +15,7 @@ export const mutation = `
     updateUser(body: InputUpdateUser): MutationUserResponse
 
     sendMessageFromBuyer(sellerId: String!, productId: String!, messageText: String!): SendMessageResponse
+
+    sendMessageFromSeller(buyerId: String!, productId: String!, messageText: String!): SendMessageResponse
   }
 `;

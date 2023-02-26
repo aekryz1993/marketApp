@@ -40,9 +40,9 @@ const typeDefs = gql`
 
   ${tag}
 
-  ${message}
-
   ${conversation}
+
+  ${message}
 
   ${notification}
 `;

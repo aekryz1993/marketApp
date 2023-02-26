@@ -1,5 +1,6 @@
 import type { TContext } from "./types";
 import type { TConversation } from "~/types/endpoints/conversation";
+import type { TMessage } from "~/types/endpoints/message";
 
 import { createContext, useReducer } from "react";
 
@@ -24,7 +25,7 @@ const ConversationSectionProvider = ({
   children: React.ReactNode;
   userId: string | undefined;
 }) => {
-  const [state, dispatch] = useReducer(reducer, { conversations: [], userId });
+  const [state, dispatch] = useReducer(reducer, { conversations: [] });
 
   const addConversation = ({
     conversation,
@@ -58,52 +59,59 @@ const ConversationSectionProvider = ({
     dispatch({ type: "MAXIMIZE", payload: { conversationId } });
   };
 
+  const addMessage = ({
+    message
+  }: {
+    message: TMessage
+  }) => {
+    dispatch({ type: "ADD_MESSAGE", payload: { message } });
+  };
+
   const value = {
     conversationSectionState: state,
     addConversation,
     removeConversation,
     minimizeConversation,
     maximizeConversation,
+    addMessage,
   };
 
   return (
     <ConversationSectionContext.Provider value={value}>
       {children}
-      {canUseDOM() ? (
+      {canUseDOM() && state.conversations.length > 0 && userId ? (
         <Portal
           id="conversations"
           rootClasses={rootConversationsClasses}
           containerClasses={containerConversationsClasses}
         >
-          {state.conversations.length > 0 &&
-            state.conversations.map((conversationWindow) => {
-              if (!conversationWindow.minimize)
+          {state.conversations.map((conversationWindow) => {
+            if (!conversationWindow.minimize)
+              return (
+                <Conversation
+                  key={conversationWindow.conversation.id}
+                  conversation={conversationWindow.conversation}
+                  userId={userId}
+                  removeConversation={removeConversation}
+                  minimizeConversation={minimizeConversation}
+                />
+              );
+            return null;
+          })}
+          <Container classes="relative flex flex-col gap-2 bottom-8 w-16 items-end">
+            {state.conversations.map((conversationWindow) => {
+              if (conversationWindow.minimize)
                 return (
-                  <Conversation
+                  <MinimizedWindow
                     key={conversationWindow.conversation.id}
                     conversation={conversationWindow.conversation}
-                    userId={state.userId}
                     removeConversation={removeConversation}
-                    minimizeConversation={minimizeConversation}
+                    maximizeConversation={maximizeConversation}
                   />
                 );
               return null;
             })}
-            <Container classes="relative flex flex-col gap-2 bottom-8 w-16 items-end">
-              {state.conversations.length > 0 &&
-                state.conversations.map((conversationWindow) => {
-                  if (conversationWindow.minimize)
-                    return (
-                      <MinimizedWindow
-                        key={conversationWindow.conversation.id}
-                        conversation={conversationWindow.conversation}
-                        removeConversation={removeConversation}
-                        maximizeConversation={maximizeConversation}
-                      />
-                    );
-                  return null;
-                })}
-            </Container>
+          </Container>
         </Portal>
       ) : null}
     </ConversationSectionContext.Provider>

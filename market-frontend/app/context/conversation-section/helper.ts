@@ -1,45 +1,129 @@
-import type { TAddPayload, TConversationWindow, TRemovePayload, TState } from "./types"
+import type {
+  TAddMessagePayload,
+  TAddPayload,
+  TConversationWindow,
+  TRemovePayload,
+  TState,
+} from "./types";
 
-const addConversation = ({ state, payload }: { state: TState, payload: TAddPayload }) => {
-  const minimize = state.conversations.length === 3 ? true : false
+const addConversation = ({
+  state,
+  payload,
+}: {
+  state: TState;
+  payload: TAddPayload;
+}) => {
   return {
     ...state,
-    conversations: state.conversations.length > 0 ? [...state.conversations, { conversation: payload.conversation, minimize }] : [{ conversation: payload.conversation, minimize }]
-  }
-}
+    conversations:
+      state.conversations.length > 0
+        ? [
+            ...state.conversations,
+            { conversation: payload.conversation, minimize: false },
+          ]
+        : [{ conversation: payload.conversation, minimize: false }],
+  };
+};
 
-const removeConversation = ({ state, payload }: { state: TState, payload: TRemovePayload }) => ({
+const removeConversation = ({
+  state,
+  payload,
+}: {
+  state: TState;
+  payload: TRemovePayload;
+}) => ({
   ...state,
-  conversations: state.conversations.filter(conversationWindow => conversationWindow.conversation.id !== payload.conversationId)
-})
+  conversations: state.conversations.filter(
+    (conversationWindow) =>
+      conversationWindow.conversation.id !== payload.conversationId
+  ),
+});
 
-const minimizeConversation = ({ state, payload }: { state: TState, payload: TRemovePayload }) => {
-  const conversationWindow = state.conversations.find(conversationWindow => conversationWindow.conversation.id === payload.conversationId) as TConversationWindow
+const minimizeConversation = ({
+  state,
+  payload,
+}: {
+  state: TState;
+  payload: TRemovePayload;
+}) => {
+  const conversationWindow = state.conversations.find(
+    (conversationWindow) =>
+      conversationWindow.conversation.id === payload.conversationId
+  ) as TConversationWindow;
 
   return {
     ...state,
     conversations: [
-      ...state.conversations.filter(conversationWindow => conversationWindow.conversation.id !== payload.conversationId),
-      { conversation: conversationWindow.conversation, minimize: true }
-    ]
-  }
-}
+      ...state.conversations.filter(
+        (conversationWindow) =>
+          conversationWindow.conversation.id !== payload.conversationId
+      ),
+      { ...conversationWindow, minimize: true },
+    ],
+  };
+};
 
-const maximizeConversation = ({ state, payload }: { state: TState, payload: TRemovePayload }) => {
-  const conversationWindow = state.conversations.find(conversationWindow => conversationWindow.conversation.id === payload.conversationId) as TConversationWindow
+const maximizeConversation = ({
+  state,
+  payload,
+}: {
+  state: TState;
+  payload: TRemovePayload;
+}) => {
+  const conversationWindow = state.conversations.find(
+    (conversationWindow) =>
+      conversationWindow.conversation.id === payload.conversationId
+  ) as TConversationWindow;
 
   return {
     ...state,
     conversations: [
-      ...state.conversations.filter(conversationWindow => conversationWindow.conversation.id !== payload.conversationId),
-      { conversation: conversationWindow.conversation, minimize: false }
-    ]
-  }
-}
+      ...state.conversations.filter(
+        (conversationWindow) =>
+          conversationWindow.conversation.id !== payload.conversationId
+      ),
+      { ...conversationWindow, minimize: false },
+    ],
+  };
+};
+
+const addMessage = ({
+  state,
+  payload,
+}: {
+  state: TState;
+  payload: TAddMessagePayload;
+}) => {
+  const conversationWindow = state.conversations.find(
+    (conversationWindow) =>
+      conversationWindow.conversation.id === payload.message.conversationId
+  ) as TConversationWindow;
+
+  return {
+    ...state,
+    conversations: [
+      ...state.conversations.filter(
+        (conversationWindow) =>
+          conversationWindow.conversation.id !== payload.message.conversationId
+      ),
+      {
+        ...conversationWindow,
+        conversation: {
+          ...conversationWindow.conversation,
+          messages: [
+            { ...payload.message },
+            ...conversationWindow.conversation.messages,
+          ],
+        },
+      },
+    ],
+  };
+};
 
 export {
   addConversation,
   removeConversation,
   minimizeConversation,
-  maximizeConversation
-}
+  maximizeConversation,
+  addMessage,
+};

@@ -121,7 +121,7 @@ const getImageSize: (file: File) => Promise<{
 
 const productsLocations = ['/', ...categories.map(category => `/${category.pathname}`)]
 
-const sidebarLocations = [...productsLocations, '/product']
+const sidebarLocations = [...productsLocations, '/product', '/selling', '/buying', '/inbox']
 
 const isIncludesSidebar = (pathname: string) => pathname.split('/').length <= 3 && sidebarLocations.includes(pathname.split('/').slice(0, 2).join('/'))
 
