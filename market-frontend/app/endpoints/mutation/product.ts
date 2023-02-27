@@ -3,7 +3,7 @@ import type { TProductBody, TProductResponse } from "~/types/endpoints/product";
 
 import { gql } from "@apollo/client";
 
-import { httpClient } from "~/graphql-client";
+import { httpClient } from "~/graphql-client.server";
 
 export const CREATE_PRODUCT = gql`
   mutation CreateProduct($body: InputMutateProduct) {

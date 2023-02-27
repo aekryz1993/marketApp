@@ -1,3 +1,5 @@
+import type { NotificationName } from '../enums';
+import type { TConversation } from './conversation';
 export interface TMessage {
   id: string
   text: string
@@ -22,4 +24,12 @@ export interface TMessageSellerBody extends TMessageBody {
 export interface TSendMessageResponse {
   message: TMessage
   statusCode: number;
+}
+
+export interface TMessageSubscriptionResponse {
+  messageSent: {
+    conversation: TConversation
+    counter: number;
+    name: NotificationName
+  }
 }

@@ -34,7 +34,7 @@ export const ConversationCard = ({
   const conversationUsername =
     conversation.buyer.id === conversationUserId
       ? conversation.buyer.username
-      : conversation.seller.id;
+      : conversation.seller.username;
 
   const lastMessageDate = new Date(conversation.messages[0].createdAt);
 

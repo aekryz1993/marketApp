@@ -24,6 +24,7 @@ export const useDropdownPortal = ({
   handleClose,
   dropdownFieldRef,
   isOpened,
+  translateX,
   isInheritedWidth
 }: {
   id: string;
@@ -32,6 +33,7 @@ export const useDropdownPortal = ({
   handleClose: () => void;
   dropdownFieldRef: React.RefObject<HTMLDivElement>;
   isOpened: boolean;
+  translateX?: string;
   isInheritedWidth: boolean
 }) => {
   const rootElemRef = useRef<HTMLDivElement | null>(null);
@@ -45,7 +47,7 @@ export const useDropdownPortal = ({
         top: "",
         left: "",
         width: "",
-        transform: "",
+        transform: `translate(${translateX ?? 0}, 0)`,
         hidden: false,
       };
     const boundingClientRect = dropdownFieldRef.current.getBoundingClientRect();
@@ -54,7 +56,7 @@ export const useDropdownPortal = ({
       top: `${boundingClientRect?.bottom ? boundingClientRect?.bottom : 0}px`,
       left: `${boundingClientRect?.left ? boundingClientRect?.left : 0}px`,
       width: !isInheritedWidth ? `${dropdownFieldRef.current?.clientWidth}px` : "",
-      transform: "",
+      transform: `translate(${translateX ?? 0}, 0)`,
       hidden: false,
     };
   });
@@ -110,7 +112,7 @@ export const useDropdownPortal = ({
         boundingClientRect?.bottom,
         parentElemBoundingClientRect?.height
       )
-        ? "translate(0, calc(-100% - 54px))"
+        ? `translate(${translateX ?? 0}, calc(-100% - 54px))`
         : "",
       hidden: isHidden(
         containerBoundingClientRect.bottom,
@@ -123,7 +125,7 @@ export const useDropdownPortal = ({
     };
 
     setPosition((prevState) => ({ ...prevState, ...style }));
-  }, [containerRef, dropdownFieldRef, isInheritedWidth]);
+  }, [containerRef, dropdownFieldRef, isInheritedWidth, translateX]);
 
   const stopPropagationChild = useCallback((event: MouseEvent) => {
     event.stopPropagation();
@@ -154,7 +156,8 @@ export const useDropdownPortal = ({
       containerRef.current.clientHeight +
       containerRef.current.getBoundingClientRect().top,
       boundingClientRect.bottom,
-      parentElemRef.current.getBoundingClientRect()?.height
+      parentElemRef.current.getBoundingClientRect()?.height,
+      translateX
     );
 
     parentElemRef.current.setAttribute(
@@ -162,7 +165,7 @@ export const useDropdownPortal = ({
       `top: ${style.top}; left: ${style.left}; width: ${style.width
       }; transform: ${transform}; display: ${style.hidden ? "none" : "block"}`
     );
-  }, [dropdownFieldRef, id, style, rootClasses, containerRef]);
+  }, [dropdownFieldRef, id, style, rootClasses, containerRef, translateX]);
 
   useEffect(() => {
     if (handleClose) {

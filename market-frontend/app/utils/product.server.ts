@@ -33,21 +33,21 @@ const uploadImagesHandler = () => unstable_composeUploadHandlers(
   }
 );
 
-const getProductForm = async ({ request }: Pick<LoaderArgs, "request">) => {
-  const formData = await unstable_parseMultipartFormData(
+const getProductForm = async ({ request, formData }: Pick<LoaderArgs, "request"> & {formData?: FormData}) => {
+  const form = formData ?? await unstable_parseMultipartFormData(
     request,
     uploadImagesHandler()
   );
-  const images = formData.getAll("images") as string[];
-  const tags = formData.getAll("tags") as string[] | null;
-  const title = formData.get('title') as string
-  const description = formData.get('description') as string | null
-  const brand = formData.get('brand') as string | null
-  const locationId = formData.get('locationId') as string
-  const category = formData.get('category') as Category
-  const condition = formData.get('condition') as Condition
-  const currency = formData.get('currency') as Currency
-  const price = formData.get('currentPrice') as string
+  const images = form.getAll("images") as string[];
+  const tags = form.getAll("tags") as string[] | null;
+  const title = form.get('title') as string
+  const description = form.get('description') as string | null
+  const brand = form.get('brand') as string | null
+  const locationId = form.get('locationId') as string
+  const category = form.get('category') as Category
+  const condition = form.get('condition') as Condition
+  const currency = form.get('currency') as Currency
+  const price = form.get('currentPrice') as string
 
   const formattedImages = images.map((image) => JSON.parse(image as string)) as TImagePhoto[]
   const formattedPrice = parseFloat(price.replace(/,/g, ''))

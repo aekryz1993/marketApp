@@ -12,12 +12,13 @@ import { getProductForm } from "~/utils/product.server";
 
 export const createProductAction = async ({
   request,
-}: Pick<LoaderArgs, "request">) => {
+  formData,
+}: Pick<LoaderArgs, "request"> & { formData?: FormData }) => {
   const authSession = await getAuthSession(request);
   try {
     const token = authSession.getToken();
 
-    const { title, description, brand, price, currency, images, tags, locationId, category, condition } = await getProductForm({ request })
+    const { title, description, brand, price, currency, images, tags, locationId, category, condition } = await getProductForm({ request, formData })
 
     if (!title || !price || !currency || images.length <= 0 || !locationId || !category || !condition) return json({ formError: 'Form is not valid' })
 

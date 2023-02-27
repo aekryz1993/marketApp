@@ -3,7 +3,7 @@ import type { FetchResult } from "@apollo/client";
 
 import { gql } from "@apollo/client";
 
-import { httpClient } from "~/graphql-client";
+import { httpClient } from "~/graphql-client.server";
 
 export const LOCATIONS = gql`
   query Locations($search: String!, $pagination: InputPagination) {

@@ -7,7 +7,7 @@ import type { FetchResult } from "@apollo/client";
 
 import { gql } from "@apollo/client";
 
-import { httpClient } from "~/graphql-client";
+import { httpClient } from "~/graphql-client.server";
 
 export const TAKE = 18;
 

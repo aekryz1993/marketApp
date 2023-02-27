@@ -3,6 +3,7 @@ import type { TConversation } from "~/types/endpoints/conversation";
 import { useState } from "react";
 import { useFetcher } from "@remix-run/react";
 import { MinusSmallIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
 
 import { Box, Container } from "~/components/utilities";
 import {
@@ -76,7 +77,7 @@ export const Conversation = ({
         </Container>
         <Container classes={rightHeaderConversationClasses}>
           <MinusSmallIcon
-            className={headerButtonClasses}
+            className={clsx(headerButtonClasses, 'hidden md:block')}
             onClick={handleMinimize}
           />
           <XMarkIcon className={headerButtonClasses} onClick={handleClose} />

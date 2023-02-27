@@ -3,7 +3,7 @@ import type { TMessageBuyerBody, TMessageSellerBody, TSendMessageResponse } from
 
 import { gql } from "@apollo/client";
 
-import { httpClient } from "~/graphql-client";
+import { httpClient } from "~/graphql-client.server";
 
 export const SEND_MESSAGE_BUYER = gql`
   mutation SendMessageFromBuyer($sellerId: String!, $productId: String!, $messageText: String!) {

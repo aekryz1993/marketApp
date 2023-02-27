@@ -1,8 +1,10 @@
-import type { TContext } from "./types";
+import type { TContext, TMessageSubscriptionResponseData } from "./types";
 import type { TConversation } from "~/types/endpoints/conversation";
 import type { TMessage } from "~/types/endpoints/message";
+import type { TRootLoaderData } from "~/types/data";
 
 import { createContext, useReducer } from "react";
+import { useSubscription } from "@apollo/client";
 
 import { reducer } from "./reducer";
 import { Portal, canUseDOM } from "~/components/portal";
@@ -13,6 +15,8 @@ import {
 } from "./styled";
 import { MinimizedWindow } from "./minimized-conversation";
 import { Container } from "~/components/utilities";
+import { MESSAGE_SENT } from "~/endpoints/subscription/message";
+import { useLoaderData } from "@remix-run/react";
 
 const ConversationSectionContext = createContext<TContext | undefined>(
   undefined
@@ -25,7 +29,22 @@ const ConversationSectionProvider = ({
   children: React.ReactNode;
   userId: string | undefined;
 }) => {
+  const { authInfo } = useLoaderData<TRootLoaderData>();
+
   const [state, dispatch] = useReducer(reducer, { conversations: [] });
+
+  useSubscription(MESSAGE_SENT, {
+    variables: { clientId: authInfo?.user?.id },
+    context: {
+      connectionParams: {
+        Authorization: authInfo?.token ? `Bearer ${authInfo.token}` : null,
+      },
+    },
+    onData: (response: TMessageSubscriptionResponseData) => {
+      const conversation = response.data.data?.messageSent.conversation;
+      if (conversation) dispatch({ type: "ADD", payload: { conversation } });
+    },
+  });
 
   const addConversation = ({
     conversation,
@@ -59,11 +78,7 @@ const ConversationSectionProvider = ({
     dispatch({ type: "MAXIMIZE", payload: { conversationId } });
   };
 
-  const addMessage = ({
-    message
-  }: {
-    message: TMessage
-  }) => {
+  const addMessage = ({ message }: { message: TMessage }) => {
     dispatch({ type: "ADD_MESSAGE", payload: { message } });
   };
 
@@ -98,7 +113,7 @@ const ConversationSectionProvider = ({
               );
             return null;
           })}
-          <Container classes="relative flex flex-col gap-2 bottom-8 w-16 items-end">
+          <Container classes="hidden relative md:flex flex-col gap-2 bottom-8 w-16 items-end">
             {state.conversations.map((conversationWindow) => {
               if (conversationWindow.minimize)
                 return (

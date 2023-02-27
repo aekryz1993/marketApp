@@ -52,13 +52,13 @@ export const SellingItem = ({ product }: { product: TProduct }) => {
         </Container>
         <Container classes="flex flex-col justify-between md:justify-start items-start ml-4 grow shrink w-full self-stretch">
           <Box classes={textContainerClasses}>
-            <h1 className={clsx(textClasses, "text-xl font-bold")}>
+            <h1 className={clsx(textClasses, "md:text-xl font-bold")}>
               {product.title}
             </h1>
           </Box>
           <Container classes="w-full md:mt-2">
             <Box classes={textContainerClasses}>
-              <p className={clsx(textClasses)}>
+              <p className={clsx(textClasses, "text-sm md:text-base")}>
                 {`${currentPrice?.amount} ${currency}`}
               </p>
             </Box>

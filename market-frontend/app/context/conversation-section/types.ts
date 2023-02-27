@@ -1,5 +1,6 @@
+import type { OnDataOptions } from "@apollo/client";
 import type { TConversation } from "~/types/endpoints/conversation";
-import type { TMessage } from "~/types/endpoints/message";
+import type { TMessage, TMessageSubscriptionResponse } from "~/types/endpoints/message";
 import type { TDispatch } from "~/types/helper";
 
 export interface TConversationWindow {
@@ -43,3 +44,5 @@ export interface TContext {
   maximizeConversation: TDispatch;
   addMessage: TDispatch;
 }
+
+export type TMessageSubscriptionResponseData = OnDataOptions<TMessageSubscriptionResponse>

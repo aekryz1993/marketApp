@@ -13,14 +13,24 @@ const addConversation = ({
   state: TState;
   payload: TAddPayload;
 }) => {
+  const existConversation = state.conversations.find(conversationWindow => conversationWindow.conversation.id === payload.conversation.id)
+
+  if (existConversation) {
+    const conversation = { ...existConversation, conversation: { ...existConversation.conversation, messages: [payload.conversation.messages[0], ...existConversation.conversation.messages] }, minimize: false }
+
+    return {
+      ...state,
+      conversations: [...state.conversations.filter(conversationWindow => conversationWindow.conversation.id !== payload.conversation.id), conversation]
+    }
+  }
   return {
     ...state,
     conversations:
       state.conversations.length > 0
         ? [
-            ...state.conversations,
-            { conversation: payload.conversation, minimize: false },
-          ]
+          ...state.conversations,
+          { conversation: payload.conversation, minimize: false },
+        ]
         : [{ conversation: payload.conversation, minimize: false }],
   };
 };

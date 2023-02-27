@@ -1,5 +1,3 @@
-import type { DefaultOptions } from "@apollo/client";
-
 import { RemixBrowser } from "@remix-run/react";
 import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
@@ -9,24 +7,41 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 import { getInitialNamespaces } from "remix-i18next";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { createClient } from "graphql-ws";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { HttpLink, split } from "@apollo/client";
 
 import i18n from "./i18n";
 import { BreakPointProvider } from "./context/breakPoint";
+import { defaultOptions } from "./graphql-client.server";
 
 function Client() {
-  const defaultOptions: DefaultOptions = {
-    watchQuery: {
-      fetchPolicy: "no-cache",
-      errorPolicy: "ignore",
+  const wsLink = new GraphQLWsLink(
+    createClient({
+      webSocketImpl: WebSocket,
+      url: window?.__ENV__?.WS_ENDPOINT ?? "ws://127.0.0.1:4000/subscription",
+    })
+  );
+
+  const httpLink = new HttpLink({
+    uri: window?.__ENV__?.HTTP_ENDPOINT ?? "http://127.0.0.1:4000/graphql",
+  });
+
+  const splitLink = split(
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return (
+        definition.kind === "OperationDefinition" &&
+        definition.operation === "subscription"
+      );
     },
-    query: {
-      fetchPolicy: "no-cache",
-      errorPolicy: "all",
-    },
-  };
+    wsLink,
+    httpLink
+  );
 
   const client = new ApolloClient({
-    uri: window?.__ENV__?.HTTP_ENDPOINT ?? "http://127.0.0.1:4000/graphql",
+    link: splitLink,
     cache: new InMemoryCache().restore(window.__APOLLO_STATE__),
     defaultOptions,
   });

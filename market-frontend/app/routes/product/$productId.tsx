@@ -14,7 +14,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();
   const authType = formData.get("authType");
   if (typeof authType === "string") return authAction({ request, formData });
-  return sendMessageFromBuyerAction({ request, params });
+  return sendMessageFromBuyerAction({ request, params, formData });
 };
 
 export default function ProductPage() {

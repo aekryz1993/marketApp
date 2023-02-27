@@ -19,12 +19,13 @@ const isInverse = (
 const getTransform = (
   containerHeight: number,
   dropdownFieldBottom: number,
-  parentHeight: number | undefined
+  parentHeight: number | undefined,
+  translateX?: string
 ) =>
   isInverse(containerHeight, dropdownFieldBottom, parentHeight)
-    ? "translate(0, calc(-100% - 54px))"
-    : "";
-
+    ? `translate(${translateX ?? 0}, calc(-100% - 54px))`
+    : `translate(${translateX ?? 0}, 0)`;
+    
 const isHidden = (
   containerBottom: number,
   dropdownFieldTop: number,

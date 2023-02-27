@@ -32,7 +32,7 @@ export const Account = ({
       </Box>
       <Dropdown isOpened={isOpened} handleClose={handleClose}>
         <DropdownHeader postMessage={postMessage} handleClose={handleClose} />
-        <DropdownItems />
+        <DropdownItems handleClose={handleClose} />
       </Dropdown>
     </Container>
   );

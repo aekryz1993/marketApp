@@ -4,7 +4,7 @@ import type { FetchResult } from "@apollo/client";
 import { gql } from "@apollo/client";
 
 import { setContext } from "~/utils/helpers";
-import { httpClient } from "~/graphql-client";
+import { httpClient } from "~/graphql-client.server";
 
 const authFields = `
   user {

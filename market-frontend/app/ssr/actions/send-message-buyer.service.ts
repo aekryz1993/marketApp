@@ -10,10 +10,11 @@ import { getAuthSession } from "~/utils/auth.server";
 
 export const sendMessageFromBuyerAction = async ({
   request,
-  params
-}: Pick<LoaderArgs, "request" | "params">) => {
+  params,
+  formData
+}: Pick<LoaderArgs, "request" | "params"> & { formData?: FormData }) => {
   const authSession = await getAuthSession(request);
-  const form = await request.formData();
+  const form = formData ?? await request.formData();
   const sellerId = form.get("sellerId");
   const messageText = form.get("messageText");
   const productIdField = form.get("productId");
@@ -26,7 +27,6 @@ export const sendMessageFromBuyerAction = async ({
     const token = authSession.getToken();
 
     const messageResponse = await sendMessageFromBuyer({ sellerId, productId, messageText }, token)
-    console.log(messageResponse?.data?.sendMessageFromBuyer)
 
     if (messageResponse?.data?.sendMessageFromBuyer.statusCode === 200) {
       return json({ message: messageResponse.data.sendMessageFromBuyer.message })

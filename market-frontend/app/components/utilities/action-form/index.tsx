@@ -1,8 +1,8 @@
 import { Form } from "@remix-run/react";
+import clsx from "clsx";
 
 import { PrimaryButton } from "../button";
 import { formClasses, submitBtn } from "./styled";
-import clsx from "clsx";
 
 const ActionFrom = ({
   actionType,
