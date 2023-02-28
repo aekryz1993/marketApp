@@ -26,7 +26,7 @@ const locationSearchIconInputClasses =
 
 const locationApplyButtonContainerClasses = "w-full px-4 py-2";
 const locationApplyButtonClasses =
-  "float-right px-4 py-2 rounded-md bg-bg-sel_lt bg-bg-sel_dark hover:bg-btn-hvr_lt dark:hover:bg-btn-hvr_lt text-white font-bold";
+  "float-right px-4 py-2 rounded-md text-white font-bold";
 
 export {
   containerClasses,

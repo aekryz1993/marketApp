@@ -71,7 +71,7 @@ export const LocationForm = ({ handleClose }: { handleClose: () => void }) => {
         />
       </Box>
       <Box classes={locationApplyButtonContainerClasses}>
-        <PrimaryButton type="submit" className={locationApplyButtonClasses}>
+        <PrimaryButton type="submit" classes={locationApplyButtonClasses}>
           {transition.state === "submitting" ? (
             <div className="h-5 w-5 animate-spin rounded-full border border-l-4" />
           ) : (

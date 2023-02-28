@@ -19,7 +19,7 @@ const profileHeaderTopClasses = "flex items-center gap-8";
 const logoutClasses = "text-btn-light-pry dark:text-btn-dark-pry";
 
 const authBoxClasses =
-  "rounded py-1 px-2 hover:bg-bg-sel_lt dark:hover:bg-bg-sel_dark";
+  "rounded py-1 px-2 hover:bg-bg-light-hover dark:hover:bg-bg-dark-hover";
 
 const authTextClasses =
   "text-btn-light-pry dark:text-btn-dark-pry hover:text-btn-light-hover dark:hover:text-btn-dark-hover font-semibold tracking-wider text-md";

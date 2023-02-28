@@ -21,7 +21,7 @@ export const sendMessageFromBuyerAction = async ({
 
   const productId = params.productId ?? productIdField
 
-  if (typeof sellerId !== "string" || typeof messageText !== "string" || typeof productId !== "string") return json({ fieldErrors: "Form not submitted correctly." })
+  if (typeof sellerId !== "string" || typeof messageText !== "string" || typeof productId !== "string") return json({ formError: "Form not submitted correctly." })
 
   const token = authSession.getToken();
 

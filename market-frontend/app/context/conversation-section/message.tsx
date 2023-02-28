@@ -12,7 +12,7 @@ export const Message = ({
   return (
     <Box
       classes={clsx(
-        "px-4 py-2 rounded-3xl w-full bg-bg-sel_lt max-w-[200px] dark:bg-bg-sel_dark",
+        "px-4 py-2 rounded-3xl w-full bg-btn-light-pry max-w-[200px] dark:bg-btn-dark-pry",
         isSender ? "self-end mr-6" : "float-start ml-2"
       )}
     >

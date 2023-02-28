@@ -6,17 +6,15 @@ import { fetchProduct } from "~/endpoints/query/products";
 export const productLoader = async ({
   params,
 }: Pick<LoaderArgs, "params">) => {
+  const productId = params?.productId
+  if (!productId) return json({ formError: 'product id must be provided' })
   try {
-    const productId = params?.productId
-    if (!productId) return json({ error: 'product id must be provided' })
-
     const productResponse = await fetchProduct(productId)
-    
     if (productResponse?.data?.product.statusCode === 200) {
       return json({ product: productResponse.data.product.product })
     }
   } catch (error: any) {
     console.error(error)
-    return json({ error: error.message });
+    throw new Response(null, { status: 500, statusText: error.message });
   }
 };

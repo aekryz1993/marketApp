@@ -89,7 +89,7 @@ export const MessageFieldSection = ({
         <PaperAirplaneIcon
           className={clsx(
             "h-7 w-7",
-            text ? "text-bg-sel_lt dark:text-bg-sel_dark" : "text-neutral-500"
+            text ? "text-btn-light-pry dark:text-btn-dark-pry" : "text-icon-light-sec dark:text-icon-dark-pry"
           )}
         />
       </Box>

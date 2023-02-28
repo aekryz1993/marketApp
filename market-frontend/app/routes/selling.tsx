@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "@remix-run/node";
 import type { TRootLoaderData } from "~/types/data";
 
-import { useOutletContext } from "@remix-run/react";
+import { useCatch, useOutletContext } from "@remix-run/react";
 
 import { Selling } from "~/components/selling";
 import { ProductsProvider } from "~/context/products";
@@ -20,5 +20,17 @@ export default function SellingPage() {
     <ProductsProvider>
       <Selling />
     </ProductsProvider>
+  );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+
+  return (
+    <div>
+      <h1>
+        {caught.status} {caught.statusText}
+      </h1>
+    </div>
   );
 }

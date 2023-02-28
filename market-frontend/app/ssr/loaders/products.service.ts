@@ -12,18 +12,18 @@ export const productsLoader = async ({
   params,
   isSellerProducts
 }: Pick<LoaderArgs, "request"> & Partial<Pick<LoaderArgs, "params">> & { isSellerProducts?: boolean }) => {
-  try {
-    const authSession = await getAuthSession(request);
-    const token = authSession.getToken();
+  const authSession = await getAuthSession(request);
+  const token = authSession.getToken();
 
-    const url = new URL(request.url);
-    const search = url.searchParams.get("search");
-    const locationId = url.searchParams.get("locationId");
+  const url = new URL(request.url);
+  const search = url.searchParams.get("search");
+  const locationId = url.searchParams.get("locationId");
 
-    const formData = new FormData()
-    const ownProducts = isSellerProducts ?? await formData.get('ownProducts');
+  const formData = new FormData()
+  const ownProducts = isSellerProducts ?? await formData.get('ownProducts');
 
-    if (!params || search) {
+  if (!params || search) {
+    try {
       const response = await fetchProducts(
         {
           pagination: { skip: 0, take: TAKE },
@@ -36,26 +36,26 @@ export const productsLoader = async ({
         },
         token
       );
-
-
-
       if (response.data?.products.statusCode === 200) {
         const { statusCode, ...data } = response.data.products;
         return json({ ...data, token });
       }
-      throw new Response("Failed to retrieve products", { status: 400 });
     }
-
-    const category = categories.find(
-      (category) => category.pathname === params.category
-    );
-
-    const categoryName: Category = category?.name || Category.NOT_FOUND;
-
-    if (categoryName === Category.NOT_FOUND) {
-      throw new Response(null, { status: 404 });
+    catch (error: any) {
+      throw new Response(null, { status: 500, statusText: error.message });
     }
+    throw new Response(null, { status: 500, statusText: "Failed to fetch products." });
+  }
+  const category = categories.find(
+    (category) => category.pathname === params.category
+  );
 
+  const categoryName: Category = category?.name || Category.NOT_FOUND;
+
+  if (categoryName === Category.NOT_FOUND) {
+    throw new Response(null, { status: 404, statusText: "Page not found." });
+  }
+  try {
     const response = await fetchProducts(
       {
         pagination: { skip: 0, take: TAKE },
@@ -74,7 +74,6 @@ export const productsLoader = async ({
       return json({ ...data, categoryName });
     }
   } catch (error: any) {
-    if (error.status === 404) throw new Response(null, { status: error.status, statusText: "Page not found." });
-    throw new Response(null, { statusText: error.message });
+    throw new Response(null, { status: 500, statusText: error.message });
   }
 };
