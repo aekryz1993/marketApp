@@ -5,6 +5,9 @@ import clsx from "clsx";
 import {
   cancelBtnDarkClasses,
   cancelBtnLightClasses,
+  deemphasizedBtnDarkClasses,
+  deemphasizedBtnLightClasses,
+  buttonClasses,
   primaryBtnDarkClasses,
   primaryBtnLightClasses,
 } from "./styled";
@@ -15,9 +18,26 @@ const PrimaryButton = (props: TButtonProps) => {
     <button
       {...buttonProps}
       className={clsx(
-        classes,
+        classes ? classes : buttonClasses,
         primaryBtnLightClasses,
         primaryBtnDarkClasses,
+        className
+      )}
+    >
+      {children}
+    </button>
+  );
+};
+
+const DeemphasizedButton = (props: TButtonProps) => {
+  const { children, classes, className, ...buttonProps } = props;
+  return (
+    <button
+      {...buttonProps}
+      className={clsx(
+        classes ? classes : buttonClasses,
+        deemphasizedBtnLightClasses,
+        deemphasizedBtnDarkClasses,
         className
       )}
     >
@@ -43,4 +63,4 @@ const CancelButton = (props: TButtonProps) => {
   );
 };
 
-export { PrimaryButton, CancelButton };
+export { PrimaryButton, CancelButton, DeemphasizedButton };

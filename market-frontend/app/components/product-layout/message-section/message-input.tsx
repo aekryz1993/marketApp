@@ -10,7 +10,7 @@ export const MessageInput = () => {
       <textarea
         name="messageText"
         className={clsx(
-          "w-full resize-none rounded-lg border border-gray-300 bg-bg-pry_lt py-2 pl-2 outline-none focus:border-2 focus:border-btn-hvr_lt dark:border-gray-700 dark:bg-bg-pry_dark dark:focus:border-btn-hvr_dark"
+          "w-full resize-none rounded-lg border border-gray-300 bg-bg-light-pry py-2 pl-2 outline-none focus:border-2 focus:border-btn-hvr_lt dark:border-gray-700 dark:bg-bg-dark-pry dark:focus:border-btn-hvr_dark"
         )}
         rows={1}
         value={text}

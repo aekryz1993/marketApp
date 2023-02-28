@@ -23,18 +23,17 @@ export const sendMessageFromBuyerAction = async ({
 
   if (typeof sellerId !== "string" || typeof messageText !== "string" || typeof productId !== "string") return json({ fieldErrors: "Form not submitted correctly." })
 
-  try {
-    const token = authSession.getToken();
+  const token = authSession.getToken();
 
+  try {
     const messageResponse = await sendMessageFromBuyer({ sellerId, productId, messageText }, token)
 
     if (messageResponse?.data?.sendMessageFromBuyer.statusCode === 200) {
       return json({ message: messageResponse.data.sendMessageFromBuyer.message })
     }
-
-    return json({ error: 'failed to send the message' })
-  } catch (error: unknown) {
-    console.error(error);
-    return json(error)
+    throw new Error("failed to send the message")
+  } catch (error: any) {
+    console.log(error)
+    throw new Response(null, { status: 500, statusText: error.message })
   }
 };

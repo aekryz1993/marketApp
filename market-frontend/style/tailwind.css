@@ -3,19 +3,19 @@
 @tailwind utilities;
 
 html {
-  --text-colour: #050505;
-  --background-colour: #f1f2f5;
+  --text-color: #050505;
+  --background-color: #F0F2F5;
   --base-font-size: 16px;
 
-  color: var(--text-colour);
-  background-color: var(--background-colour);
+  color: var(--text-color);
+  background-color: var(--background-color);
   font-family: Helvetica, Arial, sans-serif;
   font-size: var(--base-font-size);
 }
 
 html.dark {
-  --text-colour: #e4e6eb;
-  --background-colour: #18191a;
+  --text-color: #E4E6EB;
+  --background-color: #18191A;
 }
 
 :root,

@@ -1,4 +1,4 @@
-const cartClasses = "rounded-lg w-full p-4 bg-bg-sec_lt dark:bg-bg-sec_dark drop-shadow"
+const cartClasses = "rounded-lg w-full p-4 bg-bg-light-sec dark:bg-bg-dark-sec drop-shadow"
 
 const textContainerClasses = "w-full"
 

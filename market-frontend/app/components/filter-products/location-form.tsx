@@ -15,6 +15,7 @@ import { OLMap } from "../utilities/ol-map";
 import { LocationSearch } from "./location-search";
 import { Box } from "../utilities";
 import { productsLocations } from "~/utils/helpers";
+import { PrimaryButton } from "../utilities/button";
 
 export const LocationForm = ({ handleClose }: { handleClose: () => void }) => {
   const location = useLocation();
@@ -70,13 +71,13 @@ export const LocationForm = ({ handleClose }: { handleClose: () => void }) => {
         />
       </Box>
       <Box classes={locationApplyButtonContainerClasses}>
-        <button type="submit" className={locationApplyButtonClasses}>
+        <PrimaryButton type="submit" className={locationApplyButtonClasses}>
           {transition.state === "submitting" ? (
             <div className="h-5 w-5 animate-spin rounded-full border border-l-4" />
           ) : (
             "Apply"
           )}
-        </button>
+        </PrimaryButton>
       </Box>
     </Form>
   );

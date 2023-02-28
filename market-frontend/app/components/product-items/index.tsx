@@ -33,9 +33,11 @@ export type TProductProp = Required<Pick<TProductBody, "title">> &
 export const ProductItems = ({ product }: { product: TProductProp }) => {
   const { authInfo } = useOutletContext<Pick<TRootLoaderData, "authInfo">>();
 
+  const userId = authInfo?.user?.id;
+
   return (
     <>
-      <Container classes="py-4 border-b border-b-gray-200 dark:border-b-gray-700 md:overflow-y-auto md:overscroll-y-contain">
+      <Container classes="py-4 border-b border-b-border-light-pry dark:border-b-border-dark-pry md:overflow-y-auto md:overscroll-y-contain">
         <div>
           <Title title={product.title} />
           <Price price={product.currentPrice} currency={product.currency} />
@@ -55,7 +57,9 @@ export const ProductItems = ({ product }: { product: TProductProp }) => {
           <LocationMap location={product.location} />
         </div>
       </Container>
-      {!!authInfo && <MessageSection product={product} />}
+      {((!!userId && userId !== product.owner?.id)) && (
+        <MessageSection product={product} />
+      )}
     </>
   );
 };

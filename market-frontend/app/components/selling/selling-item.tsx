@@ -73,7 +73,7 @@ export const SellingItem = ({ product }: { product: TProduct }) => {
         </Container>
         <Container classes="relative shrink-0">
           <div
-            className="cursor-pointer rounded-lg px-4 py-3 hover:bg-gray-100 dark:hover:bg-zinc-700"
+            className="cursor-pointer rounded-lg px-4 py-3 hover:bg-icon-light-hover dark:hover:bg-icon-dark-hover"
             ref={controllerRef}
             onClick={handleClick}
           >

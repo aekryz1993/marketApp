@@ -47,7 +47,7 @@ const DropdownField = ({
         <DropdownPortal
           id="dropdown-input"
           rootClasses={clsx(
-            "fixed shadow-3xl z-50 rounded-lg bg-bg-sec_lt dark:bg-bg-sec_dark p-0.5 overflow-y-auto"
+            "fixed shadow-3xl z-50 rounded-lg bg-bg-light-sec dark:bg-bg-dark-sec p-0.5 overflow-y-auto"
           )}
           dropdownFieldRef={dropdownFieldRef}
           containerClasses="flex flex-col w-full max-h-[40vh]"
@@ -70,7 +70,7 @@ const DropdownOption = ({
 }) => {
   return (
     <div
-      className="cursor-pointer rounded-lg py-2 text-center hover:bg-bg-pry_hvr_lt dark:hover:bg-bg-pry_hvr_dark"
+      className="cursor-pointer rounded-lg py-2 text-center hover:bg-bg-light-hover dark:hover:bg-bg-dark-hover"
       onClick={onClick}
     >
       {children}

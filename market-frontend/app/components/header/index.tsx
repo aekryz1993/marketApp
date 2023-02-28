@@ -1,7 +1,7 @@
 import { useTheme } from "~/context/theme";
 import { Box, Container } from "../utilities";
 import { Account } from "./account";
-import { Bag } from "./bag";
+// import { Bag } from "./bag";
 import { DisplayNav } from "./display-nav";
 import { Logo } from "./logo";
 import { containerClasses, leftBoxClasses, rightBoxClasses } from "./styled";
@@ -23,7 +23,7 @@ export const Header = () => {
         </Box>
         <Box classes={rightBoxClasses}>
           <Account postMessage={postMessage} />
-          <Bag />
+          {/* <Bag /> */}
         </Box>
       </Container>
   );

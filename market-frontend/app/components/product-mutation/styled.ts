@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 const leftContainerClasses =
-  "w-full max-w-full min-w-0 shrink-0 md:w-[360px] bg-bg-sec_lt dark:bg-bg-sec_dark flex flex-col z-10 drop-shadow";
+  "w-full max-w-full min-w-0 shrink-0 md:w-[360px] bg-bg-light-sec dark:bg-bg-dark-sec flex flex-col z-10 drop-shadow";
 
 const formContainerClasses =
   "px-2 pb-2 flex flex-col gap-2 overflow-y-auto overscroll-contain";

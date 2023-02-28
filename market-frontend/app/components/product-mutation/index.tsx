@@ -24,7 +24,7 @@ export const ProductMutation = () => {
               <ImagesSection />
               <FieldsSection />
             </div>
-            <Container classes="basis-1/12 shrink-0 border-t border-t-gray-300 dark:border-t-gray-50 px-4 py-2">
+            <Container classes="basis-1/12 shrink-0 border-t border-t-border-light-pry dark:border-t-border-dark-pry px-4 py-2">
               <SubmissionSection />
             </Container>
           </Container>

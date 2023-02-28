@@ -24,7 +24,7 @@ export const ProductMessages = ({
       handleClose={handleClose}
     >
       <Container classes="w-full h-full overflow-hidden">
-        <Container classes="flex items-center py-4 border-b border-b-neutral-200 dark:border-b-neutral-700">
+        <Container classes="flex items-center py-4 border-b border-b-border-light-pry dark:border-b-border-dark-pry">
           <Box classes="w-full flex items-center justify-center">
             <h1 className={clsx(textClasses, "select-none text-xl font-bold tracking-wide antialiased")}>
               Product Messages

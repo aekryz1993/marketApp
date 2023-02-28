@@ -18,15 +18,11 @@ export const ProductItemsLayout = ({
     <Container
       classes={clsx(
         productInfoSideClasses,
-        isViewProductLocation
-          ? "md:basis-[360px] md:shrink-0 h-4/6 md:h-auto"
-          : "basis-[360px]"
+        isViewProductLocation && "h-4/6 md:h-auto"
       )}
     >
       <Container classes="flex flex-col md:shrink-0 w-full min-h-0">
-        <Container classes={productInfoContainerClasses}>
-          {children}
-        </Container>
+        <Container classes={productInfoContainerClasses}>{children}</Container>
       </Container>
     </Container>
   );

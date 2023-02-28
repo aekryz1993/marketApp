@@ -2,9 +2,9 @@ import type { TInputState } from "./type";
 
 import clsx from "clsx";
 
-const primaryInputLightClasses = "bg-bg-input_lt";
+const primaryInputLightClasses = "bg-input-light-sec";
 
-const primaryInputDarkClasses = "dark:bg-bg-input_dark";
+const primaryInputDarkClasses = "dark:bg-input-dark-sec";
 
 const labelClasses = "block text-base md:text-xl pb-2";
 
@@ -12,11 +12,11 @@ const inputClasses = "w-full rounded-lg bg-transparent p-3.5"
 
 const inputBlurClasses = "border border-gray-300 dark:border-gray-600"
 
-const inputFocusClasses = "border border-gray-900 dark:border-gray-50 outline-text-active_lt outline-2 dark:outline-text-active_dark pt-6 outline outline-offset-1"
+const inputFocusClasses = "border border-gray-900 dark:border-gray-50 outline-btn-light-pry outline-2 dark:outline-btn-dark-pry pt-6 outline outline-offset-1"
 
 const inputLabelClasses = "absolute left-3 transition-all"
 
-const inputLabelFocusClasses = "top-1 text-sm text-text-tag_lt dark:text-text-active_dark"
+const inputLabelFocusClasses = "top-1 text-sm text-btn-light-pry dark:text-btn-dark-pry"
 
 const inputLabelBlurClasses = "text-gray-500"
 

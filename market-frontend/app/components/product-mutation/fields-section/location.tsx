@@ -80,7 +80,7 @@ export const LocationField = () => {
               <DropdownPortal
                 id="location-search"
                 rootClasses={clsx(
-                  "fixed shadow-3xl z-50 rounded-lg bg-bg-sec_lt dark:bg-bg-sec_dark p-0.5 overflow-y-auto"
+                  "fixed shadow-3xl z-50 rounded-lg bg-bg-light-sec dark:bg-bg-dark-sec p-0.5 overflow-y-auto"
                 )}
                 containerClasses="flex flex-col w-full max-h-[40vh]"
                 dropdownFieldRef={fieldRef}

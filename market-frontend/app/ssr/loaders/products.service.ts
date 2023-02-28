@@ -43,7 +43,7 @@ export const productsLoader = async ({
         const { statusCode, ...data } = response.data.products;
         return json({ ...data, token });
       }
-      throw new Error("Failed to retrieve products");
+      throw new Response("Failed to retrieve products", { status: 400 });
     }
 
     const category = categories.find(
@@ -53,7 +53,7 @@ export const productsLoader = async ({
     const categoryName: Category = category?.name || Category.NOT_FOUND;
 
     if (categoryName === Category.NOT_FOUND) {
-      throw new Error("Page not found.");
+      throw new Response(null, { status: 404 });
     }
 
     const response = await fetchProducts(
@@ -74,6 +74,7 @@ export const productsLoader = async ({
       return json({ ...data, categoryName });
     }
   } catch (error: any) {
-    return json({ error: error.message });
+    if (error.status === 404) throw new Response(null, { status: error.status, statusText: "Page not found." });
+    throw new Response(null, { statusText: error.message });
   }
 };

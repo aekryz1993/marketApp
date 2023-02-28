@@ -98,7 +98,6 @@ export const authAction = async ({ request, formData }: Pick<LoaderArgs, "reques
       }
     }
   } catch (error: any) {
-    console.log(error);
     return loginBadRequest({
       formError: error.message,
     });

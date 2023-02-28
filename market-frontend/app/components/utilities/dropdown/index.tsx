@@ -37,7 +37,7 @@ const Dropdown = ({
               ? classes
               : i18n.dir(i18n.language) === "rtl"
               ? "translate-x-3/4"
-              : "-translate-x-3/4"
+              : "-translate-x-[80%]"
           )}
           ref={containerRef}
         >

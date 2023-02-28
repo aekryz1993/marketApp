@@ -1,26 +1,16 @@
-import type { AuthActionData } from "~/types/data";
-
-import { useActionData } from "@remix-run/react";
-
 import { useFieldsWithoutState } from "~/hooks/useFields";
 import { Field } from "../utilities/input";
 import { ErrorMessageField } from "../utilities/typography";
-import { useEffect } from "react";
+import { useReloadPageAfterAuth } from "~/hooks/useReloadPageAfterAuth";
 
 export const AuthFormInputs = ({
   currentScreen,
 }: {
   currentScreen: string;
 }) => {
-  const actionData = useActionData<AuthActionData>();
-
   const { fieldProps } = useFieldsWithoutState();
 
-  useEffect(() => {
-    if (actionData?.success) {
-      location.reload();
-    }
-  }, [actionData?.success]);
+  const actionData = useReloadPageAfterAuth();
 
   return (
     <>

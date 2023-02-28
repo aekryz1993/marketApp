@@ -17,7 +17,7 @@ async function getConversation(
   { senderId, receiverIdName, receiverIdValue, productId },
   { prisma, userId },
 ) {
-  let conversation = await prisma.conversation.findMany({
+  const conversations = await prisma.conversation.findMany({
     where: {
       AND: [
         { [senderId]: userId },
@@ -26,19 +26,19 @@ async function getConversation(
       ],
     },
   });
-  return conversation[0];
+  return conversations[0];
 }
 
-async function createConversation(
-  { receiverIdName, receiverIdValue, productId, sender },
+function createConversation(
+  { receiverIdValue, productId, sender },
   { prisma, userId },
 ) {
-  conversation = await prisma.conversation.create({
+  return prisma.conversation.create({
     data: {
       [sender]: {
         connect: { id: userId },
       },
-      [receiverIdName]: {
+      [sender === "seller" ? "buyer" : "seller"]: {
         connect: { id: receiverIdValue },
       },
       product: {
@@ -213,7 +213,7 @@ async function sendMessageFromBuyer(
 
   if (!conversation)
     conversation = await createConversation(
-      { receiverIdName, receiverIdValue, productId, sender },
+      { receiverIdValue, productId, sender },
       { prisma, userId },
     );
 

@@ -53,7 +53,7 @@ export const SendButton = ({
           transition.submission || !isViewProductLocation ? true : false
         }
       >
-        {transition.submission ? (
+        {transition.submission && isViewProductLocation ? (
           <Loader dimensions="w-5 h-5" />
         ) : (
           <span className="text tracking-wider">

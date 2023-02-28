@@ -13,10 +13,10 @@ import { bodyClasses, contentClasses } from "./styled";
 import { Container } from "../utilities";
 import { Sidebar } from "../sidebar";
 import { Loader } from "../loader";
-import { Auth } from "../auth";
 import { useProductsKey } from "../products/useProductsKey";
 import { isIncludesSidebar } from "~/utils/helpers";
 import { ConversationSectionProvider } from "~/context/conversation-section";
+import { Auth } from "../auth";
 
 export const Body = ({ children }: { children: React.ReactNode }) => {
   const { authInfo } = useLoaderData<Pick<TRootLoaderData, "authInfo">>();
@@ -35,8 +35,8 @@ export const Body = ({ children }: { children: React.ReactNode }) => {
           ) : (
             <>{children}</>
           )}
-          <Auth />
         </ConversationSectionProvider>
+        <Auth />
       </Container>
       <ScrollRestoration />
       <Scripts />

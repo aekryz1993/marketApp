@@ -1,14 +1,8 @@
-import { useLocation } from "@remix-run/react";
-
 import { Box, Container } from "../utilities";
 import { ActionFrom } from "../utilities/action-form";
 import { AuthFormInputs } from "../auth/auth-form-inputs";
 
 export const NotAuthorizedPage = () => {
-  const location = useLocation();
-
-  const locationPath = `${location.pathname}${location.search}`;
-
   return (
     <Container classes="w-full flex flex-col items-center overflow-y-auto overflow-x-hidden">
       <Container classes="my-4 text-center md:my-12">
@@ -23,14 +17,8 @@ export const NotAuthorizedPage = () => {
           </p>
         </Box>
       </Container>
-      <Container classes="bg-bg-sec_lt dark:bg-bg-sec_dark self-stretch w-full max-w-[796px] mx-auto">
-        <ActionFrom
-          actionType="login"
-          buttonLabel="Login"
-          action={locationPath}
-          styledForm
-          replace
-        >
+      <Container classes="bg-bg-light-sec dark:bg-bg-dark-sec self-stretch w-full max-w-[796px] mx-auto">
+        <ActionFrom actionType="login" buttonLabel="Login" styledForm replace>
           <AuthFormInputs currentScreen="login" />
         </ActionFrom>
       </Container>

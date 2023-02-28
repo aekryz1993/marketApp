@@ -1,13 +1,9 @@
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/node";
 
 import { useCatch } from "@remix-run/react";
 
 import { ProductsLayout } from "~/components/products";
 import { productsLoader } from "~/ssr/loaders/products.service";
-import { authAction } from "~/ssr/actions/auth.service";
-
-export const action: ActionFunction = async ({ request }) =>
-  authAction({ request });
 
 export const loader: LoaderFunction = async ({ request, params }) =>
   productsLoader({ request, params });
@@ -20,8 +16,8 @@ export function CatchBoundary() {
   const caught = useCatch();
 
   return (
-    <div>
-      <h1>
+    <div className="flex h-[calc(100%-56px)] w-full flex-col items-center justify-center">
+      <h1 className="text-4xl font-black tracking-wide antialiased">
         {caught.status} {caught.statusText}
       </h1>
     </div>

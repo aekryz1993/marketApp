@@ -33,8 +33,8 @@ const uploadImagesHandler = () => unstable_composeUploadHandlers(
   }
 );
 
-const getProductForm = async ({ request, formData }: Pick<LoaderArgs, "request"> & {formData?: FormData}) => {
-  const form = formData ?? await unstable_parseMultipartFormData(
+const getProductForm = async ({ request }: Pick<LoaderArgs, "request">) => {
+  const form = await unstable_parseMultipartFormData(
     request,
     uploadImagesHandler()
   );

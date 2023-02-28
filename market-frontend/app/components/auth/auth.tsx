@@ -1,5 +1,3 @@
-import { useLocation } from "@remix-run/react";
-
 import { useAuthPortal } from "~/context/auth-portal";
 import { Portal } from "../portal";
 import {
@@ -20,9 +18,6 @@ export const Auth = ({
   buttonLabel: string;
 }) => {
   const { handleClose } = useAuthPortal();
-  const location = useLocation();
-
-  const locationPath = `${location.pathname}${location.search}`;
 
   return (
     <Portal
@@ -38,7 +33,6 @@ export const Auth = ({
         <ActionFrom
           actionType={actionType}
           buttonLabel={buttonLabel}
-          action={locationPath}
           styledForm
           replace
         >

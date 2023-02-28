@@ -40,7 +40,7 @@ export const MinimizedWindow = ({
       >
         {isHover && (
           <Box
-            classes="absolute -right-1.5 -top-1.5 p-0.5 rounded-full bg-bg-sec_lt dark:bg-bg-sec_dark shadow-3xl"
+            classes="absolute -right-1.5 -top-1.5 p-0.5 rounded-full bg-bg-light-sec dark:bg-bg-dark-sec shadow-3xl"
             onClick={(event) => handleClose(event)}
           >
             <XMarkIcon className="h-5 w-5" />
