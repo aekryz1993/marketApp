@@ -25,8 +25,9 @@ const getFields = ({
   return { fields, fieldErrors };
 };
 
-export const authAction = async ({ request, formData }: Pick<LoaderArgs, "request"> & { formData?: FormData }) => {
-  const form = formData ?? await request.formData();
+export const authAction = async ({ request }: Pick<LoaderArgs, "request">) => {
+  const requestText = await request.text();
+  const form = new URLSearchParams(requestText);
   const username = form.get("username");
   const password = form.get("password");
   const authType = form.get("authType");

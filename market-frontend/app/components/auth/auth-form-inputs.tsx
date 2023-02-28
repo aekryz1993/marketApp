@@ -1,40 +1,50 @@
-import { useFieldsWithoutState } from "~/hooks/useFields";
-import { Field } from "../utilities/input";
+import { useAuthPortal } from "~/context/auth-portal";
+import { InputField } from "../utilities/input/input-field";
 import { ErrorMessageField } from "../utilities/typography";
-import { useReloadPageAfterAuth } from "~/hooks/useReloadPageAfterAuth";
+import { Box } from "../utilities";
 
-export const AuthFormInputs = ({
-  currentScreen,
-}: {
-  currentScreen: string;
-}) => {
-  const { fieldProps } = useFieldsWithoutState();
+export const AuthFormInputs = () => {
+  const { fields, setFields, savedPersistAuth } = useAuthPortal();
 
-  const actionData = useReloadPageAfterAuth();
+  const data = savedPersistAuth.current.data;
+  const type = savedPersistAuth.current.type;
 
   return (
     <>
-      <input type="hidden" name="authType" value={currentScreen} />
-      <Field
-        {...fieldProps({
-          name: "username",
-          type: "text",
-          defaultValue: actionData?.fields?.username,
-          error: actionData?.fieldErrors?.username,
-        })}
-        placeholder="Type your username..."
-      />
-      <Field
-        {...fieldProps({
-          name: "password",
-          type: "password",
-          defaultValue: actionData?.fields?.password,
-          error: actionData?.fieldErrors?.password,
-        })}
-        placeholder="Type your password..."
-      />
-      {actionData?.formError ? (
-        <ErrorMessageField>{actionData.formError}</ErrorMessageField>
+      <Box>
+        <InputField
+          type="text"
+          value={fields.username}
+          label="Username"
+          onChange={(event) => {
+            setFields((prevState) => ({
+              ...prevState,
+              username: event.target.value,
+            }));
+          }}
+        />
+        {data?.fieldErrors?.username && type === "actionReload" ? (
+          <ErrorMessageField>{data.fieldErrors?.username}</ErrorMessageField>
+        ) : null}
+      </Box>
+      <Box>
+        <InputField
+          type="password"
+          value={fields.password}
+          label="Password"
+          onChange={(event) => {
+            setFields((prevState) => ({
+              ...prevState,
+              password: event.target.value,
+            }));
+          }}
+        />
+        {data?.fieldErrors?.password && type === "actionReload" ? (
+          <ErrorMessageField>{data.fieldErrors?.password}</ErrorMessageField>
+        ) : null}
+      </Box>
+      {data?.formError && type === "actionReload" ? (
+        <ErrorMessageField>{data.formError}</ErrorMessageField>
       ) : null}
     </>
   );

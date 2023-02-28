@@ -10,7 +10,7 @@ import { i18nCookie } from "~/utils/i18n.server";
 import { getAuthSession } from "~/utils/auth.server";
 import { checkToken } from "~/endpoints/mutation/auth";
 
-export const rootLoader = async ({request}: Pick<LoaderArgs, 'request'>) => {
+export const rootLoader = async ({ request }: Pick<LoaderArgs, 'request'>) => {
   const locale = await i18next.getLocale(request);
   const themeSession = await getThemeSession(request);
   const authSession = await getAuthSession(request);
@@ -30,15 +30,15 @@ export const rootLoader = async ({request}: Pick<LoaderArgs, 'request'>) => {
     theme: themeSession.getTheme(),
   };
 
-  try {
-    if (!token) {
-      const data: TRootLoaderData = {
-        ...appearanceData,
-        authInfo: null,
-      };
-      return json(data, { headers });
-    }
+  if (!token) {
+    const data: TRootLoaderData = {
+      ...appearanceData,
+      authInfo: null,
+    };
+    return json(data, { headers });
+  }
 
+  try {
     const response = await checkToken(token);
     if (response.data?.checkToken.token) {
       const data: TRootLoaderData = {
@@ -47,14 +47,14 @@ export const rootLoader = async ({request}: Pick<LoaderArgs, 'request'>) => {
       };
       return json(data, { headers });
     }
-
-    const data: TRootLoaderData = {
-      ...appearanceData,
-      authInfo: null,
-    };
-    return json(data, { headers });
   } catch (error) {
     headers.append("Set-Cookie", await authSession.destroy());
     return json({ ...appearanceData, authInfo: null }, { headers });
   }
+
+  const data: TRootLoaderData = {
+    ...appearanceData,
+    authInfo: null,
+  };
+  return json(data, { headers });
 };

@@ -9,11 +9,11 @@ import { useBroadcastChannel } from "~/hooks/useBroadcastChannel";
 import { useThemeBroadcastChannel } from "~/hooks/useThemeBroadcastChannel";
 
 export const Header = () => {
-  const [, setTheme] = useTheme();
+  const [, handleThemeChange] = useTheme();
 
   const { postMessage, subscribeMessage } = useBroadcastChannel("theme");
 
-  useThemeBroadcastChannel({ subscribeMessage, setTheme });
+  useThemeBroadcastChannel({ subscribeMessage, handleThemeChange });
 
   return (
       <Container classes={containerClasses}>

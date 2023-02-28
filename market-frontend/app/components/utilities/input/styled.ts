@@ -8,13 +8,13 @@ const primaryInputDarkClasses = "dark:bg-input-dark-sec";
 
 const labelClasses = "block text-base md:text-xl pb-2";
 
-const inputClasses = "w-full rounded-lg bg-transparent p-3.5"
+const inputClasses = "relative w-full rounded-lg bg-transparent p-3.5 z-10"
 
 const inputBlurClasses = "border border-gray-300 dark:border-gray-600"
 
 const inputFocusClasses = "border border-gray-900 dark:border-gray-50 outline-btn-light-pry outline-2 dark:outline-btn-dark-pry pt-6 outline outline-offset-1"
 
-const inputLabelClasses = "absolute left-3 transition-all"
+const inputLabelClasses = "absolute left-3 transition-all select-none z-0"
 
 const inputLabelFocusClasses = "top-1 text-sm text-btn-light-pry dark:text-btn-dark-pry"
 

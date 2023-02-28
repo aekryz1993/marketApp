@@ -9,10 +9,10 @@ export const ThemeSwitch = ({
 }: {
   postMessage: (data: any) => void
 }) => {
-  const [theme, setTheme] = useTheme();
+  const [theme, handleThemeChange] = useTheme();
 
   const handleSwitchTheme = () => {
-    setTheme((prev) => (prev === Theme.DARK ? Theme.LIGHT : Theme.DARK));
+    handleThemeChange();
     postMessage({});
   };
 

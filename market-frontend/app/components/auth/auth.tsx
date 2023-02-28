@@ -5,19 +5,23 @@ import {
   portalContainerClasses,
   portalRootClasses,
 } from "./styled";
-import { ActionFrom } from "../utilities/action-form";
 import { AuthFormInputs } from "./auth-form-inputs";
 import { Box, Container } from "../utilities";
 import { ClosePortalBtn } from "../utilities/close-portal-btn";
+import { formClasses, submitBtn } from "../utilities/action-form/styled";
+import { PrimaryButton } from "../utilities/button";
+import { Loader } from "../loader";
 
 export const Auth = ({
-  actionType,
-  buttonLabel,
+  label,
+  authType,
 }: {
-  actionType: string;
-  buttonLabel: string;
+  label: string;
+  authType: "login" | "register";
 }) => {
-  const { handleClose } = useAuthPortal();
+  const { handleClose, handleSubmit, savedPersistAuth } = useAuthPortal();
+
+  const isLoading = savedPersistAuth.current.type === "actionSubmission";
 
   return (
     <Portal
@@ -30,14 +34,25 @@ export const Auth = ({
         <ClosePortalBtn handleCloseEvent={handleClose} />
       </Box>
       <Container classes={containerClasses}>
-        <ActionFrom
-          actionType={actionType}
-          buttonLabel={buttonLabel}
-          styledForm
-          replace
-        >
-          <AuthFormInputs currentScreen={actionType} />
-        </ActionFrom>
+        <Container classes={formClasses}>
+          <AuthFormInputs />
+          <PrimaryButton
+            classes={submitBtn}
+            onClick={() => {
+              handleSubmit(authType);
+            }}
+            disabled={isLoading ? true : false}
+          >
+            {isLoading ? (
+              <Box className="flex items-center justify-center">
+                <span className="mr-3">{label}</span>
+                <Loader dimensions="w-8 h-8" />
+              </Box>
+            ) : (
+              <>{label}</>
+            )}
+          </PrimaryButton>
+        </Container>
       </Container>
     </Portal>
   );

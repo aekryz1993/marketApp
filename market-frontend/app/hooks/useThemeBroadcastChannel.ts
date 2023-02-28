@@ -1,19 +1,17 @@
 import { useCallback, useEffect } from "react";
 
-import { Theme } from "~/context/theme";
-
 import type { TListenEventCallback } from "./useBroadcastChannel";
 
 export const useThemeBroadcastChannel = ({
   subscribeMessage,
-  setTheme,
+  handleThemeChange,
 }: {
   subscribeMessage: TListenEventCallback;
-  setTheme: React.Dispatch<React.SetStateAction<Theme | null>>;
+  handleThemeChange: () => void
 }) => {
   const callback = useCallback(() => {
-    setTheme((prev) => (prev === Theme.DARK ? Theme.LIGHT : Theme.DARK));
-  }, [setTheme]);
+    handleThemeChange()
+  }, [handleThemeChange]);
 
   useEffect(() => {
     subscribeMessage(callback);

@@ -14,58 +14,6 @@ import {
 const isEmpty = (value: string) =>
   typeof value === "string" ? value.length === 0 : typeof value === "number";
 
-// function InputField<TProps>(
-//   props: TProps & {
-//     label: string;
-//     classes?: string;
-//     fieldType?: "input" | "textarea";
-//   }
-// ) {
-//   const [inputState, setInputState] = useState<TInputState>({
-//     isFocus: false,
-//     isEmpty: true,
-//   });
-
-//   const { label, classes, fieldType } = props;
-
-//   const handleFocus = (value: string) => {
-//     setInputState(() =>
-//       isEmpty(value)
-//         ? { isFocus: true, isEmpty: true }
-//         : { isFocus: true, isEmpty: false }
-//     );
-//   };
-
-//   const handleBlur = (value: string) => {
-//     setInputState(() =>
-//       isEmpty(value)
-//         ? { isFocus: false, isEmpty: true }
-//         : { isFocus: false, isEmpty: false }
-//     );
-//   };
-
-//   return (
-//     <Box classes={clsx("relative w-full", classes)}>
-//       <span
-//         className={clsx(
-//           inputLabelClasses,
-//           inputState.isFocus
-//             ? inputLabelFocusClasses
-//             : inputState.isEmpty
-//             ? clsx(
-//                 inputLabelBlurClasses,
-//                 fieldType === "textarea" ? "top-4" : "top-2/4 -translate-y-2/4"
-//               )
-//             : "top-1 text-sm text-gray-500"
-//         )}
-//       >
-//         {label}
-//       </span>
-//       {children}
-//     </Box>
-//   );
-// }
-
 const InputField = forwardRef<HTMLInputElement, TInputProps & TEventHandlerProps>(
   function InputField(props, ref) {
     const [inputState, setInputState] = useState<TInputState>({

@@ -1,7 +1,6 @@
 import type {
   MetaFunction,
   LoaderFunction,
-  ActionFunction,
 } from "@remix-run/node";
 import type { TRootLoaderData } from "./types/data";
 
@@ -11,12 +10,8 @@ import styles from "./tailwind.css";
 import { ThemeProvider } from "./context/theme";
 import { Document } from "./components/document";
 import { SidebarProvider } from "~/context/sidebar";
-import { authAction } from "./ssr/actions/auth.service";
 import { rootLoader } from "./ssr/loaders/root.service";
 import { AuthPortalProvider } from "./context/auth-portal";
-
-export const action: ActionFunction = async ({ request }) =>
-  authAction({ request });
 
 export const loader: LoaderFunction = async ({ request }) =>
   rootLoader({ request });

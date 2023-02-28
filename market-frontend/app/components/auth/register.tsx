@@ -1,5 +1,3 @@
 import { Auth } from "./auth";
 
-export const Register = () => {
-  return <Auth actionType="register" buttonLabel="Sign Up" />;
-};
+export const Register = () => <Auth authType="register" label="Sign Up" />;

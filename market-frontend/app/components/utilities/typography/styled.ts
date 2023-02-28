@@ -5,7 +5,7 @@ const pClasses =
 const pClassesLight = "text-text-text_lt";
 const pClassesDark = "dark:text-text-text_dark";
 
-const errorMessageClasses = "text-alert-danger_lt dark:text-alert-danger_dark";
+const errorMessageClasses = "text-alert-light-danger dark:text-alert-dark-danger";
 
 export {
   labelButtonClasses,

@@ -1,17 +1,18 @@
-import { useFetcher } from "@remix-run/react";
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
 
-import { useCallbackRef } from "~/hooks/useCallbackRef";
+import { useSaveFetcherRef } from "~/hooks/useFetcherRef";
 
 enum Theme {
   DARK = "dark",
   LIGHT = "light",
 }
 
-type ThemeContextType = [
-  Theme | null,
-  React.Dispatch<React.SetStateAction<Theme | null>>
-];
+type ThemeContextType = [Theme | null, () => void];
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
@@ -67,21 +68,20 @@ function ThemeProvider({
     return getPreferredTheme();
   });
 
-  const persistTheme = useFetcher();
+  const persistTheme = useSaveFetcherRef();
 
-  const savePersistTheme = useCallbackRef(persistTheme);
-
-  useEffect(() => {
-    if (theme) {
-      savePersistTheme.current.submit(
-        { theme },
-        { action: "action/set-theme", method: "post" }
-      );
-    }
-  }, [savePersistTheme, theme]);
+  const handleThemeChange = useCallback(() => {
+    setTheme((prevTheme) =>
+      prevTheme === Theme.DARK ? Theme.LIGHT : Theme.DARK
+    );
+    persistTheme.current.submit(
+      { theme: theme === Theme.DARK ? Theme.LIGHT : Theme.DARK },
+      { action: "action/set-theme", method: "post" }
+    );
+  }, [persistTheme, theme]);
 
   return (
-    <ThemeContext.Provider value={[theme, setTheme]}>
+    <ThemeContext.Provider value={[theme, handleThemeChange]}>
       {children}
     </ThemeContext.Provider>
   );

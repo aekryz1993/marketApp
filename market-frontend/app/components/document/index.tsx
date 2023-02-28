@@ -1,4 +1,4 @@
-import type { TRootLoaderData } from "~/types/data";
+// import type { TRootLoaderData } from "~/types/data";
 
 import clsx from "clsx";
 
@@ -6,8 +6,8 @@ import { Body } from "./body";
 import { Head } from "./head";
 import { Loader } from "../loader";
 import { useDocument } from "~/hooks/useDocument";
-import { useRefreshToken } from "~/hooks/useRefreshToken";
-import { useLoaderData } from "@remix-run/react";
+// import { useRefreshToken } from "~/hooks/useRefreshToken";
+// import { useLoaderData } from "@remix-run/react";
 
 export function Document({
   children,
@@ -17,9 +17,9 @@ export function Document({
   title?: string;
 }) {
   const { locale, i18n, ready, theme } = useDocument();
-  const { authInfo } = useLoaderData<TRootLoaderData>();
+  // const { authInfo } = useLoaderData<TRootLoaderData>();
 
-  useRefreshToken(authInfo);
+  // useRefreshToken(authInfo);
 
   if (!ready) return <Loader dimensions="w-12 h-12" />;
 

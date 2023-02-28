@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { Box } from "./utilities";
 
 export const Loader = ({ dimensions }: { dimensions: string }) => (
-  <Box classes="w-full flex justify-center items-center py-2">
+  <Box classes="inline-flex justify-center items-center py-2">
     <div
       className={clsx(
         dimensions,
